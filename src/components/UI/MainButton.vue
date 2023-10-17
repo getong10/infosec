@@ -21,5 +21,6 @@ export default {
   padding: 2vh 2vw;
   border: none;
   font-size: 1rem;
+  cursor: pointer;
 }
 </style>
