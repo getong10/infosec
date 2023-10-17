@@ -1,13 +1,13 @@
 <template>
   <div>
-    <main-button>
-      Типы атак
-    </main-button>
+
   </div>
 </template>
 
 <script>
+export default {
 
+}
 </script>
 
 <style>
