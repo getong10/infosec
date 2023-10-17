@@ -3,15 +3,21 @@
     <button
         class="menu-button">
       <slot></slot>
-        <svg v-html="svgProp"></svg>
+        <img :src="require(`@/assets/img/${svgProp}`)" :alt="svgProp">
     </button>
   </div>
 </template>
 
 <script>
+
 export default {
   name: 'menu-button',
-  props: ['svgProp']
+  props: {
+    svgProp: {
+      type: String,
+      required: true
+    }
+  }
 }
 </script>
 
@@ -22,16 +28,24 @@ export default {
   border-radius: 40px;
   border: none;
   text-transform: uppercase;
+  text-align: left;
   display: flex;
   padding-left: 3vw;
   padding-top: 3vw;
   font-size: 2vw;
   overflow: hidden;
   cursor: pointer;
-  max-width: 30vw;
+  width: 30vw;
   min-height: 35vh;
+  position: relative;
 }
 .menu-button:hover {
   background-color: #DEF7E5;
+}
+.menu-button img {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  height: 20vh;
 }
 </style>
