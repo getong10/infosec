@@ -1,6 +1,7 @@
 <template>
   <div>
-
+    <span></span>
+    <svg></svg>
   </div>
 </template>
 

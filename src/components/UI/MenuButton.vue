@@ -25,9 +25,11 @@ export default {
   display: flex;
   padding-left: 3vw;
   padding-top: 3vw;
-  font-size: 2em;
+  font-size: 2vw;
   overflow: hidden;
   cursor: pointer;
+  max-width: 30vw;
+  min-height: 35vh;
 }
 .menu-button:hover {
   background-color: #DEF7E5;

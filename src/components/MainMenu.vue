@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container">
     <div class="grid-menu">
       <menu-button :svgProp="svgXSS">Межсайтовый скриптинг</menu-button>
       <menu-button :svgProp="svgSQL">управление базами данных И sql инъекции</menu-button>
@@ -41,8 +41,23 @@ export default {
 </script>
 
 <style scoped>
+
+* {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  width: 100vw;
+  height: 100vh;
+}
+
 .grid-menu {
   display: grid;
   gap: 20px;
+  grid-template-columns: repeat(3, 30vw);
 }
 </style>
