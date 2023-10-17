@@ -3,7 +3,7 @@
     <button
         class="menu-button">
       <slot></slot>
-        <div v-html="svgProp"></div>
+        <svg v-html="svgProp"></svg>
     </button>
   </div>
 </template>

@@ -6,7 +6,7 @@ const routes = [
     {
         path: '/',
         component: App
-    }
+    },
 ]
 
 const router = createRouter({
