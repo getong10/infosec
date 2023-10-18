@@ -1,6 +1,6 @@
 <template>
-  <img class="back-button" src="@/assets/img/back.svg"/>
   <div class="container">
+    <img class="back-button" src="@/assets/img/back.svg"/>
     <div class="grid-menu">
       <menu-button svgProp="xss.svg">Межсайтовый <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;скриптинг</menu-button>
       <menu-button svgProp="sql.svg">управление <br/>базами данных <br/>И sql инъекции</menu-button>
