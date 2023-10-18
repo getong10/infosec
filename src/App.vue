@@ -1,7 +1,7 @@
 <template>
   <div>
     <TextContent title="XSSSS" description="XSS isss..."></TextContent>
-    <ButtonsContent></ButtonsContent>
+    <ButtonsContent :text-buttons="textButtons"></ButtonsContent>
   </div>
 </template>
 
@@ -10,7 +10,19 @@ import TextContent from "@/components/TextContent.vue";
 import ButtonsContent from "@/components/ButtonsContent.vue";
 
 export default {
-  components: {ButtonsContent, TextContent}
+  components: {ButtonsContent, TextContent},
+  data() {
+    return {
+      textButtons: [{
+        name: 'Типы атак',
+        link: 'menu'
+      },
+        {
+        name: 'Защита',
+        link: 'menu'
+      },]
+    }
+  }
 }
 </script>
 
