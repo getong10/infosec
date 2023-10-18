@@ -1,14 +1,16 @@
 <template>
   <div>
-    <MainMenu></MainMenu>
+    <TextContent title="XSSSS" description="XSS isss..."></TextContent>
+    <ButtonsContent></ButtonsContent>
   </div>
 </template>
 
 <script>
-import MainMenu from "@/components/MainMenu.vue";
+import TextContent from "@/components/TextContent.vue";
+import ButtonsContent from "@/components/ButtonsContent.vue";
 
 export default {
-  components: {MainMenu}
+  components: {ButtonsContent, TextContent}
 }
 </script>
 
