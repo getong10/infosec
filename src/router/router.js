@@ -1,4 +1,3 @@
-import App from "@/App.vue";
 import {createRouter, createWebHistory} from "vue-router";
 import MainMenu from "@/components/MainMenu.vue";
 import XSSMainPage from "@/pages/XSS/XSSMainPage.vue";
@@ -7,12 +6,13 @@ import SQLinjMainPage from "@/pages/SQLinj/SQLinjMainPage.vue";
 import DDoSMainPage from "@/pages/DDoS/DDoSMainPage.vue";
 import CSRFMainPage from "@/pages/CSRF/CSRFMainPage.vue";
 import ClickjackingMainPage from "@/pages/Clickjacking/ClickjackingMainPage.vue";
+import MainPage from "@/pages/MainPage.vue";
 
 
 const routes = [
     {
         path: '/',
-        component: App
+        component: MainPage
     },
     {
         path: '/menu',

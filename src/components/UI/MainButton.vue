@@ -1,26 +1,33 @@
 <template>
-  <div>
     <button
         class="main-button"
-        @click="$router.push('/')">
+        @click="$router.push(`${link}`)">
       <slot></slot>
     </button>
-  </div>
 </template>
 
 <script>
 export default {
-  name: 'main-button'
+  name: 'main-button',
+  props: {
+    link: {
+      type: String,
+      required: true
+    }
+  }
 }
 </script>
 
 <style scoped>
 .main-button {
-  border-radius: 44px;
+  border-radius: 100vw;
   background-color: #92E3A9;
-  padding: 1.5vh 2vw;
+  padding: 2vh 2vw;
   border: none;
-  font-size: 1rem;
+  font-size: 1.2rem;
   cursor: pointer;
+}
+.main-button:hover {
+  background-color: #8bd9a1;
 }
 </style>

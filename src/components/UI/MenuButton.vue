@@ -1,9 +1,10 @@
 <template>
   <div>
     <button
-        class="menu-button">
+        class="menu-button"
+        @click="$router.push(`/${link}`)">
       <slot></slot>
-        <img :src="require(`@/assets/img/${svgProp}`)" :alt="svgProp">
+      <img :src="require(`@/assets/img/${svgProp}`)" :alt="svgProp">
     </button>
   </div>
 </template>
@@ -14,6 +15,10 @@ export default {
   name: 'menu-button',
   props: {
     svgProp: {
+      type: String,
+      required: true
+    },
+    link: {
       type: String,
       required: true
     }
@@ -39,9 +44,11 @@ export default {
   min-height: 35vh;
   position: relative;
 }
+
 .menu-button:hover {
   background-color: #DEF7E5;
 }
+
 .menu-button img {
   position: absolute;
   right: 0;

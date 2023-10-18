@@ -1,13 +1,13 @@
 <template>
   <div class="container">
-    <img class="back-button" src="@/assets/img/back.svg"/>
+    <img class="back-button" src="@/assets/img/back.svg" @click="$router.push('/')"/>
     <div class="grid-menu">
-      <menu-button svgProp="xss.svg">Межсайтовый <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;скриптинг</menu-button>
-      <menu-button svgProp="sql.svg">управление <br/>базами данных <br/>И sql инъекции</menu-button>
-      <menu-button svgProp="CSRF.svg">пОДДЕЛКА <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ЗАПРОСА</menu-button>
-      <menu-button svgProp="ddos.svg">перегрузка <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;web-сервера</menu-button>
-      <menu-button svgProp="passw.svg">ПЕРЕБОР <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;паролей</menu-button>
-      <menu-button svgProp="clickjacking.svg">кликджекинг</menu-button>
+      <menu-button svgProp="xss.svg" link="xss">Межсайтовый <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;скриптинг</menu-button>
+      <menu-button svgProp="sql.svg" link="sql">управление <br/>базами данных <br/>И sql инъекции</menu-button>
+      <menu-button svgProp="CSRF.svg" link="csrf">пОДДЕЛКА <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ЗАПРОСА</menu-button>
+      <menu-button svgProp="ddos.svg" link="ddos">перегрузка <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;web-сервера</menu-button>
+      <menu-button svgProp="passw.svg" link="timing">ПЕРЕБОР <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;паролей</menu-button>
+      <menu-button svgProp="clickjacking.svg" link="clickjacking">кликджекинг</menu-button>
     </div>
   </div>
 </template>
@@ -20,8 +20,6 @@ export default {
 
 <style scoped>
 * {
-  margin: 0;
-  padding: 0;
   display: flex;
   justify-content: center;
   align-items: center;

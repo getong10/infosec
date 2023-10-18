@@ -1,32 +1,13 @@
 <template>
-  <div>
-    <TextContent title="межсайтовый скриптинг" description="XSS (Cross-Site Scripting) – вид уязвимости
-    в web-приложениях, при которой злоумышленник
-    внедряет вредоносный JS-код или другие скрипты
-    в web-страницы, которые затем выполняются в
-    браузере пользователей."></TextContent>
-    <ButtonsContent :text-buttons="textButtons"></ButtonsContent>
+  <div class="app">
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-import TextContent from "@/components/TextContent.vue";
-import ButtonsContent from "@/components/ButtonsContent.vue";
 
 export default {
-  components: {ButtonsContent, TextContent},
-  data() {
-    return {
-      textButtons: [{
-        name: 'Типы атак',
-        link: 'menu'
-      },
-        {
-        name: 'Защита',
-        link: 'menu'
-      },]
-    }
-  }
+
 }
 </script>
 
@@ -38,5 +19,8 @@ export default {
   font-family: Montserrat, sans-serif;
   font-weight: 600;
   color: #263238;
+}
+body {
+  overflow: hidden;
 }
 </style>
