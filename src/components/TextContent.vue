@@ -21,5 +21,18 @@ export default {
 </script>
 
 <style scoped>
+* {
+  display: flex;
+  flex-direction: column;
+}
 
+h1 {
+  text-transform: uppercase;
+  font-size: 9vw;
+  line-height: 80%;
+}
+
+h2 {
+  font-size: 2.5vw;
+}
 </style>

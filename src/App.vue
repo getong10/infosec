@@ -1,6 +1,10 @@
 <template>
   <div>
-    <TextContent title="XSSSS" description="XSS isss..."></TextContent>
+    <TextContent title="межсайтовый скриптинг" description="XSS (Cross-Site Scripting) – вид уязвимости
+в web-приложениях, при которой злоумышленник
+внедряет вредоносный JS-код или другие скрипты
+в web-страницы, которые затем выполняются в
+браузере пользователей."></TextContent>
     <ButtonsContent></ButtonsContent>
   </div>
 </template>
