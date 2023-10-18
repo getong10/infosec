@@ -1,11 +1,11 @@
 <template>
   <div>
     <TextContent title="межсайтовый скриптинг" description="XSS (Cross-Site Scripting) – вид уязвимости
-в web-приложениях, при которой злоумышленник
-внедряет вредоносный JS-код или другие скрипты
-в web-страницы, которые затем выполняются в
-браузере пользователей."></TextContent>
-    <ButtonsContent></ButtonsContent>
+    в web-приложениях, при которой злоумышленник
+    внедряет вредоносный JS-код или другие скрипты
+    в web-страницы, которые затем выполняются в
+    браузере пользователей."></TextContent>
+    <ButtonsContent :text-buttons="textButtons"></ButtonsContent>
   </div>
 </template>
 
@@ -14,7 +14,19 @@ import TextContent from "@/components/TextContent.vue";
 import ButtonsContent from "@/components/ButtonsContent.vue";
 
 export default {
-  components: {ButtonsContent, TextContent}
+  components: {ButtonsContent, TextContent},
+  data() {
+    return {
+      textButtons: [{
+        name: 'Типы атак',
+        link: 'menu'
+      },
+        {
+        name: 'Защита',
+        link: 'menu'
+      },]
+    }
+  }
 }
 </script>
 

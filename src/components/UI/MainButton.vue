@@ -18,7 +18,7 @@ export default {
 .main-button {
   border-radius: 44px;
   background-color: #92E3A9;
-  padding: 2vh 2vw;
+  padding: 1.5vh 2vw;
   border: none;
   font-size: 1rem;
   cursor: pointer;
