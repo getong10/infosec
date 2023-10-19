@@ -7,6 +7,7 @@ import DDoSMainPage from "@/pages/DDoS/DDoSMainPage.vue";
 import CSRFMainPage from "@/pages/CSRF/CSRFMainPage.vue";
 import ClickjackingMainPage from "@/pages/Clickjacking/ClickjackingMainPage.vue";
 import MainPage from "@/pages/MainPage.vue";
+import TypesOfXSS from "@/pages/XSS/TypesOfXSS.vue";
 
 
 const routes = [
@@ -21,6 +22,10 @@ const routes = [
     {
         path: '/xss',
         component: XSSMainPage
+    },
+    {
+        path: '/typesXSS',
+        component: TypesOfXSS
     },
     {
         path: '/timing',

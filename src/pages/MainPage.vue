@@ -28,11 +28,13 @@ export default {
   top: 50%;
   left: 5%;
   transform: translateY(-50%);
+  z-index: 10;
 }
 img {
   width: 70vh;
   position: absolute;
   right: -5%;
   bottom: -5%;
+  z-index: 5;
 }
 </style>

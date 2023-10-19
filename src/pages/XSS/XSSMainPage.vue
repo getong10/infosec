@@ -23,7 +23,7 @@ export default {
       buttonsList: [
         {
           name: 'Типы атак',
-          link: ''
+          link: 'typesXSS'
         },
         {
           name: 'Защита',

@@ -4,6 +4,7 @@ import MainButton from "@/components/UI/MainButton";
 import MenuButton from "@/components/UI/MenuButton";
 import SecondaryButton from "@/components/UI/SecondaryButton";
 import WhiteButton from "@/components/UI/WhiteButton";
+import TypeButton from "@/components/UI/TypeButton.vue";
 
 export default [
     AnonimusModal,
@@ -12,4 +13,5 @@ export default [
     MenuButton,
     SecondaryButton,
     WhiteButton,
+    TypeButton
 ]
