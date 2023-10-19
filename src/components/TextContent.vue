@@ -33,6 +33,7 @@ h1 {
 }
 
 h2 {
-  font-size: 2.5vw;
+  padding-top: 4vh;
+  font-size: 2vw;
 }
 </style>
