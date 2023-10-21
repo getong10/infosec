@@ -8,6 +8,7 @@ import CSRFMainPage from "@/pages/CSRF/CSRFMainPage.vue";
 import ClickjackingMainPage from "@/pages/Clickjacking/ClickjackingMainPage.vue";
 import MainPage from "@/pages/MainPage.vue";
 import TypesOfXSS from "@/pages/XSS/TypesOfXSS.vue";
+import VKMainPage from "@/pages/XSS/VK/VKMainPage.vue";
 
 
 const routes = [
@@ -46,6 +47,10 @@ const routes = [
     {
         path: '/clickjacking',
         component: ClickjackingMainPage
+    },
+    {
+        path: '/startXSS',
+        component: VKMainPage
     },
 ]
 
