@@ -28,7 +28,7 @@ export default {
 
 h1 {
   text-transform: uppercase;
-  font-size: 9vw;
+  font-size: 8vw;
   line-height: 80%;
   font-weight: 600;
 }
@@ -36,7 +36,8 @@ h1 {
 h2 {
   padding-top: 4vh;
   font-size: 2vw;
-  width: 85vw;
+  width: 75vw;
   font-weight: 600;
+  display: inline;
 }
 </style>

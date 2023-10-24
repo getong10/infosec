@@ -1,6 +1,6 @@
 <template>
   <div>
-
+    protection click
   </div>
 </template>
 

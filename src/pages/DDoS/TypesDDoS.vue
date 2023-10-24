@@ -1,6 +1,6 @@
 <template>
   <div>
-
+types DDOS
   </div>
 </template>
 

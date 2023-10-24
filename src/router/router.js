@@ -10,6 +10,15 @@ import MainPage from "@/pages/MainPage.vue";
 import TypesOfXSS from "@/pages/XSS/TypesOfXSS.vue";
 import VKMainPage from "@/pages/XSS/VK/VKMainPage.vue";
 import ProtectionXSS from "@/pages/XSS/ProtectionXSS.vue";
+import ProtectionSQL from "@/pages/SQLinj/ProtectionSQL.vue";
+import ManageDB from "@/pages/SQLinj/ManageDB.vue";
+import WBMainPage from "@/pages/SQLinj/WB/WBMainPage.vue";
+import HowWorkCSRF from "@/pages/CSRF/HowWorkCSRF.vue";
+import ProtectionCSRF from "@/pages/CSRF/ProtectionCSRF.vue";
+import TypesDDoS from "@/pages/DDoS/TypesDDoS.vue";
+import ProtectionDDoS from "@/pages/DDoS/ProtectionDDoS.vue";
+import DdosAttack from "@/pages/DDoS/DdosAttack.vue";
+import ProtectionClick from "@/pages/Clickjacking/ProtectionClick.vue";
 
 
 const routes = [
@@ -42,16 +51,52 @@ const routes = [
         component: SQLinjMainPage
     },
     {
+        path: '/protectSQL',
+        component: ProtectionSQL
+    },
+    {
+        path: '/manageDB',
+        component: ManageDB
+    },
+    {
+        path: '/cultureBerries',
+        component: WBMainPage
+    },
+    {
         path: '/ddos',
         component: DDoSMainPage
+    },
+    {
+        path: '/typesDDoS',
+        component: TypesDDoS
+    },
+    {
+        path: '/protectDDoS',
+        component: ProtectionDDoS
+    },
+    {
+        path: '/ddosAttack',
+        component: DdosAttack
     },
     {
         path: '/csrf',
         component: CSRFMainPage
     },
     {
+        path: '/guideCSRF',
+        component: HowWorkCSRF
+    },
+    {
+        path: '/protectCSRF',
+        component: ProtectionCSRF
+    },
+    {
         path: '/clickjacking',
         component: ClickjackingMainPage
+    },
+    {
+        path: '/protectClick',
+        component: ProtectionClick
     },
     {
         path: '/startXSS',
