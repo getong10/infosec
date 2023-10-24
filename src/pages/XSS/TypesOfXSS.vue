@@ -1,6 +1,6 @@
 <template>
   <div>
-    <img class="back-button" src="@/assets/img/back.svg" @click="$router.push('/xss')"/>
+    <img class="back-button" src="@/assets/img/back.svg" @click="$router.push('/xss')" alt="back-button"/>
     <home-button class="home-button"></home-button>
     <div class="container">
       <text-content title="МЕЖСАЙТОВЫЙ<br/>&nbsp;&nbsp;&nbspСКРИПТИНГ"
@@ -93,7 +93,7 @@ export default {
 .back-button {
   position: absolute;
   left: 5%;
-  top: 4%;
+  top: 7%;
   cursor: pointer;
   height: 6vh;
 }

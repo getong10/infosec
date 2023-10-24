@@ -23,4 +23,7 @@ export default {
 body {
   overflow: hidden;
 }
+.strong-text {
+  font-weight: 800;
+}
 </style>

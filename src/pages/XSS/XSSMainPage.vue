@@ -24,7 +24,7 @@ export default {
         },
         {
           name: 'Защита',
-          link: ''
+          link: 'protectXSS'
         },
         {
           name: 'Сценарий атаки',

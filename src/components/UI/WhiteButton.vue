@@ -1,8 +1,7 @@
 <template>
   <div>
     <button
-        class="white-button"
-        @click="$router.push(`/${link}`)">
+        class="white-button">
       <slot></slot>
     </button>
   </div>
@@ -10,13 +9,7 @@
 
 <script>
 export default {
-  name: 'white-button',
-  props: {
-    link: {
-      type: String,
-      required: true
-    }
-  }
+  name: 'white-button'
 }
 </script>
 
@@ -26,8 +19,11 @@ export default {
   background-color: white;
   border: none;
   border-radius: 25px;
-  padding: 0.5vh 1.5vw;
-  font-size: 1.2rem;
+  padding: 1vh 1.5vw;
+  font-size: 1.4rem;
   cursor: pointer;
+}
+.white-button:hover {
+  background-color: rgb(247, 250, 248);
 }
 </style>

@@ -9,6 +9,7 @@ import ClickjackingMainPage from "@/pages/Clickjacking/ClickjackingMainPage.vue"
 import MainPage from "@/pages/MainPage.vue";
 import TypesOfXSS from "@/pages/XSS/TypesOfXSS.vue";
 import VKMainPage from "@/pages/XSS/VK/VKMainPage.vue";
+import ProtectionXSS from "@/pages/XSS/ProtectionXSS.vue";
 
 
 const routes = [
@@ -27,6 +28,10 @@ const routes = [
     {
         path: '/typesXSS',
         component: TypesOfXSS
+    },
+    {
+        path: '/protectXSS',
+        component: ProtectionXSS
     },
     {
         path: '/timing',

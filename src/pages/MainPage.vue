@@ -3,9 +3,12 @@
     <div class="container">
       <text-content title="ИНФОБЕЗ<br/>&nbsp;&nbsp;&nbsp;&nbsp;WEB-СИСТЕМ"
                     description="Защити свой сайт от уязвимостей<br/>и внешних угроз"></text-content>
-      <white-button link="menu">Начать ➝</white-button>
+      <white-button
+          @click="$router.push(`/menu`)"
+          style="margin-left: 40vw"
+          >Начать ➝</white-button>
     </div>
-    <img src="@/assets/img/background-img/main-hacker-bro.svg">
+    <img src="@/assets/img/background-img/main-hacker-bro.svg" alt="hacker-background-image">
   </div>
 </template>
 

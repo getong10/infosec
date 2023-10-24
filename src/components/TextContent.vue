@@ -30,10 +30,13 @@ h1 {
   text-transform: uppercase;
   font-size: 9vw;
   line-height: 80%;
+  font-weight: 600;
 }
 
 h2 {
   padding-top: 4vh;
   font-size: 2vw;
+  width: 85vw;
+  font-weight: 600;
 }
 </style>
