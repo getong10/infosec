@@ -19,6 +19,7 @@ import TypesDDoS from "@/pages/DDoS/TypesDDoS.vue";
 import ProtectionDDoS from "@/pages/DDoS/ProtectionDDoS.vue";
 import DdosAttack from "@/pages/DDoS/DdosAttack.vue";
 import ProtectionClick from "@/pages/Clickjacking/ProtectionClick.vue";
+import VKRegistration from "@/pages/XSS/VK/VKRegistration.vue";
 
 
 const routes = [
@@ -101,6 +102,10 @@ const routes = [
     {
         path: '/startXSS',
         component: VKMainPage
+    },
+    {
+        path: '/vsregictration',
+        component: VKRegistration
     },
 ]
 
