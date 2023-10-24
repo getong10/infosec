@@ -1,7 +1,6 @@
 import {createRouter, createWebHistory} from "vue-router";
 import MainMenu from "@/components/MainMenu.vue";
 import XSSMainPage from "@/pages/XSS/XSSMainPage.vue";
-import TimingATKMainPage from "@/pages/TimingATK/TimingATKMainPage.vue";
 import SQLinjMainPage from "@/pages/SQLinj/SQLinjMainPage.vue";
 import DDoSMainPage from "@/pages/DDoS/DDoSMainPage.vue";
 import CSRFMainPage from "@/pages/CSRF/CSRFMainPage.vue";
@@ -22,6 +21,9 @@ import ProtectionClick from "@/pages/Clickjacking/ProtectionClick.vue";
 import VKRegistration from "@/pages/XSS/VK/VKRegistration.vue";
 import MailMainPage from "@/pages/CSRF/Mail/MailMainPage.vue";
 import ChatGT from "@/pages/Clickjacking/ChatGT.vue";
+import PasswordAttacks from "@/pages/PasswordAttacks/PasswordAttacks.vue";
+import ProtectionPasswords from "@/pages/PasswordAttacks/ProtectionPasswords.vue";
+import TypesPasswords from "@/pages/PasswordAttacks/TypesPasswords.vue";
 
 
 const routes = [
@@ -44,10 +46,6 @@ const routes = [
     {
         path: '/protectXSS',
         component: ProtectionXSS
-    },
-    {
-        path: '/timing',
-        component: TimingATKMainPage
     },
     {
         path: '/sql',
@@ -117,6 +115,18 @@ const routes = [
         path: '/vsregictration',
         component: VKRegistration
     },
+    {
+        path: '/passwordAttack',
+        component: PasswordAttacks
+    },
+    {
+        path: '/protectPasswords',
+        component: ProtectionPasswords
+    },
+    {
+        path: '/typesPasswords',
+        component: TypesPasswords
+    }
 ]
 
 const router = createRouter({

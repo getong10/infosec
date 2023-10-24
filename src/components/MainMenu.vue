@@ -6,7 +6,7 @@
       <menu-button svgProp="sql.svg" link="sql">управление <br/>базами данных <br/>И sql инъекции</menu-button>
       <menu-button svgProp="CSRF.svg" link="csrf">пОДДЕЛКА <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ЗАПРОСА</menu-button>
       <menu-button svgProp="ddos.svg" link="ddos">перегрузка <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;web-сервера</menu-button>
-      <menu-button svgProp="passw.svg" link="timing">ПЕРЕБОР <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;паролей</menu-button>
+      <menu-button svgProp="passw.svg" link="passwordAttack">ПЕРЕБОР <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;паролей</menu-button>
       <menu-button svgProp="clickjacking.svg" link="clickjacking">кликджекинг</menu-button>
     </div>
   </div>
