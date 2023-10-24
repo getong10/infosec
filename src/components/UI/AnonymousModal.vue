@@ -32,8 +32,8 @@ export default {
 <style scoped>
 .container {
   position: absolute;
-  right: 5%;
-  bottom: 5%;
+  right: 3.5vw;
+  bottom: 5vh;
   z-index: 200;
   display: inline-flex;
   justify-content: flex-end;

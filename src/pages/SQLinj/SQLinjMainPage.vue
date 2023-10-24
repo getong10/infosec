@@ -3,7 +3,7 @@
     <ContentFirstPages
         title="УПРАВЛЕНИЕ БД
         <br/>&nbsp&nbspИ SQL-ИНЪЕКЦИИ"
-        description="В этой главе мы разберем администрирование баз данных,</br> SQL-инъекции и защиту от такого типа атак"
+        description="В этой главе мы разберем администрирование баз данных,<br/> SQL-инъекции и защиту от такого типа атак"
         svg-name="sql.svg"
         :buttons-list=buttonsList
     ></ContentFirstPages>
