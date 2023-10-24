@@ -10,6 +10,7 @@ import MainPage from "@/pages/MainPage.vue";
 import TypesOfXSS from "@/pages/XSS/TypesOfXSS.vue";
 import VKMainPage from "@/pages/XSS/VK/VKMainPage.vue";
 import ProtectionXSS from "@/pages/XSS/ProtectionXSS.vue";
+import VKRegistration from "@/pages/XSS/VK/VKRegistration.vue";
 
 
 const routes = [
@@ -56,6 +57,10 @@ const routes = [
     {
         path: '/startXSS',
         component: VKMainPage
+    },
+    {
+        path: '/vsregictration',
+        component: VKRegistration
     },
 ]
 
