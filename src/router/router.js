@@ -20,6 +20,8 @@ import ProtectionDDoS from "@/pages/DDoS/ProtectionDDoS.vue";
 import DdosAttack from "@/pages/DDoS/DdosAttack.vue";
 import ProtectionClick from "@/pages/Clickjacking/ProtectionClick.vue";
 import VKRegistration from "@/pages/XSS/VK/VKRegistration.vue";
+import MailMainPage from "@/pages/CSRF/Mail/MailMainPage.vue";
+import ChatGT from "@/pages/Clickjacking/ChatGT.vue";
 
 
 const routes = [
@@ -92,12 +94,20 @@ const routes = [
         component: ProtectionCSRF
     },
     {
+        path: '/elMailRf',
+        component: MailMainPage
+    },
+    {
         path: '/clickjacking',
         component: ClickjackingMainPage
     },
     {
         path: '/protectClick',
         component: ProtectionClick
+    },
+    {
+        path: '/chatGT',
+        component: ChatGT
     },
     {
         path: '/startXSS',

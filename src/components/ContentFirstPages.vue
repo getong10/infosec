@@ -6,7 +6,7 @@
                     :description=description></text-content>
       <buttons-content :text-buttons=buttonsList></buttons-content>
     </div>
-    <img :src="require(`@/assets/img/background-img/${svgName}`)" :alt="svgName">
+    <img :src="require(`@/assets/img/background-img/${svgName}`)" :alt="svgName" :style="imgStyle">
   </div>
 </template>
 
@@ -31,6 +31,10 @@ export default {
     },
     buttonsList: {
       type: Array
+    },
+    imgStyle: {
+      type: Object,
+      default: () => ({})
     }
   }
 }

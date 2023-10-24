@@ -86,7 +86,7 @@ export default {
   z-index: 1;
 }
 .background-img {
-  width: 70vh;
+  width: 60vh;
   position: absolute;
   right: -5%;
   bottom: -5%;

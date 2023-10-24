@@ -29,15 +29,13 @@ export default {
 h1 {
   text-transform: uppercase;
   font-size: 8vw;
-  line-height: 80%;
-  font-weight: 600;
+  line-height: 87%;
 }
 
 h2 {
   padding-top: 4vh;
   font-size: 2vw;
   width: 75vw;
-  font-weight: 600;
   display: inline;
 }
 </style>

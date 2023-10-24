@@ -6,6 +6,7 @@
         description="В этой главе мы разберем администрирование баз данных,<br/> SQL-инъекции и защиту от такого типа атак"
         svg-name="sql.svg"
         :buttons-list=buttonsList
+        :img-style="{ width: '60vh'}"
     ></ContentFirstPages>
   </div>
 </template>

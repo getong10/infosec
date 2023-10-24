@@ -1,6 +1,6 @@
 <template>
   <div>
-
+manageDB
   </div>
 </template>
 

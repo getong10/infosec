@@ -1,6 +1,6 @@
 <template>
   <div>
-wb page
+chatGT
   </div>
 </template>
 
