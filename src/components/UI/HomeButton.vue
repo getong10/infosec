@@ -27,6 +27,9 @@ export default {
   background-color: #FFF;
   box-shadow: 0 0 25px rgba(123, 123, 123, 0.30);
   cursor: pointer;
+  position: absolute;
+  right: 5vw;
+  top: 5vh;
 }
 .home-button svg {
   width: 5vh;

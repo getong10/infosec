@@ -26,4 +26,7 @@ body {
 .strong-text {
   font-weight: 800;
 }
+p:not(:last-child){
+  margin-bottom: 0.7vh;
+}
 </style>
