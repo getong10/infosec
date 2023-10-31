@@ -26,21 +26,40 @@
     <div class="vk__content">
       <p style="font-size: 1.3vw">ОБСУЖДЕНИЕ</p>
       <p style="font-size: 2vw">«Помогите сделать дз»</p>
-      <div class="vk__user">
-        <img
-          src="@/assets/img/pypka.png"
-          alt="VS"
-          style="border-radius: 50%; border: 0.1vw solid rgba(49, 54, 172, 1);"
-        />
-        <p style="margin-left: 1vw; color: rgba(49, 54, 172, 1);">Василий Пупкин</p>
+      <div
+        v-for="message in messages"
+        :key="message.id"
+      >
+        <div class="vk__user">
+          <img
+              src="@/assets/img/pypka.png"
+              alt="VS"
+              style="border-radius: 50%; border: 0.1vw solid rgba(49, 54, 172, 1);"
+          />
+          <p style="margin-left: 1vw; color: rgba(49, 54, 172, 1);" v-html="message.user"></p>
+        </div>
+        <p style="padding-top: 1vw; white-space: pre-line">{{ message.text}}</p>
       </div>
-      <p style="padding-top: 1vw;">Не могу решить уравнение по алгебре: <br /> cos(5x) = 1</p>
-      <textarea class="vk__comment" autocomplete="off" placeholder="Введите текст..." v-if="isAuth"/>
-      <textarea class="vk__comment" autocomplete="off" placeholder="Введите текст..." v-else disabled/>
+    </div>
+    <div style="margin-left: 4vw">
+      <textarea
+          class="vk__comment"
+          autocomplete="off"
+          placeholder="Введите текст..."
+          v-if="isAuth"
+          v-model="newMessage"
+      />
+      <textarea
+          class="vk__comment"
+          autocomplete="off"
+          placeholder="Введите текст..."
+          v-else disabled
+      />
       <button
           class="vk__btn"
           style="background: rgba(49, 54, 172, 1); color: #FFFFFF; margin-top: 2vw;"
           v-if="isAuth"
+          @click="submitMsg"
       >
         Отправить
       </button>
@@ -59,20 +78,36 @@
 
 <script>
 
-import AnonymousModal from "@/components/UI/AnonymousModal.vue";
 
 export default {
-  components: {AnonymousModal},
   data() {
     return {
+      messages: [
+        { id: Date.now(), user: 'Василий Пупкин', text: 'Не могу решить уравнение по алгебре: \ncos(5x) = 1'},
+      ],
       username: '',
-      isAuth: false
+      isAuth: false,
+      newMessage: '',
     }
   },
   mounted() {
       if (sessionStorage.getItem('username') !== null) {
         this.isAuth = true;
         this.username = sessionStorage.getItem('username');
+        this.messages = JSON.parse(sessionStorage.getItem('messages'))?? [];
+    }
+  },
+  methods: {
+    submitMsg() {
+      if (this.newMessage.trim() !== '') {
+        this.messages.push({
+          id: Date.now(),
+          user: this.username,
+          text: this.newMessage
+        });
+        sessionStorage.setItem('messages', JSON.stringify(this.messages));
+        this.newMessage = '';
+      }
     }
   }
 }
@@ -100,6 +135,8 @@ export default {
 
 .vk__content {
   padding: 3vw 0 0 4vw;
+  max-height: 50vh;
+  overflow-y: scroll;
 }
 
 img {
