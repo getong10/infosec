@@ -1,16 +1,16 @@
 <template>
-  <div class="manage-DB" v-if="status === 'registration'">
+  <div class="manage-DB" v-if="statusPage === 'registration'">
     <div class="buttons">
-      <type-button @click="status = 'roles'; this.role = 'Пользователь'">Войти как пользователь</type-button>
-      <type-button @click="status = 'roles'; this.role = 'Администратор'">Войти как администратор</type-button>
+      <type-button @click="statusPage = 'roles'; this.role = 'Пользователь'">Войти как пользователь</type-button>
+      <type-button @click="statusPage = 'roles'; this.role = 'Администратор'">Войти как администратор</type-button>
     </div>
     <home-button></home-button>
     <anonymous-modal text-message='<p>Роль администратора ты уже попробовал. Теперь можешь выбрать роль пользователя.</p>'></anonymous-modal>
   </div>
-  <div v-if="status === 'roles'" class="manage-DB">
+  <div v-if="statusPage === 'roles'" class="manage-DB">
     <div class="role-panel">
       <span><b class="bold">Роль:</b> {{ role }}</span>
-      <img src="@/assets/img/exit.svg" alt="exit" @click="status = 'registration'" class="svg-exit"/>
+      <img src="@/assets/img/exit.svg" alt="exit" @click="statusPage = 'registration'" class="svg-exit"/>
     </div>
     <div class="column-container">
       <div class="column-1">
@@ -38,16 +38,14 @@
 </template>
 
 <script>
-import TypeButton from "@/components/UI/TypeButton.vue";
-
 export default {
-  components: {TypeButton},
+  components: {},
   data() {
     return {
       role: 'Администратор',
       query: '',
       table: '',
-      status: 'roles'
+      statusPage: 'roles'
     }
   },
   methods: {
