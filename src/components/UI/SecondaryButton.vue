@@ -23,7 +23,7 @@ export default {
   position: absolute;
   left: 5vw;
   bottom: 5vh;
-  padding: 1vh 0.6vw;
+  padding: 2vh 1vw;
   cursor: pointer;
   border: none;
   display: flex;

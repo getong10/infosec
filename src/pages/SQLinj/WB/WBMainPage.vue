@@ -1,34 +1,45 @@
 <template>
-  <div class="full-page">
-    <div class="authentication" v-if="!isAuth">
-      <div class="header-wb">
-        <h1 @click="$router.push('/menu')" class="logo">CULTUREBERRIES</h1>
-        <div class="search-field">
-          <img src="@/assets/img/searchIcon.svg"/>
-          <input placeholder="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Поиск" class="wb-search" disabled/>
-        </div>
+  <div class="full-page" style="overflow: auto;">
+    <div class="header-wb">
+      <h1 @click="$router.push('/menu')" class="logo">CULTUREBERRIES</h1>
+      <div class="search-field">
+        <input placeholder="Поиск" class="wb-search"
+               :disabled="!isAuth"
+               :style="{ cursor: isAuth ? 'text' : 'not-allowed' }"/>
       </div>
+    </div>
+    <div class="authentication" v-if="!isAuth">
       <div class="form-auth">
         <h1 class="text-header">Вход</h1>
-        <input placeholder="Логин"/>
-        <input placeholder="Пароль"/>
-        <button @click="changeAuth">Войти</button>
+        <input placeholder="Логин" v-model="login"/>
+        <input placeholder="Пароль" v-model="password"/>
+        <button @click="changeAuth" class="wb-button">Войти</button>
       </div>
-      <anonymous-modal text-message="<p>Самая популярная уязвимость при входе это SQL-запрос на сравнение логина и хеша пароля в базе данных, выглядит он так: SELECT username, hashPass FROM users WHERE username='$uname' AND hashPass='$hashPass'</p>
-      <p>$uname и $hashPass – переменные, значение которых передаются из полей логин и пароль.</p>
-      <p>По привычке для администратора разработчики установили $uname как admin. Вставьте admin'-- в поле “Логин”, так вторая часть условия с паролем станет комментарием.</p>
-      <p>В таком случае проверка покажет истину, так как в запросе сложится следующее условие: WHERE username='admin'--' AND hashPass=''</p>"></anonymous-modal>
+      <anonymous-modal
+          text-message="<p>Самая популярная уязвимость при входе это SQL-запрос на сравнение логина и хеша пароля в базе данных, выглядит он так: SELECT username, hashPass FROM users WHERE username='$uname' AND hashPass='$hashPass'</p>
+           <p>$uname и $hashPass – переменные, значение которых передаются из полей логин и пароль.</p>
+           <p>По привычке для администратора разработчики установили $uname как admin. Вставьте admin'-- в поле “Логин”, так вторая часть условия с паролем станет комментарием.</p>
+           <p>В таком случае проверка покажет истину, так как в запросе сложится следующее условие: WHERE username='admin'--' AND hashPass=''</p>"></anonymous-modal>
     </div>
     <div class="pageShop" v-else>
-      <div class="header-wb">
-        <h1 @click="$router.push('/menu')" class="logo">CULTUREBERRIES</h1>
-        <div class="search-field">
-          <img src="@/assets/img/searchIcon.svg" v-if="!inputFocused"/>
-          <input placeholder="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Поиск" class="wb-search"
-                 @focus="handleInputFocus"
-                 @blur="handleInputBlur"/>
+      <div class="cards">
+        <div class="card-item"
+             v-for="product in products"
+             :key="product"
+        >
+          <img class="image-product"
+               :src="getPathImage(product.photo)"
+               :alt="'Картинка '+ product.name"/>
+          <span class="name-product">{{ product.name }}</span>
+          <span class="price-product">{{ product.price }}₽</span>
+          <button class="bucket-button">В корзину</button>
         </div>
       </div>
+      <anonymous-modal
+          text-message="<p>На сайте Интернет-магазина внутри поиска встроен SQL-запрос:<br/>SELECT * FROM Products <br/>WHERE name = “{$ЗначениеИзПоляПоиска}”;</p>
+           <p>Разработчики не настроили администрирование и забыли сделать проверку поля на ввод посторонних символов.</p>
+           <p>Поэтому в поле поиска можно вставить SQL-инъекцию:<br/>“; UPDATE Products SET Price = 1 <br/>WHERE name = “Наушники</p>
+           <p>Посмотрите как изменилась цена.</p>"></anonymous-modal>
     </div>
     <secondary-button @click='$router.push(`/menu`)' svg-prop="Home.svg">Вернуться на главную</secondary-button>
   </div>
@@ -39,18 +50,38 @@ export default {
   data() {
     return {
       isAuth: false,
-      inputFocused: false
+      inputFocused: false,
+      searchQuery: '',
+      login: '',
+      password: '',
+      products: [{
+        photo: 'Rectangle24.png',
+        name: 'Комбинезон',
+        price: 1000
+      },
+        {
+          photo: 'pods.png',
+          name: 'Наушники',
+          price: 9000
+        },
+        {
+          photo: 'sadsda',
+          name: 'Клавиатура',
+          price: 1400
+        },
+      ]
     }
   },
   methods: {
     changeAuth() {
       this.isAuth = !this.isAuth
     },
-    handleInputFocus() {
-      this.inputFocused = true;
-    },
-    handleInputBlur() {
-      this.inputFocused = false;
+    getPathImage(photo) {
+      try {
+        return require(`@/assets/img/product-img/${photo}`);
+      } catch (error) {
+        return require(`@/assets/img/product-img/nullPhoto.jpg`);
+      }
     },
   }
 }
@@ -61,6 +92,19 @@ export default {
   background-color: #EDEFEF;
   width: 100vw;
   height: 100vh;
+}
+
+.full-page::-webkit-scrollbar {
+  width: 0.5vw;
+}
+
+.full-page::-webkit-scrollbar-thumb {
+  background-color: #B535B8;
+  border-radius: 1vw;
+}
+
+.full-page::-webkit-scrollbar-track {
+  background-color: #FFF;
 }
 
 .header-wb {
@@ -81,7 +125,7 @@ export default {
   width: 60vw;
   height: 6vh;
   border: none;
-  padding-left: 1vw;
+  padding-left: 1.5vw;
 }
 
 .wb-search::placeholder {
@@ -92,10 +136,6 @@ export default {
   border: none;
   outline: none;
   color: #FFFFFF;
-}
-
-.wb-search:focus::placeholder {
-  color: #F183EF;
 }
 
 .search-field img {
@@ -120,7 +160,7 @@ export default {
   border: 1px solid #B535B8;
 }
 
-.form-auth button {
+.wb-button {
   border: none;
   border-radius: 1vw;
   background-color: #B535B8;
@@ -130,7 +170,7 @@ export default {
   height: 5.2vh;
 }
 
-.form-auth button:hover {
+.wb-button:hover {
   background-color: #c940cc;
 }
 
@@ -151,4 +191,53 @@ h1 {
   font-size: x-large;
   padding-bottom: 1vh;
 }
+
+.cards {
+  width: 80vw;
+  margin: 5vh auto auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 5vw;
+}
+
+.card-item {
+  width: calc(33.33% - 5vw);
+  border-radius: 2vw;
+  background-color: #FFFFFF;
+  padding: 1vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.price-product {
+  font-size: x-large;
+  padding: 1vh 0;
+}
+
+.image-product {
+  width: 100%;
+  height: 45vh;
+  object-fit: cover;
+  border-radius: calc(2vw - 1vh);
+  margin-bottom: 1vh;
+}
+
+.bucket-button {
+  border: none;
+  border-radius: 1vw;
+  background-color: #B535B8;
+  color: white;
+  width: 100%;
+  cursor: pointer;
+  height: 5.2vh;
+}
+
+.bucket-button:hover {
+  background-color: #c940cc;
+}
+
+
 </style>
