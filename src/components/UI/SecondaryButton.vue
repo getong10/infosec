@@ -1,6 +1,6 @@
 <template>
   <button class="secondary-button" >
-    <img v-if="svgProp" :src="require(`@/assets/img/${svgProp}`)" :alt="svgProp" class="image">
+    <img v-if="svgProp" :src="`/assets/img/${svgProp}`" :alt="svgProp" class="image">
     <slot></slot>
   </button>
 </template>

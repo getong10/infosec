@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <img class="back-button" src="@/assets/img/back.svg" @click="$router.push('/')"/>
+    <img class="back-button" src="/assets/img/back.svg" @click="$router.push('/')"/>
     <div class="grid-menu">
       <menu-button svgProp="xss.svg" link="xss">Межсайтовый <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;скриптинг</menu-button>
       <menu-button svgProp="sql.svg" link="sql">управление <br/>базами данных <br/>И sql инъекции</menu-button>
@@ -13,7 +13,10 @@
 </template>
 
 <script>
+import MenuButton from "@/components/UI/MenuButton.vue";
+
 export default {
+  components: {MenuButton}
 
 }
 </script>

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <img class="back-button" src="@/assets/img/back.svg" @click="$router.push('/passwordAttack')" alt="back-button"/>
+    <img class="back-button" src="/assets/img/back.svg" @click="$router.push('/passwordAttack')" alt="back-button"/>
     <home-button class="home-button"></home-button>
     <div class="container">
       <text-content title="ПЕРЕБОР<br/>
@@ -25,7 +25,7 @@
             @click="nullState">В начало</white-button>
       </div>
     </div>
-    <img class="background-img" :src="require(`@/assets/img/background-img/passw.svg`)" alt="*******(не мат)">
+    <img class="background-img" :src="`/assets/img/background-img/passw.svg`" alt="*******(не мат)">
   </div>
 </template>
 

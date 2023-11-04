@@ -1,6 +1,6 @@
 <template>
   <div>
-    <img class="back-button" src="@/assets/img/back.svg" @click="$router.push('/csrf')" alt="back-button"/>
+    <img class="back-button" src="/assets/img/back.svg" @click="$router.push('/csrf')" alt="back-button"/>
     <home-button class="home-button"></home-button>
     <div class="container">
       <text-content title="ПОДДЕЛКА<br/>
@@ -25,7 +25,7 @@
             @click="nullState">В начало</white-button>
       </div>
     </div>
-    <img class="background-img" :src="require(`@/assets/img/background-img/csrf.svg`)" alt="csrf">
+    <img class="background-img" :src="`/assets/img/background-img/csrf.svg`" alt="csrf">
   </div>
 </template>
 

@@ -6,16 +6,17 @@
                     :description=description></text-content>
       <buttons-content :text-buttons=buttonsList></buttons-content>
     </div>
-    <img :src="require(`@/assets/img/background-img/${svgName}`)" :alt="svgName" :style="imgStyle">
+    <img :src="`/assets/img/background-img/${svgName}`" :alt="svgName" :style="imgStyle">
   </div>
 </template>
 
 <script>
 import TextContent from "@/components/TextContent.vue";
 import ButtonsContent from "@/components/ButtonsContent.vue";
+import HomeButton from "@/components/UI/HomeButton.vue";
 
 export default {
-  components: {ButtonsContent, TextContent},
+  components: {HomeButton, ButtonsContent, TextContent},
   props: {
     title: {
       type: String,

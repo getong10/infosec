@@ -1,6 +1,6 @@
 <template>
   <div>
-    <img class="back-button" src="@/assets/img/back.svg" @click="$router.push('/csrf')" alt="back-button" style="z-index: 100"/>
+    <img class="back-button" src="/assets/img/back.svg" @click="$router.push('/csrf')" alt="back-button" style="z-index: 100"/>
     <home-button class="home-button"></home-button>
     <div class="container">
       <text-content title="ПОДДЕЛКА<br/>
@@ -11,7 +11,7 @@
 <p><span class='strong-text'>4.</span> Веб-сайт, думая, что запросы приходят от авторизованной жертвы, выполняет их.</p>"
      style="margin-top: 10vh;"></text-content>
     </div>
-    <img class="background-img" :src="require(`@/assets/img/background-img/csrf.svg`)" alt="csrf">
+    <img class="background-img" :src="`/assets/img/background-img/csrf.svg`" alt="csrf">
   </div>
 </template>
 

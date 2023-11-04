@@ -1,6 +1,6 @@
 <template>
   <div>
-    <img class="back-button" src="@/assets/img/back.svg" @click="$router.push('/clickjacking')" alt="back-button"/>
+    <img class="back-button" src="/assets/img/back.svg" @click="$router.push('/clickjacking')" alt="back-button"/>
     <home-button class="home-button"></home-button>
     <div class="container">
       <text-content title="КЛИКДЖЕКИНГ"
@@ -24,7 +24,7 @@
             @click="nullState">В начало</white-button>
       </div>
     </div>
-    <img class="background-img" :src="require(`@/assets/img/background-img/clickjacking.svg`)" alt="clickjacking">
+    <img class="background-img" :src="`/assets/img/background-img/clickjacking.svg`" alt="clickjacking">
   </div>
 </template>
 

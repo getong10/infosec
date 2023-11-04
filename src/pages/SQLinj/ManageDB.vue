@@ -10,7 +10,7 @@
   <div v-if="statusPage === 'roles'" class="manage-DB">
     <div class="role-panel">
       <span><b class="bold">Роль:</b> {{ role }}</span>
-      <img src="@/assets/img/exit.svg" alt="exit" @click="statusPage = 'registration'" class="svg-exit"/>
+      <img src="/assets/img/exit.svg" alt="exit" @click="statusPage = 'registration'" class="svg-exit"/>
     </div>
     <div class="column-container">
       <div class="column-1">
