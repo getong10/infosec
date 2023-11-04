@@ -32,9 +32,10 @@
 
 <script>
 import TextContent from "@/components/TextContent.vue";
+import HomeButton from "@/components/UI/HomeButton.vue";
 
 export default {
-  components: {TextContent},
+  components: {HomeButton, TextContent},
   data() {
     return {
       state: 0,

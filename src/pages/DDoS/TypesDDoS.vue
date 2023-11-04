@@ -23,9 +23,11 @@
 
 <script>
 import TextContent from "@/components/TextContent.vue";
+import HomeButton from "@/components/UI/HomeButton.vue";
+import TypeButton from "@/components/UI/TypeButton.vue";
 
 export default {
-  components: {TextContent},
+  components: {TypeButton, HomeButton, TextContent},
   data() {
     return {
       state: 'first',

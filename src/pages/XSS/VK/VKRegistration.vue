@@ -46,7 +46,10 @@
 </template>
 
 <script>
+import AnonymousModal from "@/components/UI/AnonymousModal.vue";
+
 export default {
+  components: {AnonymousModal},
   data() {
     return {
       username: '',

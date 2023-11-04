@@ -38,8 +38,12 @@
 </template>
 
 <script>
+import AnonymousModal from "@/components/UI/AnonymousModal.vue";
+import TypeButton from "@/components/UI/TypeButton.vue";
+import HomeButton from "@/components/UI/HomeButton.vue";
+
 export default {
-  components: {},
+  components: {HomeButton, TypeButton, AnonymousModal},
   data() {
     return {
       role: 'Администратор',
