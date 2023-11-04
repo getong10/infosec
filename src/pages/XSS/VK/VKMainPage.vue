@@ -67,12 +67,21 @@
     <anonymous-modal text-message="Для того чтобы скрипт встроился в страницу
                                   с общим доступом, необходимо отправить
                                   сообщение под “заражённым” именем"
-      v-if="isAuth"
+      v-if="isAuth && !nextStep"
     ></anonymous-modal>
     <anonymous-modal text-message="Сейчас Вы будете в роли хакера, который хочет заполучить данные аккаунта у Василия Пупкина.
                                    <br /> <br />Для начала перейдите на страницу регистрации."
-      v-else
+      v-else-if="!isAuth && !nextStep"
     ></anonymous-modal>
+    <div v-else-if="isAuth && nextStep">
+      <secondary-button
+          @click="changeUser"
+      >
+        Зайти на сайт от имени Василия Пупкина
+      </secondary-button>
+      <anonymous-modal text-message="Теперь, когда зарегистрированный пользователь зайдёт на эту страницу, к хакеру на сервер отправится его никнейм и токен (символьная последовательность, используемая для аутентификации и авторизации пользователя), с помощью которого возможно отправлять любые запросы на сайт от чужого имени."
+      ></anonymous-modal>
+    </div>
   </div>
 </template>
 
@@ -88,13 +97,25 @@ export default {
       username: '',
       isAuth: false,
       newMessage: '',
+      nextStep: false,
     }
   },
   mounted() {
-      if (sessionStorage.getItem('username') !== null) {
-        this.isAuth = true;
-        this.username = sessionStorage.getItem('username');
-        this.messages = JSON.parse(sessionStorage.getItem('messages'))?? [];
+    if (sessionStorage.getItem('messages') === null) {
+      sessionStorage.setItem('messages', JSON.stringify(this.messages));
+    }
+    if (sessionStorage.getItem('username') !== null) {
+      this.isAuth = true;
+      this.username = sessionStorage.getItem('username');
+      this.messages = JSON.parse(sessionStorage.getItem('messages'));
+      if (this.messages.length > 1) {
+        this.nextStep = true;
+      }
+    }
+  },
+  watch: {
+    username(newValue) {
+      this.username = newValue;
     }
   },
   methods: {
@@ -107,7 +128,17 @@ export default {
         });
         sessionStorage.setItem('messages', JSON.stringify(this.messages));
         this.newMessage = '';
+        this.nextStep = true;
       }
+    },
+    changeUser() {
+      sessionStorage.removeItem('username');
+      sessionStorage.removeItem('token');
+      const token = Math.random().toString(36);
+      sessionStorage.setItem('username', 'Василий Пупкин');
+      sessionStorage.setItem('token', token);
+      this.username = sessionStorage.getItem('username');
+      console.log(this.username, token);
     }
   }
 }
