@@ -3,7 +3,7 @@
     <div class="vk__header">
       <div class="vk__logo" @click="$router.push(`/xss`)">
         <img
-          src="@/assets/img/VK.svg"
+          src="/assets/img/VK.svg"
           alt="VS"
         />
         <p style="font-size: 2vw; margin-left: 0.7vw">ВСети</p>
@@ -32,7 +32,7 @@
       >
         <div class="vk__user">
           <img
-              src="@/assets/img/pypka.png"
+              src="/assets/img/pypka.png"
               alt="VS"
               style="border-radius: 50%; border: 0.1vw solid rgba(49, 54, 172, 1);"
           />
@@ -88,7 +88,10 @@
 <script>
 
 
+import AnonymousModal from "@/components/UI/AnonymousModal.vue";
+
 export default {
+  components: {AnonymousModal},
   data() {
     return {
       messages: [

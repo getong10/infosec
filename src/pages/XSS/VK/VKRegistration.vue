@@ -3,7 +3,7 @@
     <div class="vk__header">
       <div class="vk__logo" @click="$router.push(`/xss`)">
         <img
-            src="@/assets/img/VK.svg"
+            src="/assets/img/VK.svg"
             alt="VS"
         />
         <p style="font-size: 2vw; margin-left: 0.7vw">ВСети</p>
@@ -46,7 +46,10 @@
 </template>
 
 <script>
+import AnonymousModal from "@/components/UI/AnonymousModal.vue";
+
 export default {
+  components: {AnonymousModal},
   data() {
     return {
       username: '',

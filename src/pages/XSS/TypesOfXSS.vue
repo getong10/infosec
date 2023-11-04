@@ -1,6 +1,6 @@
 <template>
   <div>
-    <img class="back-button" src="@/assets/img/back.svg" @click="$router.push('/xss')" alt="back-button"/>
+    <img class="back-button" src="/assets/img/back.svg" @click="$router.push('/xss')" alt="back-button"/>
     <home-button class="home-button"></home-button>
     <div class="container">
       <text-content title="МЕЖСАЙТОВЫЙ<br/>&nbsp;&nbsp;&nbspСКРИПТИНГ"
@@ -16,15 +16,17 @@
         </type-button>
       </div>
     </div>
-    <img class="background-img" :src="require(`@/assets/img/background-img/xss.svg`)" alt="xss">
+    <img class="background-img" :src="`/assets/img/background-img/xss.svg`" alt="xss">
   </div>
 </template>
 
 <script>
 import TextContent from "@/components/TextContent.vue";
+import HomeButton from "@/components/UI/HomeButton.vue";
+import TypeButton from "@/components/UI/TypeButton.vue";
 
 export default {
-  components: {TextContent},
+  components: {TypeButton, HomeButton, TextContent},
   data() {
     return {
       state: 'first',

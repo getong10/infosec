@@ -2,7 +2,7 @@
   <div class="container">
     <div class="message typing-demo" v-if="isShowed" v-html="textMessage"></div>
     <img
-        src="@/assets/img/anon.svg" alt="Anon"
+        src="/assets/img/anon.svg" alt="Anon"
         @click="changeModalView"
     />
   </div>

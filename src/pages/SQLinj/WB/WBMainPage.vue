@@ -46,7 +46,10 @@
 </template>
 
 <script>
+import AnonymousModal from "@/components/UI/AnonymousModal.vue";
+
 export default {
+  components: {AnonymousModal},
   data() {
     return {
       isAuth: false,
@@ -78,9 +81,9 @@ export default {
     },
     getPathImage(photo) {
       try {
-        return require(`@/assets/img/product-img/${photo}`);
+        return `/assets/img/product-img/${photo}`;
       } catch (error) {
-        return require(`@/assets/img/product-img/nullPhoto.jpg`);
+        return `/assets/img/product-img/nullPhoto.jpg`;
       }
     },
   }

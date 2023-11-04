@@ -4,13 +4,12 @@
         class="menu-button"
         @click="$router.push(`/${link}`)">
       <slot></slot>
-      <img :src="require(`@/assets/img/${svgProp}`)" :alt="svgProp">
+      <img :src="`/assets/img/${svgProp}`" :alt="svgProp">
     </button>
   </div>
 </template>
 
 <script>
-
 export default {
   name: 'menu-button',
   props: {
@@ -22,7 +21,7 @@ export default {
       type: String,
       required: true
     }
-  }
+  },
 }
 </script>
 

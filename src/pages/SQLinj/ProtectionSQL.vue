@@ -1,6 +1,6 @@
 <template>
   <div>
-    <img class="back-button" src="@/assets/img/back.svg" @click="$router.push('/sql')" alt="back-button"/>
+    <img class="back-button" src="/assets/img/back.svg" @click="$router.push('/sql')" alt="back-button"/>
     <home-button class="home-button"></home-button>
     <div class="container">
       <text-content
@@ -26,15 +26,16 @@
             @click="nullState">В начало</white-button>
       </div>
     </div>
-    <img class="background-img" :src="require(`@/assets/img/background-img/sql.svg`)" alt="sql">
+    <img class="background-img" :src="`/assets/img/background-img/sql.svg`" alt="sql">
   </div>
 </template>
 
 <script>
 import TextContent from "@/components/TextContent.vue";
+import HomeButton from "@/components/UI/HomeButton.vue";
 
 export default {
-  components: {TextContent},
+  components: {HomeButton, TextContent},
   data() {
     return {
       state: 0,
