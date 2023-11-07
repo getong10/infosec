@@ -11,22 +11,50 @@ export default defineComponent({
   },
   methods: {
     onEnter: (e) => {
-      const commands = {
-        "print user": "User Name",
-        "hello": "Hi from terminal",
-      };
-
+      const regex = /^ping\s+(.*?)\s+-t$/;
 
       const terminalContent = document.querySelector(".terminal__content");
-      const inputContainer = document.querySelector(".terminal__input_container");
-      const paragraph = document.createElement("p");
-      paragraph.style.color = "white";
-      paragraph.innerText = commands[e.target.value] ?? "Команда введена неверно";
+      const inputContainers = document.querySelectorAll(".terminal__input_container");
+      const inputContainer = inputContainers[inputContainers.length - 1];
 
+      const inputClone = inputContainer.cloneNode(true);
+
+      let i = 0;
+
+      const isCorrectCommand = regex.test(e.target.value);
+
+      terminalContent.insertBefore(inputClone, inputContainer);
+      inputClone.querySelector("input").readOnly = true;
       e.target.value = "";
 
-      terminalContent.insertBefore(paragraph, inputContainer);
-      terminalContent.scrollTo({top: terminalContent.scrollHeight});
+      if (isCorrectCommand) {
+        inputContainer.style.display = "none";
+
+        const intervalId = setInterval(() => {
+          i++;
+          const paragraph = document.createElement("p");
+          paragraph.style.color = "white";
+          paragraph.innerText = "64 bytes from 142.250.74.110: icmp_seq=0 ttl=111 time=116.314 ms";
+
+          terminalContent.insertBefore(paragraph, inputContainer);
+
+          terminalContent.scrollTo({top: terminalContent.scrollHeight});
+
+          if (i === 50) {
+            clearInterval(intervalId);
+            inputContainer.style.display = "flex";
+            terminalContent.scrollTo({top: terminalContent.scrollHeight});
+          }
+        }, 100);
+      } else {
+        const paragraph = document.createElement("p");
+        paragraph.style.color = "white";
+        paragraph.innerText = "Команда введена неверно";
+
+        terminalContent.insertBefore(paragraph, inputContainer);
+
+        terminalContent.scrollTo({top: terminalContent.scrollHeight});
+      }
     }
   },
   components: {SecondaryButton, AnonymousModal}
