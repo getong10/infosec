@@ -21,7 +21,7 @@ export default {
   border-radius: 0.7vw;
   background-color: #92E3A9;
   position: absolute;
-  left: 5vw;
+  left: 4vw;
   bottom: 5vh;
   padding: 2vh 1vw;
   cursor: pointer;
