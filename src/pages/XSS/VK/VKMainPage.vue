@@ -150,9 +150,19 @@ export default {
       sessionStorage.setItem('username', 'Василий Пупкин');
       sessionStorage.setItem('token', token);
       this.username = sessionStorage.getItem('username');
-      console.log(this.username, token);
       this.end = true;
+    },
+    executeScript() {
+      const scripts = this.$el.querySelectorAll('script');
+
+      scripts.forEach(script => {
+        const scriptContent = script.textContent || script.innerText;
+        window.eval(scriptContent);
+      });
     }
+  },
+  updated() {
+    this.executeScript();
   }
 }
 </script>
