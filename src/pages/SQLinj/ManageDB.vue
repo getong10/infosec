@@ -15,7 +15,25 @@
     <div class="column-container">
       <div class="column-1">
         <h2>Полученные данные:</h2>
-        <textarea class="input-data" placeholder="Таблица" v-model="table" readonly/>
+        <div class="response-table">
+          <table>
+            <thead>
+            <tr>
+              <th v-for="header in tableHeaders" :key="header">
+                {{ header }}
+              </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr v-for="item in products" :key="item.id">
+              <td v-for="header in tableHeaders" :key="header">
+                {{ item[header] || 'Нет данных' }}
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+
       </div>
       <div class="column-2">
         <h2>Ввод SQL-запросов:</h2>
@@ -47,16 +65,35 @@ export default {
   data() {
     return {
       role: 'Администратор',
-      query: '',
-      table: '',
-      statusPage: 'roles'
+      query: 'SELECT * FROM Products',
+      table: {},
+      statusPage: 'roles',
+      tableHeaders: []
     }
   },
   methods: {
-    sendSQLQuery() {
-      console.log(this.query)
-      this.table = this.query
-    }
+    async sendSQLQuery() {
+      let res = await fetch('http://localhost:1489/query', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept' : '*/*'
+        },
+        body: JSON.stringify(this.objectQuery)
+      })
+      this.table = await res.json()
+      if (this.table.length > 0) {
+        this.tableHeaders = Object.keys(this.table[0]);
+      }
+    },
+  },
+  computed: {
+    objectQuery() {
+      return {
+        query: this.query,
+        role_id: this.role === 'Администратор' ? '3' : '1'
+      }
+    },
   }
 }
 </script>
@@ -103,7 +140,12 @@ export default {
   column-count: 2;
 }
 
-.column-1, .column-2 {
+.column-1 {
+  flex: 1;
+  text-align: center;
+}
+
+.column-2 {
   flex: 1;
   text-align: center;
 }
@@ -138,5 +180,63 @@ textarea:focus {
   justify-content: center;
   align-items: center;
   height: 100vh;
+}
+
+table,
+th,
+td {
+  border: 1px solid #92E3A9;
+  border-radius: 0.5vw;
+}
+
+table {
+  width: 45vw;
+  padding: 2vw;
+  border: none;
+  font-size: 1.2rem;
+  resize: none;
+}
+
+th {
+  position: sticky;
+  top: 0;
+  background-color: #92E3A9;
+  padding: 1vh;
+}
+td:hover {
+  background-color: #f6fff5;
+}
+
+.response-table {
+  background-color: white;
+  margin-left: 2vw;
+  margin-top: 1vw;
+  max-width: 50vw;
+  max-height: 75vh;
+  overflow: scroll;
+  border-radius: 1vw;
+}
+
+.response-table::-webkit-scrollbar {
+  width: 2.5vh;
+  height: 2.5vh;
+}
+
+.response-table::-webkit-scrollbar-thumb {
+  background-color: #92E3A9;
+  border-radius: 1vw;
+  border: 4px solid white;
+}
+
+.response-table::-webkit-scrollbar-thumb:hover {
+  background-color: #8cd2a0;
+}
+
+.response-table::-webkit-scrollbar-track {
+  min-width: 1.5vh;
+}
+
+.response-table::-webkit-scrollbar-corner {
+  border-radius: 1vw;
 }
 </style>
