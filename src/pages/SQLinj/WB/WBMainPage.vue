@@ -5,15 +5,17 @@
       <div class="search-field">
         <input placeholder="Поиск" class="wb-search"
                :disabled="!isAuth"
-               :style="{ cursor: isAuth ? 'text' : 'not-allowed' }"/>
+               :style="{ cursor: isAuth ? 'text' : 'not-allowed' }"
+               v-model="searchQuery"
+               @keyup.enter="searching"/>
       </div>
     </div>
     <div class="authentication" v-if="!isAuth">
       <div class="form-auth">
         <h1 class="text-header">Вход</h1>
         <input placeholder="Логин" v-model="login"/>
-        <input placeholder="Пароль" v-model="password"/>
-        <button @click="changeAuth" class="wb-button">Войти</button>
+        <input placeholder="Пароль" type="password" v-model="password"/>
+        <button @click="authIn" class="wb-button">Войти</button>
       </div>
       <anonymous-modal
           text-message="<p>Самая популярная уязвимость при входе это SQL-запрос на сравнение логина и хеша пароля в базе данных, выглядит он так: SELECT username, hashPass FROM users WHERE username='$uname' AND hashPass='$hashPass'</p>
@@ -24,12 +26,13 @@
     <div class="pageShop" v-else>
       <div class="cards">
         <div class="card-item"
-             v-for="product in products"
+             v-for="product in filteredProducts"
              :key="product"
         >
           <img class="image-product"
-               :src="getPathImage(product.photo)"
-               :alt="'Картинка '+ product.name"/>
+               :src="getPathImage(product.name)"
+               :alt="'Картинка '+ product.name"
+               @error="handleImageError"/>
           <span class="name-product">{{ product.name }}</span>
           <span class="price-product">{{ product.price }}₽</span>
           <button class="bucket-button">В корзину</button>
@@ -38,7 +41,7 @@
       <anonymous-modal
           text-message="<p>На сайте Интернет-магазина внутри поиска встроен SQL-запрос:<br/>SELECT * FROM Products <br/>WHERE name = “{$ЗначениеИзПоляПоиска}”;</p>
            <p>Разработчики не настроили администрирование и забыли сделать проверку поля на ввод посторонних символов.</p>
-           <p>Поэтому в поле поиска можно вставить SQL-инъекцию:<br/>“; UPDATE Products SET Price = 1 <br/>WHERE name = “Наушники</p>
+           <p>Поэтому в поле поиска можно вставить SQL-инъекцию и нажать Enter:<br/>“; UPDATE Products SET Price = 1 <br/>WHERE name = “Наушники</p>
            <p>Посмотрите как изменилась цена.</p>"></anonymous-modal>
     </div>
     <secondary-button @click='$router.push(`/menu`)' svg-prop="Home.svg">Вернуться на главную</secondary-button>
@@ -46,32 +49,86 @@
 </template>
 
 <script>
-import AnonymousModal from "@/components/UI/AnonymousModal.vue";
-
 export default {
-  components: {AnonymousModal},
+  components: {},
   data() {
     return {
-      isAuth: false,
+      isAuth: !false,
       inputFocused: false,
       searchQuery: '',
       login: '',
       password: '',
-      products: [{
-        photo: 'Rectangle24.png',
-        name: 'Комбинезон',
-        price: 1000
-      },
+      products: [
         {
-          photo: 'pods.png',
-          name: 'Наушники',
-          price: 9000
+          "id": 1,
+          "name": "Смартфон Samsung Galaxy S21",
+          "price": 373.51,
+          "description": null,
+          "code_product": 1
         },
         {
-          photo: 'sadsda',
-          name: 'Клавиатура',
-          price: 1400
+          "id": 2,
+          "name": "Ноутбук HP Envy x360",
+          "price": 723.56,
+          "description": null,
+          "code_product": 2
         },
+        {
+          "id": 3,
+          "name": "Телевизор LG OLED CX",
+          "price": 696.98,
+          "description": null,
+          "code_product": 3
+        },
+        {
+          "id": 4,
+          "name": "Наушники Sony WH-1000XM4",
+          "price": 915.11,
+          "description": null,
+          "code_product": 4
+        },
+        {
+          "id": 5,
+          "name": "Кофемашина DeLonghi Magnifica",
+          "price": 726.84,
+          "description": null,
+          "code_product": 5
+        },
+        {
+          "id": 6,
+          "name": "Холодильник Bosch KGN39XL30R",
+          "price": 553.72,
+          "description": null,
+          "code_product": 6
+        },
+        {
+          "id": 7,
+          "name": "Пылесос Dyson V11 Absolute",
+          "price": 210.40,
+          "description": null,
+          "code_product": 7
+        },
+        {
+          "id": 8,
+          "name": "Камера Canon EOS 5D Mark IV",
+          "price": 854.20,
+          "description": null,
+          "code_product": 8
+        },
+        {
+          "id": 9,
+          "name": "Графический планшет Wacom Intuos Pro",
+          "price": 786.18,
+          "description": null,
+          "code_product": 9
+        },
+        {
+          "id": 10,
+          "name": "Смарт-часы Apple Watch Series 7",
+          "price": 1.55,
+          "description": null,
+          "code_product": 10
+        }
       ]
     }
   },
@@ -80,12 +137,61 @@ export default {
       this.isAuth = !this.isAuth
     },
     getPathImage(photo) {
-      try {
-        return `/assets/img/product-img/${photo}`;
-      } catch (error) {
-        return `/assets/img/product-img/nullPhoto.jpg`;
+      return `/assets/img/product-img/${photo}.jpg`;
+    },
+    handleImageError(event) {
+      event.target.src = '/assets/img/product-img/nullPhoto.jpg';
+    },
+    async authIn() {
+      let res = await fetch('http://localhost:1489/fail/log', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': '*/*'
+        },
+        body: JSON.stringify(this.auth)
+      })
+      let response = await res.json()
+      if (response.role_id === 3) {
+        this.isAuth = true
+      }
+      await this.getAllProducts()
+    },
+      async getAllProducts() {
+      let res = await fetch(`http://localhost:1489/fail/main/all`, {
+        method: 'GET',
+        headers: {
+          'Accept': '*/*'
+        }
+      })
+      this.products = await res.json()
+    },
+    async searching() {
+      let res = await fetch(`http://localhost:1489/fail/main/search?name=${this.searchQuery}`, {
+        method: 'GET',
+        headers: {
+          'Accept': '*/*'
+        }
+      })
+      this.products = await res.json()
+    },
+  },
+  computed: {
+    auth() {
+      return {
+        username: this.login,
+        password: this.password
       }
     },
+    filteredProducts() {
+      if (this.searchQuery === "") {
+        return this.products
+      } else {
+        return this.products.filter(item => {
+            return item.name.toLowerCase().includes(this.searchQuery.toLowerCase())}
+        )
+      }
+    }
   }
 }
 </script>
@@ -125,6 +231,7 @@ export default {
 .wb-search {
   border-radius: 2vw;
   background: rgba(255, 255, 255, 0.50);
+  color: white;
   width: 60vw;
   height: 6vh;
   border: none;
@@ -184,6 +291,7 @@ export default {
 
 .logo {
   cursor: pointer;
+  font-size: 2.1vw;
 }
 
 h1 {
@@ -201,7 +309,6 @@ h1 {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  gap: 5vw;
 }
 
 .card-item {
@@ -213,6 +320,7 @@ h1 {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-bottom: 5vw;
 }
 
 .price-product {
