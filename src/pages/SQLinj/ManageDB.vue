@@ -65,8 +65,8 @@ export default {
   data() {
     return {
       role: 'Администратор',
-      query: 'SELECT * FROM Products',
-      table: {},
+      query: '',
+      table: [],
       statusPage: 'roles',
       tableHeaders: []
     }
@@ -81,7 +81,8 @@ export default {
         },
         body: JSON.stringify(this.objectQuery)
       })
-      this.table = await res.json()
+      let response = await res.json()
+      this.table = response.response
       if (this.table.length > 0) {
         this.tableHeaders = Object.keys(this.table[0]);
       }
