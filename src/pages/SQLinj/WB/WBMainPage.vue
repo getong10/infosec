@@ -53,89 +53,15 @@ export default {
   components: {},
   data() {
     return {
-      isAuth: !false,
+      isAuth: false,
       inputFocused: false,
       searchQuery: '',
       login: '',
       password: '',
-      products: [
-        {
-          "id": 1,
-          "name": "Смартфон Samsung Galaxy S21",
-          "price": 373.51,
-          "description": null,
-          "code_product": 1
-        },
-        {
-          "id": 2,
-          "name": "Ноутбук HP Envy x360",
-          "price": 723.56,
-          "description": null,
-          "code_product": 2
-        },
-        {
-          "id": 3,
-          "name": "Телевизор LG OLED CX",
-          "price": 696.98,
-          "description": null,
-          "code_product": 3
-        },
-        {
-          "id": 4,
-          "name": "Наушники Sony WH-1000XM4",
-          "price": 915.11,
-          "description": null,
-          "code_product": 4
-        },
-        {
-          "id": 5,
-          "name": "Кофемашина DeLonghi Magnifica",
-          "price": 726.84,
-          "description": null,
-          "code_product": 5
-        },
-        {
-          "id": 6,
-          "name": "Холодильник Bosch KGN39XL30R",
-          "price": 553.72,
-          "description": null,
-          "code_product": 6
-        },
-        {
-          "id": 7,
-          "name": "Пылесос Dyson V11 Absolute",
-          "price": 210.40,
-          "description": null,
-          "code_product": 7
-        },
-        {
-          "id": 8,
-          "name": "Камера Canon EOS 5D Mark IV",
-          "price": 854.20,
-          "description": null,
-          "code_product": 8
-        },
-        {
-          "id": 9,
-          "name": "Графический планшет Wacom Intuos Pro",
-          "price": 786.18,
-          "description": null,
-          "code_product": 9
-        },
-        {
-          "id": 10,
-          "name": "Смарт-часы Apple Watch Series 7",
-          "price": 1.55,
-          "description": null,
-          "code_product": 10
-        }
-      ]
+      products: []
     }
   },
   methods: {
-    changeAuth() {
-      this.isAuth = !this.isAuth
-    },
     getPathImage(photo) {
       return `/assets/img/product-img/${photo}.jpg`;
     },
@@ -152,19 +78,21 @@ export default {
         body: JSON.stringify(this.auth)
       })
       let response = await res.json()
-      if (response.role_id === 3) {
+      if (response.role_id === 1 || response.role_id === 2 || response.role_id === 3) {
         this.isAuth = true
       }
       await this.getAllProducts()
     },
-      async getAllProducts() {
+    async getAllProducts() {
       let res = await fetch(`http://localhost:1489/fail/main/all`, {
         method: 'GET',
         headers: {
           'Accept': '*/*'
         }
       })
-      this.products = await res.json()
+      console.log(res.json())
+      let products = await res.json()
+      this.products = products.response
     },
     async searching() {
       let res = await fetch(`http://localhost:1489/fail/main/search?name=${this.searchQuery}`, {
@@ -188,7 +116,8 @@ export default {
         return this.products
       } else {
         return this.products.filter(item => {
-            return item.name.toLowerCase().includes(this.searchQuery.toLowerCase())}
+              return item.name.toLowerCase().includes(this.searchQuery.toLowerCase())
+            }
         )
       }
     }
