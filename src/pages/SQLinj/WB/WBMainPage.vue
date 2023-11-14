@@ -62,6 +62,9 @@ export default {
     }
   },
   methods: {
+    changeAuth() {
+      this.isAuth = !this.isAuth
+    },
     getPathImage(photo) {
       return `/assets/img/product-img/${photo}.jpg`;
     },
