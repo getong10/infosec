@@ -7,6 +7,7 @@
                :disabled="!isAuth"
                :style="{ cursor: isAuth ? 'text' : 'not-allowed' }"
                v-model="searchQuery"
+               @click="getAllProducts"
                @keyup.enter="searching"/>
       </div>
     </div>
@@ -44,7 +45,7 @@
            <p>Поэтому в поле поиска можно вставить SQL-инъекцию и нажать Enter:<br/>“; UPDATE Products SET Price = 1 <br/>WHERE name = “Наушники</p>
            <p>Посмотрите как изменилась цена.</p>"></anonymous-modal>
     </div>
-    <secondary-button @click='$router.push(`/menu`)' svg-prop="Home.svg">Вернуться на главную</secondary-button>
+    <secondary-button @click='$router.push(`/sql`)' svg-prop="Home.svg">Вернуться на главную</secondary-button>
   </div>
 </template>
 
@@ -80,20 +81,25 @@ export default {
         },
         body: JSON.stringify(this.auth)
       })
+      console.log(res)
       let response = await res.json()
       if (response.role_id === 1 || response.role_id === 2 || response.role_id === 3) {
         this.isAuth = true
       }
-      await this.getAllProducts()
+      //await this.getAllProducts()
     },
     async getAllProducts() {
       let res = await fetch(`http://localhost:1489/fail/main/all`, {
         method: 'GET',
         headers: {
           'Accept': '*/*'
-        }
+        },
+        credentials: 'include'
       })
-      console.log(res.json())
+          .then(response => {
+            const setCookieHeader = response.headers.get('Set-Cookie')
+            console.log(setCookieHeader)
+          })
       let products = await res.json()
       this.products = products.response
     },
