@@ -3,21 +3,21 @@
     <div class="vk__header">
       <div class="vk__logo" @click="$router.push(`/xss`)">
         <img
-          src="/assets/img/VK.svg"
-          alt="VS"
+            src="/assets/img/VK.svg"
+            alt="VS"
         />
         <p style="font-size: 2vw; margin-left: 0.7vw">ВСети</p>
       </div>
       <button
-        class="vk__btn"
-        v-if="isAuth"
+          class="vk__btn"
+          v-if="isAuth"
       >
         {{ username.substring(0, 10) + '...' }}
       </button>
       <button
-        v-else
-        class="vk__btn"
-        @click="$router.push(`/vsregictration`)"
+          v-else
+          class="vk__btn"
+          @click="$router.push(`/vsregictration`)"
       >
         Регистрация
       </button>
@@ -27,8 +27,8 @@
       <p style="font-size: 1.3vw">ОБСУЖДЕНИЕ</p>
       <p style="font-size: 2vw">«Помогите сделать дз»</p>
       <div
-        v-for="message in messages"
-        :key="message.id"
+          v-for="message in messages"
+          :key="message.id"
       >
         <div class="vk__user">
           <img
@@ -38,7 +38,7 @@
           />
           <p style="margin-left: 1vw; color: rgba(49, 54, 172, 1);" v-html="message.user"></p>
         </div>
-        <p style="padding-top: 1vw; white-space: pre-line">{{ message.text}}</p>
+        <p style="padding-top: 1vw; white-space: pre-line">{{ message.text }}</p>
       </div>
     </div>
     <div style="margin-left: 4vw">
@@ -67,11 +67,11 @@
     <anonymous-modal text-message="Для того чтобы скрипт встроился в страницу
                                   с общим доступом, необходимо отправить
                                   сообщение под “заражённым” именем"
-      v-if="isAuth && !nextStep && !end"
+                     v-if="isAuth && !nextStep && !end"
     ></anonymous-modal>
     <anonymous-modal text-message="Сейчас Вы будете в роли хакера, который хочет заполучить данные аккаунта у Василия Пупкина.
                                    <br /> <br />Для начала перейдите на страницу регистрации."
-      v-else-if="!isAuth && !nextStep && !end"
+                     v-else-if="!isAuth && !nextStep && !end"
     ></anonymous-modal>
     <div v-else-if="isAuth && nextStep && !end">
       <secondary-button
@@ -79,12 +79,14 @@
       >
         Зайти на сайт от имени Василия Пупкина
       </secondary-button>
-      <anonymous-modal text-message="Теперь, когда зарегистрированный пользователь зайдёт на эту страницу, к хакеру на сервер отправится его никнейм и токен (символьная последовательность, используемая для аутентификации и авторизации пользователя), с помощью которого возможно отправлять любые запросы на сайт от чужого имени."
+      <anonymous-modal
+          text-message="Теперь, когда зарегистрированный пользователь зайдёт на эту страницу, к хакеру на сервер отправится его никнейм и токен (символьная последовательность, используемая для аутентификации и авторизации пользователя), с помощью которого возможно отправлять любые запросы на сайт от чужого имени."
       ></anonymous-modal>
     </div>
     <div v-else-if="end">
       <secondary-button @click='$router.push(`/menu`)' svg-prop="Home.svg">Вернуться на главную</secondary-button>
-      <anonymous-modal text-message="Чтобы узнать какие данные отправились на сервер хакера, можете посмотреть в консоль разработчика (нажми правой кнопкой мыши, выбери пункт меню “Исследовать элемент”, открой вкладку Console)"
+      <anonymous-modal
+          text-message="Чтобы узнать какие данные отправились на сервер хакера, можете посмотреть в консоль разработчика (нажми правой кнопкой мыши, выбери пункт меню “Исследовать элемент”, открой вкладку Console)"
       ></anonymous-modal>
     </div>
   </div>
@@ -100,7 +102,7 @@ export default {
   data() {
     return {
       messages: [
-        { id: Date.now(), user: 'Василий Пупкин', text: 'Не могу решить уравнение по алгебре: \ncos(5x) = 1'},
+        {id: Date.now(), user: 'Василий Пупкин', text: 'Не могу решить уравнение по алгебре: \ncos(5x) = 1'},
       ],
       username: '',
       isAuth: false,
@@ -141,6 +143,9 @@ export default {
         sessionStorage.setItem('messages', JSON.stringify(this.messages));
         this.newMessage = '';
         this.nextStep = true;
+
+        const contentContainer = document.querySelector(".vk__content");
+        contentContainer.scrollTo({top: contentContainer.scrollHeight});
       }
     },
     changeUser() {
