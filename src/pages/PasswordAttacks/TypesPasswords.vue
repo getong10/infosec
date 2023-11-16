@@ -41,45 +41,57 @@
 
     <div class="content" v-if="content === 'third'">
       <h1>Отслеживание нажатий клавиш <span>(Keylogger)</span></h1>
-      <p>Кейлоггер - это программа или устройство (между клавиатурой и компьютером), которое записывает <span>события нажатия клавиш на клавиатуре.</span></p>
-      <p>Кейлоггеры обычно работает <span>в фоновом режиме</span> и записывает нажатия клавиш в специальный журнал, который может быть просмотрен и анализирован злоумышленником.</p>
-      <h2 style="text-align: center">Общая схема работы кейлоггера</h2>
-      <img src="/assets/img/schemaKeylogger.png" class="schema"/>
-      <anonymous-modal text-message="<p>Типичный способ перебора паролей – это полный перебор всех возможных комбинаций.</p>
-      <p>Требует много времени и ресурсов.</p>"></anonymous-modal>
+      <div class="content">
+        <h2 style="text-align: center">Общая схема работы кейлоггера</h2>
+        <img src="/assets/img/schemaKeylogger.png" class="schema"/>
+      </div>
+      <anonymous-modal
+          text-message="<p>На Вашем устройстве может быть установлено вредоносное ПО, которое позволяет отслеживать Ваши действия и отправляет данные о нажатиях на конкретные клавиши злоумышленнику, по которым он сможет узнать Ваш пароль.</p>"></anonymous-modal>
       <secondary-button @click="content = 'fourth'" style="position: absolute; left: 21vw; bottom: 5vh">Другой метод ⟶
       </secondary-button>
     </div>
 
     <div class="content" v-if="content === 'fourth'">
-      <h1>Анимация перебора значений по времени<br/><span>(Timing Attack)</span></h1>
-      <p>Допустим, есть 4-значный пароль: <span>abcd</span></p>
-      <p>Если в пароле возможен следующий список символов:<br/> <span>0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ</span>
-      </p>
-      <p>При полном переборе надо проверить все возможные комбинации символов от <span>0000 до ZZZZ.</span></p>
-      <p>В худшем случае количество всех возможных комбинаций: 62*62*62*62 = <span>14 776 336</span>, так как длина
-        пароля 4 символа, а количество букв алфавита 62.</p>
-      <anonymous-modal text-message="<p>Типичный способ перебора паролей – это полный перебор всех возможных комбинаций.</p>
-      <p>Требует много времени и ресурсов.</p>"></anonymous-modal>
-      <secondary-button @click="animation = 'stop'" v-if="animation === 'start'" svg-prop="PlayArrow.svg"
-                        style="position: absolute; left: 21vw; bottom: 5vh ">Запустить анимацию
-      </secondary-button>
-      <secondary-button @click="animation = 'start'" v-if="animation === 'stop'" svg-prop="Stop.svg"
-                        style="position: absolute; left: 21vw; bottom: 5vh ">Остановить анимацию
+      <h1>Подбор паролей по времени инетраций<br/><span>(Timing Attack)</span></h1>
+      <div class="content">
+        <img ref="myImage" alt="Анимация перебора значений" src="public/assets/img/timingAttack.gif"
+             class="animation">
+      </div>
+      <anonymous-modal text-message="<p>Подбор хеша пароля по времени отклика чаще всего возможен, когда хеши проверяется следующим способом:</p>
+      <p>if (hashPass === correctHashPassword)</p>
+      <p>Так как опертор сравнения “===” работает поочерёдным перебором символов пока сравниваемая пара символов идентична, и неожиданно останавливается, если один из символов в паре различается.</p>
+      <p>Эти остановки составляют несколько микросекунды, но даже столь малую величину времени возможно отследить программными средствами.</p>"></anonymous-modal>
+      <secondary-button @click="reloadPage" svg-prop="update.svg"
+                        style="position: absolute; left: 21vw; bottom: 5vh ">
+        Обновить анимацию
       </secondary-button>
     </div>
-    <secondary-button @click='$router.push(`/passwordAttack`)' svg-prop="Home.svg">Вернуться на главную
+    <secondary-button @click='backToMain' svg-prop="Home.svg">
+      Вернуться на главную
     </secondary-button>
   </div>
 </template>
 
 <script>
-
 export default {
   data() {
     return {
       content: "first",
-      animation: "start"
+    }
+  },
+  mounted() {
+    this.content = sessionStorage["content"] || "first"
+  },
+  methods: {
+    reloadPage() {
+      sessionStorage.setItem("content", this.content)
+      location.reload();
+    },
+    backToMain() {
+      if (sessionStorage) {
+        sessionStorage.clear();
+      }
+      this.$router.push(`/passwordAttack`)
     }
   }
 }
@@ -130,5 +142,13 @@ li {
 
 .schema {
   width: 90vw
+}
+
+.animation {
+  width: 70vw;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 </style>

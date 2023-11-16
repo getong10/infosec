@@ -37,31 +37,32 @@
       </div>
       <div class="column-2">
         <h2>Ввод SQL-запросов:</h2>
-        <textarea autocomplete="off" placeholder="SQL-запрос" class="input-sql" v-model="query"/>
-        <type-button @click="sendSQLQuery">Отправить запрос</type-button>
+        <div class="text-input">
+          <textarea autocomplete="off" placeholder="SQL-запрос (Отправка запроса Alt + Enter)" class="input-sql" v-model="query" @keyup.alt.enter="sendSQLQuery" title="Отправка запроса Alt + Enter"/>
+          <div class="sendButton" @click="sendSQLQuery">
+            <img alt="Send" src="public/assets/img/PlayArrow.svg" />
+          </div>
+        </div>
       </div>
     </div>
     <home-button></home-button>
-    <anonymous-modal v-if="role === 'Администратор'" text-message='<p>Привет! Я – анонимус.</p> <p>Сейчас Вы являетесь администратором базы данных (БД). Админ имеет право изменять, получать, обновлять и удалять все данные из БД.</p>
+    <anonymous-modal v-if="role === 'Администратор'" text-message='<p>Сейчас Вы являетесь администратором базы данных (БД). Админ имеет право изменять, получать, обновлять и удалять все данные из БД.</p>
 <p>Попробуйте получить данные из таблицы Товары с помощью запроса:<br/> SELECT * FROM Products;</p>
-<p>Также Вы можете попробовать обновить поле таблицы Товары с помощью SQL-запроса: UPDATE Products SET Price=5000 WHERE id = 3;<br/>SELECT * FROM Products;</p>
+<p>Также Вы можете попробовать обновить поле таблицы Товары с помощью SQL-запроса: UPDATE Products SET Price=5000 WHERE id = 3;<br/>Затем выполните SELECT * FROM Products;</p>
 <p>Посмотрите как изменилось значение Price в третьей записи.</p>
 <p>Нажмите на иконку выхода из роли Администратора.</p>'></anonymous-modal>
-    <anonymous-modal v-if="role === 'Пользователь'" text-message='<p>Вы - обычный пользователь, который имеет право только на чтение данных из БД.</p>
-<p>Попробуйте получить данные из таблицы Товары с помощью запроса: SELECT * FROM Products;</p>
-<p>А теперь попробуйте изменить данные: UPDATE Products SET Price=8000 WHERE id=3; SELECT * FROM Products;</p>
+    <anonymous-modal v-if="role === 'Пользователь'" text-message='<p>Вы - обычный пользователь, который имеет право ТОЛЬКО на чтение данных из БД.</p>
+<p>Получите данные из таблицы Товары: SELECT * FROM Products;</p>
+<p>А теперь попробуйте изменить данные: UPDATE Products SET Price=8000 WHERE id=3;<br/>И посмотрите на результат<br/>SELECT * FROM Products;</p>
 <p>Как видите, ничего не изменилось, т.к. у Вас недостаточно прав для изменения данных.</p>
 <p>На этом всё. Администрирование баз данных - это один из аспектов информационной безопасности баз данных.</p>'></anonymous-modal>
   </div>
 </template>
 
 <script>
-import AnonymousModal from "@/components/UI/AnonymousModal.vue";
-import TypeButton from "@/components/UI/TypeButton.vue";
-import HomeButton from "@/components/UI/HomeButton.vue";
+import {BACKEND_URL} from "@/constants";
 
 export default {
-  components: {HomeButton, TypeButton, AnonymousModal},
   data() {
     return {
       role: 'Администратор',
@@ -73,18 +74,28 @@ export default {
   },
   methods: {
     async sendSQLQuery() {
-      let res = await fetch('http://localhost:1489/query', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept' : '*/*'
-        },
-        body: JSON.stringify(this.objectQuery)
-      })
-      let response = await res.json()
-      this.table = response.response
-      if (this.table.length > 0) {
-        this.tableHeaders = Object.keys(this.table[0]);
+      try {
+        let res = await fetch(`${BACKEND_URL}/query`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept' : '*/*'
+          },
+          body: JSON.stringify(this.objectQuery)
+        })
+        if (res.ok) {
+          let response = await res.json()
+          console.log(res)
+          console.log(response)
+          this.table = response.response
+          if (this.table.length > 0) {
+            this.tableHeaders = Object.keys(this.table[0]);
+          }
+        } else {
+          console.log("Ошибка запроса", res.status)
+        }
+      } catch (e) {
+        alert(e)
       }
     },
   },
@@ -151,20 +162,20 @@ export default {
   text-align: center;
 }
 
-textarea {
+.text-input {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
   margin-top: 2vh;
-  width: 45vw;
+}
+
+textarea {
+  width: 40vw;
   padding: 1vw;
   border: none;
   border-radius: 1vw;
   font-size: 1.2rem;
   resize: none;
-}
-
-.input-data {
-  height: 70vh;
-  font-size: 1rem;
-  cursor: default;
 }
 
 textarea:focus {

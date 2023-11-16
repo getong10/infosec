@@ -1,13 +1,12 @@
 <template>
   <div class="full-page" style="overflow: auto;">
     <div class="header-wb">
-      <h1 @click="$router.push('/menu')" class="logo">CULTUREBERRIES</h1>
+      <h1 @click="clearSessionStorageAndNavigate" class="logo">CULTUREBERRIES</h1>
       <div class="search-field">
         <input placeholder="Поиск" class="wb-search"
                :disabled="!isAuth"
                :style="{ cursor: isAuth ? 'text' : 'not-allowed' }"
                v-model="searchQuery"
-               @click="getAllProducts"
                @keyup.enter="searching"/>
       </div>
     </div>
@@ -40,21 +39,25 @@
         </div>
       </div>
       <anonymous-modal
-          text-message="<p>На сайте Интернет-магазина внутри поиска встроен SQL-запрос:<br/>SELECT * FROM Products <br/>WHERE name = “{$ЗначениеИзПоляПоиска}”;</p>
+          text-message="<p>На сайте Интернет-магазина внутри поиска встроен SQL-запрос:<br/>SELECT * FROM Products <br/>WHERE name = '{$ЗначениеИзПоляПоиска}';</p>
            <p>Разработчики не настроили администрирование и забыли сделать проверку поля на ввод посторонних символов.</p>
-           <p>Поэтому в поле поиска можно вставить SQL-инъекцию и нажать Enter:<br/>“; UPDATE Products SET Price = 1 <br/>WHERE name = “Наушники</p>
-           <p>Посмотрите как изменилась цена.</p>"></anonymous-modal>
+           <p>Поэтому в поле поиска можно вставить SQL-инъекцию и нажать Enter:<br/> ';  UPDATE products </br>SET price=1</br>  WHERE name='Смартфон Samsung Galaxy S21' ; SELECT'</p>
+           <p>Обновите страницу и посмотрите как изменилась цена.</p>
+           <p>Ещё один из вариантов – удалить таблицу Продукты:<br/>'; TRUNCATE TABLE products CASCADE; SELECT '</p>
+      "></anonymous-modal>
     </div>
     <secondary-button @click='$router.push(`/sql`)' svg-prop="Home.svg">Вернуться на главную</secondary-button>
   </div>
 </template>
 
 <script>
+import {BACKEND_URL} from "@/constants";
+
 export default {
   components: {},
   data() {
     return {
-      isAuth: false,
+      isAuth: sessionStorage.getItem('authToken') !== null,
       inputFocused: false,
       searchQuery: '',
       login: '',
@@ -62,55 +65,91 @@ export default {
       products: []
     }
   },
+  mounted() {
+    if (this.isAuth) {
+      this.getAllProducts();
+    }
+  },
   methods: {
-    changeAuth() {
-      this.isAuth = !this.isAuth
-    },
     getPathImage(photo) {
       return `/assets/img/product-img/${photo}.jpg`;
     },
     handleImageError(event) {
       event.target.src = '/assets/img/product-img/nullPhoto.jpg';
     },
-    async authIn() {
-      let res = await fetch('http://localhost:1489/fail/log', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': '*/*'
-        },
-        body: JSON.stringify(this.auth)
-      })
-      console.log(res)
-      let response = await res.json()
-      if (response.role_id === 1 || response.role_id === 2 || response.role_id === 3) {
-        this.isAuth = true
+    clearSessionStorageAndNavigate() {
+      if (sessionStorage) {
+        sessionStorage.clear();
       }
-      //await this.getAllProducts()
+      this.$router.push('/menu');
+    },
+    async authIn() {
+      try {
+        let response = await fetch(`${BACKEND_URL}/fail/log`, {
+          method: 'POST',
+          credentials: 'include',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': '*/*'
+          },
+          body: JSON.stringify(this.auth)
+        });
+        if (response.ok) {
+          this.isAuth = true;
+          await this.getAllProducts();
+          const authToken = Math.random().toString(36).substring(2) + Date.now().toString(36);
+          sessionStorage.setItem('authToken', authToken);
+        } else {
+          alert("Неверный логин или пароль. Статус ошибки: " + response.status);
+        }
+      } catch (error) {
+        console.error("Ошибка во время выполнения запроса:", error);
+      }
     },
     async getAllProducts() {
-      let res = await fetch(`http://localhost:1489/fail/main/all`, {
-        method: 'GET',
-        headers: {
-          'Accept': '*/*'
-        },
-        credentials: 'include'
-      })
-          .then(response => {
-            const setCookieHeader = response.headers.get('Set-Cookie')
-            console.log(setCookieHeader)
-          })
-      let products = await res.json()
-      this.products = products.response
+      try {
+        let res = await fetch(`${BACKEND_URL}/fail/main/all`, {
+          method: 'GET',
+          credentials: 'include',
+          headers: {
+            'Accept': '*/*',
+          }
+        })
+        if (res.ok) {
+          let products = await res.json()
+          this.products = products
+        } else {
+          alert("Ошибка при выполнении запроса получения списка продуктов");
+        }
+      } catch (e) {
+        console.error(e)
+      }
     },
     async searching() {
-      let res = await fetch(`http://localhost:1489/fail/main/search?name=${this.searchQuery}`, {
-        method: 'GET',
-        headers: {
-          'Accept': '*/*'
+      try {
+        let res = await fetch(`http://localhost:1489/fail/main/search?name=${this.searchQuery}`, {
+          method: 'GET',
+          credentials: 'include',
+          headers: {
+            'Accept': '*/*'
+          }
+        })
+        if (res.ok) {
+          this.products = await this.filteredProducts()
+        } else {
+          alert("Ошибка при выполнении запроса поиска в базе данных");
         }
-      })
-      this.products = await res.json()
+      } catch (e) {
+        console.error(e)
+      }
+    },
+    async reboot() {
+      try {
+        let res = await fetch(`${BACKEND_URL}/fail/main/reboot`)
+        console.log("Reboot:", res)
+      } catch (e) {
+        console.error(e)
+      }
     },
   },
   computed: {
