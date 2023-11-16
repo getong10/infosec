@@ -185,6 +185,15 @@ textarea:focus {
 .type-button {
   margin-top: 2vh;
 }
+.sendButton {
+  background-color: #92E3A9;
+  border-radius: 1vw;
+  width: 5vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
 
 .buttons {
   display: flex;
