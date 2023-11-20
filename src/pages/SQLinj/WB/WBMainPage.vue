@@ -8,6 +8,9 @@
                :style="{ cursor: isAuth ? 'text' : 'not-allowed' }"
                v-model="searchQuery"
                @keyup.enter="searching"/>
+        <button v-if="isAuth" class="searching-button" @click="searching">
+          <img src="public/assets/img/searchIcon.svg">
+        </button>
       </div>
     </div>
     <div class="authentication" v-if="!isAuth">
@@ -18,15 +21,18 @@
         <button @click="authIn" class="wb-button">Войти</button>
       </div>
       <anonymous-modal
-          text-message="<p>Самая популярная уязвимость при входе это SQL-запрос на сравнение логина и хеша пароля в базе данных, выглядит он так: SELECT username, hashPass FROM users WHERE username='$uname' AND hashPass='$hashPass'</p>
-           <p>$uname и $hashPass – переменные, значение которых передаются из полей логин и пароль.</p>
-           <p>По привычке для администратора разработчики установили $uname как admin. Вставьте admin'-- в поле “Логин”, так вторая часть условия с паролем станет комментарием.</p>
-           <p>В таком случае проверка покажет истину, так как в запросе сложится следующее условие: WHERE username='admin'--' AND hashPass=''</p>"></anonymous-modal>
+          text-message="<p>Самая популярная уязвимость при входе это SQL-запрос на сравнение логина и пароля в базе данных, выглядит он так: SELECT id, name, last_name, password, login, role_id</br>
+          FROM users<br/>
+          WHERE login = '$uname' AND password_noencoder = '$passw' AND deleted_at is null;
+          </p>
+           <p>$uname и $passw – переменные, значение которых передаются из полей логин и пароль.</p>
+           <p>Вставьте ''' or ''''''=''' в поле “Логин” и ''' or 1=1 limit 1 offset 5-- в поле ”Пароль”.</p>
+           <p>В таком случае проверка покажет истину, так как в запросе сложится следующее условие: WHERE login = '' or ''='' AND password_noencoder = '' or 1=1 limit 1 offset 5--'AND deleted_at is null;</p>"></anonymous-modal>
     </div>
     <div class="pageShop" v-else>
       <div class="cards">
         <div class="card-item"
-             v-for="product in filteredProducts"
+             v-for="product in products"
              :key="product"
         >
           <img class="image-product"
@@ -46,7 +52,10 @@
            <p>Ещё один из вариантов – удалить таблицу Продукты:<br/>'; TRUNCATE TABLE products CASCADE; SELECT '</p>
       "></anonymous-modal>
     </div>
-    <secondary-button @click='$router.push(`/sql`)' svg-prop="Home.svg">Вернуться на главную</secondary-button>
+    <div class="buttons-bottom-container">
+      <secondary-button @click='clearSessionStorageAndNavigate' svg-prop="Home.svg">Вернуться на главную</secondary-button>
+      <secondary-button @click='reboot' svg-prop="update.svg">Восстановить БД</secondary-button>
+    </div>
   </div>
 </template>
 
@@ -81,7 +90,7 @@ export default {
       if (sessionStorage) {
         sessionStorage.clear();
       }
-      this.$router.push('/menu');
+      this.$router.push('/sql');
     },
     async authIn() {
       try {
@@ -116,8 +125,7 @@ export default {
           }
         })
         if (res.ok) {
-          let products = await res.json()
-          this.products = products
+          this.products = await res.json()
         } else {
           alert("Ошибка при выполнении запроса получения списка продуктов");
         }
@@ -127,7 +135,7 @@ export default {
     },
     async searching() {
       try {
-        let res = await fetch(`http://localhost:1489/fail/main/search?name=${this.searchQuery}`, {
+        let res = await fetch(`${BACKEND_URL}/fail/main/search?name=${this.searchQuery}`, {
           method: 'GET',
           credentials: 'include',
           headers: {
@@ -135,7 +143,7 @@ export default {
           }
         })
         if (res.ok) {
-          this.products = await this.filteredProducts()
+          this.products = await res.json()
         } else {
           alert("Ошибка при выполнении запроса поиска в базе данных");
         }
@@ -145,8 +153,8 @@ export default {
     },
     async reboot() {
       try {
-        let res = await fetch(`${BACKEND_URL}/fail/main/reboot`)
-        console.log("Reboot:", res)
+        await fetch(`${BACKEND_URL}/fail/main/reboot`)
+        await this.getAllProducts()
       } catch (e) {
         console.error(e)
       }
@@ -159,7 +167,7 @@ export default {
         password: this.password
       }
     },
-    filteredProducts() {
+    /*filteredProducts() {
       if (this.searchQuery === "") {
         return this.products
       } else {
@@ -168,7 +176,7 @@ export default {
             }
         )
       }
-    }
+    }*/
   }
 }
 </script>
@@ -205,6 +213,12 @@ export default {
   color: #FFFFFF;
 }
 
+.search-field {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .wb-search {
   border-radius: 2vw;
   background: rgba(255, 255, 255, 0.50);
@@ -225,11 +239,23 @@ export default {
   color: #FFFFFF;
 }
 
-.search-field img {
-  position: absolute;
-  left: 36vw;
-  top: 3.6vh;
-  cursor: text;
+.searching-button {
+  width: 10vh;
+  height: 6vh;
+  position: relative;
+  right: 2vw;
+  border-radius: 2vw;
+  border: none;
+  cursor: pointer;
+  background-color: #B535B8;
+}
+.searching-button:hover {
+  background-color: #a831ab;
+}
+
+.searching-button img {
+  margin-top: 0.5vh;
+  height: 3vh;
 }
 
 .form-auth input {
@@ -269,6 +295,7 @@ export default {
 .logo {
   cursor: pointer;
   font-size: 2.1vw;
+  margin-left: 5vw;
 }
 
 h1 {
@@ -327,5 +354,15 @@ h1 {
   background-color: #c940cc;
 }
 
+.secondary-button {
+  position: relative;
+}
 
+.buttons-bottom-container {
+  display: flex;
+  width: 30vw;
+  position: absolute;
+  justify-content: space-around;
+  bottom: 0;
+}
 </style>

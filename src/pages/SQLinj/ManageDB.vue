@@ -1,8 +1,8 @@
 <template>
   <div class="manage-DB" v-if="statusPage === 'registration'">
     <div class="buttons">
-      <type-button @click="statusPage = 'roles'; this.role = 'Пользователь'">Войти как пользователь</type-button>
-      <type-button @click="statusPage = 'roles'; this.role = 'Администратор'">Войти как администратор</type-button>
+      <type-button @click="statusPage = 'roles'; this.role = 'Пользователь'; this.tableHeaders = []; this.table = []">Войти как пользователь</type-button>
+      <type-button @click="statusPage = 'roles'; this.role = 'Администратор'; this.tableHeaders = []; this.table = []">Войти как администратор</type-button>
     </div>
     <home-button></home-button>
     <anonymous-modal text-message='<p>Роль администратора ты уже попробовал. Теперь можешь выбрать роль пользователя.</p>'></anonymous-modal>
@@ -57,6 +57,7 @@
 <p>Как видите, ничего не изменилось, т.к. у Вас недостаточно прав для изменения данных.</p>
 <p>На этом всё. Администрирование баз данных - это один из аспектов информационной безопасности баз данных.</p>'></anonymous-modal>
   </div>
+  <secondary-button @click='reboot' svg-prop="update.svg">Восстановить БД</secondary-button>
 </template>
 
 <script>
@@ -85,8 +86,6 @@ export default {
         })
         if (res.ok) {
           let response = await res.json()
-          console.log(res)
-          console.log(response)
           this.table = response.response
           if (this.table.length > 0) {
             this.tableHeaders = Object.keys(this.table[0]);
@@ -96,6 +95,16 @@ export default {
         }
       } catch (e) {
         alert(e)
+      }
+    },
+    async reboot() {
+      try {
+        await fetch(`${BACKEND_URL}/fail/main/reboot`)
+        this.table = []
+        this.tableHeaders = []
+        this.query = ''
+      } catch (e) {
+        console.error(e)
       }
     },
   },
