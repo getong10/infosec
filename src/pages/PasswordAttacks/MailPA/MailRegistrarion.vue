@@ -24,7 +24,7 @@
           class="mail__registration__btn"
           @click="$router.push(`/startPasswordsHacking`)"
       >
-        Войти
+        ВОЙТИ
       </button>
     </div>
     <anonymous-modal text-message="я съел деда">

@@ -26,6 +26,7 @@ import ProtectionPasswords from "@/pages/PasswordAttacks/ProtectionPasswords.vue
 import TypesPasswords from "@/pages/PasswordAttacks/TypesPasswords.vue";
 import MailRegistrarion from "@/pages/PasswordAttacks/MailPA/MailRegistrarion.vue";
 import MailPageWithHacking from "@/pages/PasswordAttacks/MailPA/MailPageWithHacking.vue";
+import ServiceAssessment from "@/pages/CSRF/Mail/ServiceAssessment.vue";
 
 
 const routes = [
@@ -96,6 +97,10 @@ const routes = [
     {
         path: '/elMailRf',
         component: MailMainPage
+    },
+    {
+        path: '/serviceAssessment',
+        component: ServiceAssessment
     },
     {
         path: '/clickjacking',
