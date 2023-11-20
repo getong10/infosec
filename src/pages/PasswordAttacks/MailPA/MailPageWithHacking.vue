@@ -2,7 +2,7 @@
   <div class="mail__container">
     <div class="mail__header">
       <div style="display: flex;align-items: center;">
-        <div class="mail__logo" @click="$router.push('/csrf')">
+        <div class="mail__logo" @click="$router.push('/passwordAttack')">
           <img src="/assets/img/mail.svg" alt="@ЭЛПОЧТА.РФ">
         </div>
         <div class="mail__letter">
@@ -12,7 +12,7 @@
           <div class="mail__letter__text">
             Письмо
           </div>
-      </div>
+        </div>
       </div>
       <div class="mail__username__header">
         Василий
@@ -47,9 +47,9 @@
         </div>
       </div>
     </div>
-    <anonymous-modal text-message="Сейчас Вы в роли жертвы.
-                                   <br /><br />Вы залогинены на сайте элпочта.рф. У Вас есть сессия в cookies (фрагменты данных о сайте, сохранённые в памяти).
-                                   <br /><br />Хакер создал сайт с формой и отправил в виде анкеты. Откройте сообщение от anketa.ru">
+    <anonymous-modal text-message="Василий Пупкин установил популярный пароль, который был в нашей базе паролей.
+                                    <br /> <br />Теперь у Вас есть доступ ко всем его сообщениям.
+                                    <br /> <br />А чтобы такого не случалось в твоей системе, читай рекомендации в разделе “Защита” на главной странице атаки.">
     </anonymous-modal>
   </div>
 </template>

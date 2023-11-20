@@ -27,6 +27,10 @@ export default {
           name: 'Защита',
           link: 'protectPasswords'
         },
+        {
+          name: 'Сценарий атаки',
+          link: 'startPasswords'
+        },
       ]
     }
   }

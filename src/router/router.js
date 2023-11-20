@@ -24,6 +24,8 @@ import ChatGT from "@/pages/Clickjacking/ChatGT.vue";
 import PasswordAttacks from "@/pages/PasswordAttacks/PasswordAttacks.vue";
 import ProtectionPasswords from "@/pages/PasswordAttacks/ProtectionPasswords.vue";
 import TypesPasswords from "@/pages/PasswordAttacks/TypesPasswords.vue";
+import MailRegistrarion from "@/pages/PasswordAttacks/MailPA/MailRegistrarion.vue";
+import MailPageWithHacking from "@/pages/PasswordAttacks/MailPA/MailPageWithHacking.vue";
 
 
 const routes = [
@@ -126,6 +128,14 @@ const routes = [
     {
         path: '/typesPasswords',
         component: TypesPasswords
+    },
+    {
+        path: '/startPasswords',
+        component: MailRegistrarion
+    },
+    {
+        path: '/startPasswordsHacking',
+        component: MailPageWithHacking
     }
 ]
 
