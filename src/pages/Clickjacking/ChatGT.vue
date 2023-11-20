@@ -14,12 +14,12 @@
             </div>
             <div class="hidden-text-content">
               <div><span>user_nakrutchik</span> Поставь лайк и удача будет на твоей стороне!</div>
-              <button class="btn-like"  v-if="isButtonVisible">
-                <img src="/assets/like.svg" alt="">
+              <button class="btn-like"  v-if="isButtonVisible" @click="toggleButton">
+                <img src="public/assets/like.svg" alt="">
                 Like
               </button>
               <button class="btn-liked" v-else @click="toggleButton">
-                <img src="/assets/liked.svg" alt="">
+                <img src="public/assets/liked.svg" alt="">
                 Liked
               </button>
             </div>
@@ -30,11 +30,11 @@
       </div>
       <div class="btn-wrapper">
           <button  @click="$router.push(`/clickjacking`)">
-            <img src="/assets/home.svg" alt="" width="20px" height="20px">
+            <img src="/assets/home.svg" alt="" style="height: 2.8vh">
             Вернуться на главную
           </button>
           <button @click="openModal">
-            <img src="/assets/eye.svg" alt="" width="20px" height="20px">
+            <img src="/assets/eye.svg" alt="" style="height: 3vh">
             Показать скрытое окно
             </button>
       </div>
@@ -68,12 +68,17 @@ export default {
 </script>
 
 <style scoped>
+  .chat-wrapper {
+    width: 100vw;
+    height: 100vh;
+    background-color: #EDEFEF;
+  }
   .chat-wrapper h2 {
     margin: 0 auto;
     width: 100%;
     max-width: 800px;
     font-family: Montserrat;
-    font-size: 96px;
+    font-size: 5rem;
     font-weight: 600;
     line-height: 117px;
     letter-spacing: 0em;
@@ -161,7 +166,6 @@ export default {
     left: -50px;
     width: 100%;
     max-width: 860px;
-    height: 40%;
     background: rgb(173, 173, 173);
     border-radius: 12px;
     padding: 10px 30px;
@@ -172,7 +176,7 @@ export default {
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    background-image: url("./assets/bg-img.png");
+    background-image: url("public/assets/bg-img.png");
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center center;
