@@ -29,4 +29,12 @@ body {
 p:not(:last-child){
   margin-bottom: 0.7vh;
 }
+.text-is-not-checked {
+  font-weight: 700;
+  color: rgba(40, 77, 209, 1);
+}
+.text-is-checked {
+  font-weight: 400;
+  color: rgba(40, 77, 209, 1);
+}
 </style>
