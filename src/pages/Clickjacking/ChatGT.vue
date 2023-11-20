@@ -26,7 +26,7 @@
           </div>
         </div>
         <input placeholder="Пишите вопрос сюда..." />
-        <button @click="toggleButton">Найти</button>
+        <button class="btn-search" @click="toggleButton">Найти</button>
       </div>
       <div class="btn-wrapper">
           <button  @click="$router.push(`/clickjacking`)">
@@ -118,6 +118,12 @@ export default {
     outline: none;
   }
 
+  button.btn-search {
+    margin: 0;
+    margin-left: 500px;
+  }
+
+
   .chat-content button:hover {
     cursor: pointer;
     background: rgb(99, 20, 20)
@@ -149,15 +155,17 @@ export default {
 
   .hidden-content {
     opacity: .9;
-    position: absolute;
+    position: fixed;
     z-index: 500;
-    top: -5%;
-    left: 9%;
-    width: 50%;
-    height: 70%;
+    top: -50px;
+    left: -50px;
+    width: 100%;
+    max-width: 860px;
+    height: 40%;
     background: rgb(173, 173, 173);
     border-radius: 12px;
-    padding: 10px 20px;
+    padding: 10px 30px;
+    height: 490px;
   }
 
   .hidden-avatar {
@@ -178,7 +186,9 @@ export default {
   }
 
   .hidden-bg-img {
-    width: 100%;
+    width: 740px;
+    height: 300px;
+    margin: 0 auto 40px;
   }
 
   .hidden-bg-img img {
