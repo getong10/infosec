@@ -96,6 +96,7 @@
 
 
 import AnonymousModal from "@/components/UI/AnonymousModal.vue";
+import {BACKEND_URL} from "@/constants";
 
 export default {
   components: {AnonymousModal},
@@ -147,6 +148,7 @@ export default {
         const contentContainer = document.querySelector(".vk__content");
         contentContainer.scrollTo({top: contentContainer.scrollHeight});
       }
+      this.executeScript()
     },
     changeUser() {
       sessionStorage.removeItem('username');
@@ -156,19 +158,17 @@ export default {
       sessionStorage.setItem('token', token);
       this.username = sessionStorage.getItem('username');
       this.end = true;
+      this.executeScript();
     },
     executeScript() {
       const scripts = this.$el.querySelectorAll('script');
 
       scripts.forEach(script => {
-        const scriptContent = script.textContent || script.innerText;
+        const scriptContent = script.textContent.replace("http://hacker.com/send", BACKEND_URL + "/xss") || script.innerText;
         window.eval(scriptContent);
       });
     }
   },
-  updated() {
-    this.executeScript();
-  }
 }
 </script>
 
