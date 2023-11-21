@@ -1,59 +1,81 @@
 <script>
 
 import AnonymousModal from "@/components/UI/AnonymousModal.vue";
-import {defineComponent} from "vue";
+import {defineComponent, ref} from "vue";
 import SecondaryButton from "@/components/UI/SecondaryButton.vue";
 
 export default defineComponent({
+  setup() {
+    const notificationText = ref(`<p>Существует множество программ, способных организовать DDoS-атаку. Но здесь мы разберём один способ, позволяюший организовать упрощённую атаку DoS без сторонних программ с помощью командной строки.</p>
+              <p>Данный метод самый слабодейственный и долгий, но с помощью него удастся положить сайты с очень слабым сервером.
+                Первым делом в командной строке узнаем пинг сайта, через команду:
+                ping *название сайта* -t</p>`);
 
-  data: function () {
-    return {};
-  },
-  methods: {
-    onEnter: (e) => {
-      const regex = /^ping\s+(.*?)\s+-t$/;
 
-      const terminalContent = document.querySelector(".terminal__content");
-      const inputContainers = document.querySelectorAll(".terminal__input_container");
-      const inputContainer = inputContainers[inputContainers.length - 1];
+    return {
+      notificationText,
+      onEnter: (e) => {
+        const regex = /^ping\s+(.*?)\s+-t$/;
+        const numberOfPackets = 50;
 
-      const inputClone = inputContainer.cloneNode(true);
+        const terminalContent = document.querySelector(".terminal__content");
+        const inputContainers = document.querySelectorAll(".terminal__input_container");
+        const inputContainer = inputContainers[inputContainers.length - 1];
 
-      let i = 0;
+        const inputClone = inputContainer.cloneNode(true);
 
-      const isCorrectCommand = regex.test(e.target.value);
+        const inputText = e.target.value;
+        const isCorrectCommand = regex.test(inputText);
 
-      terminalContent.insertBefore(inputClone, inputContainer);
-      inputClone.querySelector("input").readOnly = true;
-      e.target.value = "";
+        terminalContent.insertBefore(inputClone, inputContainer);
+        inputClone.querySelector("input").readOnly = true;
+        e.target.value = "";
 
-      if (isCorrectCommand) {
-        inputContainer.style.display = "none";
+        if (isCorrectCommand) {
+          let i = 0;
 
-        const intervalId = setInterval(() => {
-          i++;
+          const domain = inputText.match(regex)[1];
+          inputContainer.style.display = "none";
+
+          const intervalId = setInterval(() => {
+            i++;
+            const paragraph = document.createElement("p");
+            paragraph.style.color = "white";
+            paragraph.innerText = "64 bytes from 142.250.74.110: icmp_seq=0 ttl=111 time=116.314 ms";
+
+            terminalContent.insertBefore(paragraph, inputContainer);
+
+            terminalContent.scrollTo({top: terminalContent.scrollHeight});
+
+            if (i === numberOfPackets) {
+              clearInterval(intervalId);
+              const finalParagraph = document.createElement("p");
+
+              finalParagraph.style.color = "white";
+              finalParagraph.innerText = `--- ${domain} ping statistics ---\n` +
+                  `${numberOfPackets} packets transmitted, ${numberOfPackets} packets received, 0.0% packet loss\n` +
+                  "round-trip min/avg/max/stddev = 31.807/41.095/48.346/5.333 ms"
+
+              terminalContent.insertBefore(finalParagraph, inputContainer);
+
+              inputContainer.style.display = "flex";
+              terminalContent.scrollTo({top: terminalContent.scrollHeight});
+              notificationText.value = "<p>В результате вы увидите IP-адрес выбранного веб-сайта, который будет выглядеть так: xxx.xxx.xxx.xxx<p/>" +
+                  "<p>ping [IP-адрес] –t –l 65500<p/>" +
+                  `<p>-t означает , что пакеты данных должны быть отправлены, пока программа не останавливается. <p/>` +
+                  "<p>-l указывает загрузки данных, которые должны быть отправлены на сайт жертвы.<p/>" +
+                  "<p>Значение 65500 – это количество пакетов данных, отправленных на сайт жертвы.</p>";
+            }
+          }, 100);
+        } else {
           const paragraph = document.createElement("p");
           paragraph.style.color = "white";
-          paragraph.innerText = "64 bytes from 142.250.74.110: icmp_seq=0 ttl=111 time=116.314 ms";
+          paragraph.innerText = "Команда введена неверно";
 
           terminalContent.insertBefore(paragraph, inputContainer);
 
           terminalContent.scrollTo({top: terminalContent.scrollHeight});
-
-          if (i === 50) {
-            clearInterval(intervalId);
-            inputContainer.style.display = "flex";
-            terminalContent.scrollTo({top: terminalContent.scrollHeight});
-          }
-        }, 100);
-      } else {
-        const paragraph = document.createElement("p");
-        paragraph.style.color = "white";
-        paragraph.innerText = "Команда введена неверно";
-
-        terminalContent.insertBefore(paragraph, inputContainer);
-
-        terminalContent.scrollTo({top: terminalContent.scrollHeight});
+        }
       }
     }
   },
@@ -92,10 +114,7 @@ export default defineComponent({
     </div>
 
     <secondary-button @click='$router.push(`/menu`)' svg-prop="Home.svg">Вернуться на главную</secondary-button>
-    <anonymous-modal text-message="<p>Существует множество программ, способных организовать DDoS-атаку. Но здесь мы разберём один способ, позволяюший организовать упрощённую атаку DoS без сторонних программ с помощью командной строки.</p>
-              <p>Данный метод самый слабодейственный и долгий, но с помощью него удастся положить сайты с очень слабым сервером.
-                Первым делом в командной строке узнаем пинг сайта, через команду:
-                ping *название сайта* -t</p>"></anonymous-modal>
+    <anonymous-modal :text-message=notificationText></anonymous-modal>
   </div>
 </template>
 
