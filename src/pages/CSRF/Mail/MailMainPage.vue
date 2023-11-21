@@ -47,6 +47,7 @@
         </div>
       </div>
     </div>
+<!--    <secondary-button @click='$router.push(`/csrf`)' svg-prop="Home.svg">Вернуться на главную</secondary-button>-->
     <anonymous-modal text-message="Сейчас Вы в роли жертвы.
                                    <br /><br />Вы залогинены на сайте элпочта.рф. У Вас есть сессия в cookies (фрагменты данных о сайте, сохранённые в памяти).
                                    <br /><br />Хакер создал сайт с формой и отправил в виде анкеты. Откройте сообщение от anketa.ru">
