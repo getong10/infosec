@@ -1,3 +1,61 @@
+<script>
+import AnonymousModal from "@/components/UI/AnonymousModal.vue";
+import {ref} from "vue";
+import {initialNotificationText, passwords} from "@/pages/PasswordAttacks/texts";
+import Typewriter from 'typewriter-effect/dist/core';
+import {shuffle} from "@/utils/shuffleArray";
+import {useRouter} from "vue-router";
+
+export default {
+  components: {AnonymousModal},
+  setup() {
+    const notificationText = ref(initialNotificationText);
+    const router = useRouter();
+
+    return {
+      notificationText,
+      onLogin() {
+
+
+        const emailInput = document.getElementById("emailInput");
+        const passwordInput = document.getElementById("passwordInput");
+
+        if (emailInput.value === "vpupka@elpochta.rf") {
+          passwordInput.value = "";
+
+          const typewriter = new Typewriter(passwordInput, {
+            loop: true,
+            autoStart: true,
+            strings: shuffle(passwords),
+            delay: 25,
+            pauseFor: 100,
+            onCreateTextNode(character) {
+              passwordInput.value += character;
+            },
+            onRemoveNode() {
+              passwordInput.value = passwordInput.value.slice(0, -1);
+            }
+          });
+
+          setTimeout(() => {
+            typewriter.stop();
+            typewriter.autoStart = false;
+            typewriter
+                .typeString(passwords[Math.floor(Math.random() * passwords.length)])
+                .callFunction(function () {
+                      typewriter.stop();
+                      setTimeout(() => router.push(`/startPasswordsHacking`), 1000);
+                    }
+                ).start();
+          }, 973);
+        }
+      }
+    }
+  }
+}
+</script>
+
+
 <template>
   <div class="mail__container">
     <div class="mail__header">
@@ -11,43 +69,36 @@
     <div class="mail__registration__form">
       <p style="font-size: 1.5vw; font-weight: 500">ВХОД</p>
       <input
+          value="vpupka@elpochta.rf"
+          id="emailInput"
           class="mail__registration__input"
           placeholder="E-mail"
           type="text"
       />
       <input
+          id="passwordInput"
           class="mail__registration__input"
           placeholder="Пароль"
-          type="password"
+          type="text"
       />
       <button
           class="mail__registration__btn"
-          @click="$router.push(`/startPasswordsHacking`)"
       >
         ВОЙТИ
       </button>
     </div>
-    <anonymous-modal text-message="я съел деда">
+    <anonymous-modal :text-message=notificationText>
     </anonymous-modal>
-    <secondary-button @click='$router.push(`/startPasswords`)' style="position: absolute; left: 21vw; bottom: 5vh">Запустить перебор</secondary-button>
+    <secondary-button
+        @click="onLogin"
+        style="position: absolute; left: 21vw; bottom: 5vh"
+    >
+      Запустить перебор
+    </secondary-button>
   </div>
   <secondary-button @click='$router.push(`/passwordAttack`)' svg-prop="Home.svg">Вернуться на главную</secondary-button>
 </template>
 
-<script>
-import AnonymousModal from "@/components/UI/AnonymousModal.vue";
-
-export default {
-  components: {AnonymousModal},
-  mounted() {
-  },
-  data() {
-    return {
-
-    }
-  }
-}
-</script>
 
 <style scoped>
 .mail__container {
@@ -72,6 +123,7 @@ export default {
   margin-right: 5vw;
   cursor: pointer;
 }
+
 .mail__registration__form {
   display: flex;
   flex-direction: column;
