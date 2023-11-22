@@ -20,12 +20,14 @@
     </div>
     <div class="mail__content">
       <div class="mail__dialogs">
-        <div class="mail__dialogs__item" @click="this.filteredMessages = this.messages.filter((item) => item.type === 'incoming')">
+        <div class="mail__dialogs__item"
+             @click="this.filteredMessages = this.messages.filter((item) => item.type === 'incoming')">
           <img src="/assets/img/textSMS.svg" alt="textSMS" style="width: 2.5vw">
           <span style="color:rgba(40, 77, 209, 1); padding-left: 1vw">Входящие</span>
           <span v-if="notific !== 0" style="color:rgba(40, 77, 209, 1); margin-left: auto">{{ notific }}</span>
         </div>
-        <div class="mail__dialogs__item" @click="this.filteredMessages = this.messages.filter((item) => item.type === 'sent')">
+        <div class="mail__dialogs__item"
+             @click="this.filteredMessages = this.messages.filter((item) => item.type === 'sent')">
           <img src="/assets/img/sendSMS.svg" alt="sendSMS" style="width: 2.5vw">
           <span style="color:rgba(40, 77, 209, 1); padding-left: 1vw">Отправленные</span>
         </div>
@@ -42,7 +44,8 @@
             <div :style="{opacity: mes.check ? '0' : '1'}" class="mail__messages__item__notification"></div>
           </div>
           <img :src=mes.src :alt=mes.name style="width: 3vw; margin-right: 1vw">
-          <span :class="{'text-is-checked': mes.check, 'text-is-not-checked': !mes.check}" style="margin-right: 3vw">{{ mes.name }}</span>
+          <span :class="{'text-is-checked': mes.check, 'text-is-not-checked': !mes.check}"
+                style="margin-right: 3vw">{{ mes.name }}</span>
           <span :class="{'text-is-checked': mes.check, 'text-is-not-checked': !mes.check}">{{ mes.topic }}</span>
         </div>
       </div>
@@ -66,9 +69,36 @@ export default {
     return {
       notific: 3,
       messages: [
-        {id: Date.now(), src: '/assets/img/anekdot.svg', name: 'anekdot.ru', topic: 'THIS THE TOPIC', message: 'TEXT MESSAGES', check: false, stretch: false, type: 'incoming'},
-        {id: Date.now(), src: '/assets/img/anketa.svg', name: 'anketa.ru', topic: 'THIS THE TOPIC', message: 'TEXT MESSAGES', check: false, stretch: false, type: 'incoming'},
-        {id: Date.now(), src: '/assets/img/pesni.svg', name: 'pesni.com', topic: 'THIS THE TOPIC', message: 'TEXT MESSAGES', check: false, stretch: false, type: 'incoming'},
+        {
+          id: Date.now(),
+          src: '/assets/img/anekdot.svg',
+          name: 'anekdot.ru',
+          topic: 'Новые анекдоты для Вашей улыбки на...',
+          message: 'TEXT MESSAGES',
+          check: false,
+          stretch: false,
+          type: 'incoming',
+        },
+        {
+          id: Date.now(),
+          src: '/assets/img/anketa.svg',
+          name: 'anketa.ru',
+          topic: 'Заполните анкету!',
+          message: 'TEXT MESSAGES',
+          check: false,
+          stretch: false,
+          type: 'incoming',
+        },
+        {
+          id: Date.now(),
+          src: '/assets/img/pesni.svg',
+          name: 'pesni.com',
+          topic: 'С Днём Рождения! ',
+          message: 'TEXT MESSAGES',
+          check: false,
+          stretch: false,
+          type: 'incoming',
+        },
       ],
       filteredMessages: [],
       checkedMessages: [],
