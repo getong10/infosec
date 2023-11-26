@@ -12,7 +12,6 @@ export const passwords = [
     "12345678",
     "111111",
     "qwertyuiop",
-    "yeahBash",
     "dudos2000",
     "1qaz2wsx",
     "football",

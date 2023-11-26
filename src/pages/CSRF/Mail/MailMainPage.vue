@@ -7,12 +7,12 @@
         </div>
         <div class="mail__letter">
           <div class="mail__notification__counter">
-            {{ notific }}
+            {{ messages.filter(e => !e.check).length }}
           </div>
           <div class="mail__letter__text">
             Письмо
           </div>
-      </div>
+        </div>
       </div>
       <div class="mail__username__header">
         Василий
@@ -20,73 +20,124 @@
     </div>
     <div class="mail__content">
       <div class="mail__dialogs">
-        <div class="mail__dialogs__item" @click="this.filteredMessages = this.messages.filter((item) => item.type === 'incoming')">
+        <div class="mail__dialogs__item"
+             @click="this.filteredMessages = this.messages.filter((item) => item.type === 'incoming')">
           <img src="/assets/img/textSMS.svg" alt="textSMS" style="width: 2.5vw">
           <span style="color:rgba(40, 77, 209, 1); padding-left: 1vw">Входящие</span>
-          <span v-if="notific !== 0" style="color:rgba(40, 77, 209, 1); margin-left: auto">{{ notific }}</span>
+          <span v-if="messages.filter(e => !e.check).length !== 0"
+                style="color:rgba(40, 77, 209, 1); margin-left: auto">{{
+              messages.filter(e => !e.check).length
+            }}</span>
         </div>
-        <div class="mail__dialogs__item" @click="this.filteredMessages = this.messages.filter((item) => item.type === 'sent')">
+        <div class="mail__dialogs__item"
+             @click="this.filteredMessages = this.messages.filter((item) => item.type === 'sent')">
           <img src="/assets/img/sendSMS.svg" alt="sendSMS" style="width: 2.5vw">
           <span style="color:rgba(40, 77, 209, 1); padding-left: 1vw">Отправленные</span>
         </div>
       </div>
 
       <div class="mail__messages">
-        <div :class="{'mail__messages__item__stretch': mes.stretch, 'mail__messages__item': !mes.stretch}"
-             v-for="mes in filteredMessages"
-             :key="mes.id"
-             @click="mes.check = true; isCheckedMessages(mes)"
+        <div
+            :class="{'mail__messages__item_stretch': mes.stretch, 'mail__messages__item': true}"
+            v-for="mes in filteredMessages"
+            :key="mes.id"
         >
-          <div class="mail__messages__item__check">
-            <input type="checkbox" style="outline: none;"/>
-            <div :style="{opacity: mes.check ? '0' : '1'}" class="mail__messages__item__notification"></div>
+          <div
+              class="mail__messages__item-header"
+              @click="isCheckedMessages(mes)"
+          >
+            <div class="mail__dialogs__item_label">
+              <div class="mail__messages__item__check">
+                <div :style="{opacity: mes.check ? '0' : '1'}" class="mail__messages__item__notification"></div>
+              </div>
+              <img :src=mes.src :alt=mes.name style="width: 3vw; margin-right: 1vw">
+              <span :class="{'text-is-checked': mes.check, 'text-is-not-checked': !mes.check}"
+                    style="margin-right: 3vw">{{
+                  mes.name
+                }}</span>
+            </div>
+            <span :class="{'text-is-checked': mes.check, 'text-is-not-checked': !mes.check}">{{ mes.topic }}</span>
           </div>
-          <img :src=mes.src :alt=mes.name style="width: 3vw; margin-right: 1vw">
-          <span :class="{'text-is-checked': mes.check, 'text-is-not-checked': !mes.check}" style="margin-right: 3vw">{{ mes.name }}</span>
-          <span :class="{'text-is-checked': mes.check, 'text-is-not-checked': !mes.check}">{{ mes.topic }}</span>
+          <div class="mail__dialogs__item-content" v-if=!mes.isTarget>
+            <p>{{ mes.text }}</p>
+          </div>
+          <div class="mail__dialogs__item-content" v-if=mes.isTarget>
+            <p>Заполните анкету!</p>
+            <p>Перейди по ссылке для заполнения анкеты: <span @click='$router.push(`/serviceAssessment`)'>
+              http://ankets.net
+            </span>
+            </p>
+          </div>
         </div>
       </div>
     </div>
-<!--    <secondary-button @click='$router.push(`/csrf`)' svg-prop="Home.svg">Вернуться на главную</secondary-button>-->
-    <anonymous-modal text-message="Сейчас Вы в роли жертвы.
-                                   <br /><br />Вы залогинены на сайте элпочта.рф. У Вас есть сессия в cookies (фрагменты данных о сайте, сохранённые в памяти).
-                                   <br /><br />Хакер создал сайт с формой и отправил в виде анкеты. Откройте сообщение от anketa.ru">
+    <secondary-button @click='$router.push(`/csrf`)' svg-prop="Home.svg">Вернуться на главную</secondary-button>
+    <anonymous-modal :text-message=notificationText>
     </anonymous-modal>
   </div>
 </template>
 
 <script>
 import AnonymousModal from "@/components/UI/AnonymousModal.vue";
+import SecondaryButton from "@/components/UI/SecondaryButton.vue";
+import {actionNotification, initialNotification} from "@/pages/CSRF/text";
+import {ref} from "vue";
 
 export default {
-  components: {AnonymousModal},
+  components: {SecondaryButton, AnonymousModal},
   mounted() {
     this.filteredMessages = this.messages.filter((item) => item.type === 'incoming');
   },
-  data() {
+  data(){
+
     return {
-      notific: 3,
       messages: [
-        {id: Date.now(), src: '/assets/img/anekdot.svg', name: 'anekdot.ru', topic: 'THIS THE TOPIC', message: 'TEXT MESSAGES', check: false, stretch: false, type: 'incoming'},
-        {id: Date.now(), src: '/assets/img/anketa.svg', name: 'anketa.ru', topic: 'THIS THE TOPIC', message: 'TEXT MESSAGES', check: false, stretch: false, type: 'incoming'},
-        {id: Date.now(), src: '/assets/img/pesni.svg', name: 'pesni.com', topic: 'THIS THE TOPIC', message: 'TEXT MESSAGES', check: false, stretch: false, type: 'incoming'},
+        {
+          id: Date.now(),
+          src: '/assets/img/anekdot.svg',
+          name: 'anekdot.ru',
+          topic: 'Новые анекдоты для Вашей улыбки на...',
+          text: 'TEXT MESSAGES',
+          check: true,
+          type: 'incoming',
+        },
+        {
+          id: Date.now(),
+          src: '/assets/img/anketa.svg',
+          name: 'anketa.ru',
+          topic: 'Заполните анкету!',
+          text: "TEXT MESSAGES",
+          type: 'incoming',
+          isTarget: true,
+        },
+        {
+          id: Date.now(),
+          src: '/assets/img/pesni.svg',
+          name: 'pesni.com',
+          topic: 'С Днём Рождения! ',
+          text: 'TEXT MESSAGES',
+          check: true,
+          type: 'incoming',
+        },
       ],
       filteredMessages: [],
-      checkedMessages: [],
-      stretch: false,
     }
   },
-  methods: {
-    isCheckedMessages(mes) {
-      if (!this.checkedMessages.includes(mes.name)) {
-        this.checkedMessages.push(mes.name);
+  setup() {
+    const notificationText = ref(initialNotification);
+
+    return {
+      notificationText,
+      isCheckedMessages(mes) {
         mes.stretch = !mes.stretch;
-        return --this.notific;
-      } else {
-        mes.stretch = !mes.stretch;
-      }
+
+        if (mes.check) return;
+        if (mes.isTarget) notificationText.value = actionNotification;
+
+        mes.check = true;
+      },
     }
-  }
+  },
 }
 </script>
 
@@ -172,21 +223,71 @@ export default {
   padding: 0 1vw 0 1vw;
 }
 
+.mail__messages {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
 .mail__messages__item {
   display: flex;
-  align-items: center;
-  margin: 0 0 2vh 0;
-  width: auto;
-  height: 7vh;
+  flex-direction: column;
   border-radius: 2vh;
   background-color: rgba(217, 217, 217, 1);
-  cursor: pointer;
   padding: 0 1vw 0 1vw;
+}
+
+.mail__messages__item_stretch {
+  display: flex;
+  height: 30vh;
+  align-items: start;
+  border-radius: 2vh;
+  padding: 2vw;
+}
+
+.mail__messages__item-header {
+  display: grid;
+  align-items: center;
+  grid-template-columns: 1fr 2fr;
+  cursor: pointer;
+  width: 100%;
+  height: 7vh;
+}
+
+.mail__dialogs__item_label {
+  display: flex;
+  align-items: center;
+}
+
+.mail__messages__item_stretch .mail__dialogs__item-content {
+  display: block;
+  margin-top: 2vh;
+}
+
+.mail__messages__item_stretch .mail__messages__item__check {
+  display: none;
+}
+
+.mail__dialogs__item-content {
+  font-size: 16px;
+  display: none;
+}
+
+.mail__dialogs__item-content p {
+  color: #284DD1;
+  font-weight: 400;
+  font-size: 16px;
+}
+
+.mail__dialogs__item-content span {
+  cursor: pointer;
+  color: #284DD1;
+  font-weight: 700;
+  font-size: 18px;
 }
 
 .mail__messages__item__check {
   display: flex;
-  flex-direction: row;
   align-items: center;
   padding: 0 0.5vw 0 0;
 }
@@ -197,17 +298,5 @@ export default {
   background-color: rgba(40, 77, 210, 1);
   border-radius: 1vw;
   margin-left: 0.5vw;
-}
-
-.mail__messages__item__stretch {
-  display: flex;
-  align-items: start;
-  margin: 0 0 2vh 0;
-  width: auto;
-  height: 40vh;
-  border-radius: 2vh;
-  background-color: rgba(217, 217, 217, 1);
-  cursor: pointer;
-  padding: 2vw 0.5vw 2vw 0.5vw;
 }
 </style>
