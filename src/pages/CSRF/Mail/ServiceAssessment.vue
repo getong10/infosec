@@ -4,7 +4,7 @@
       <span style="font-size: 1.4vw; align-self: center">Оцените сервис элпочта.рф</span>
       <span style="font-size: 0.9vw; font-weight: 400; margin-top: 2vh">Оцените по 10-балльной шкале</span>
       <input class="mail__input" type="number"/>
-      <button class="mail__btn" @click="$router.push(`/elMailRf`)">ОТПРАВИТЬ</button>
+      <button class="mail__btn" @click="$router.push(`/elMailRfResult`)">ОТПРАВИТЬ</button>
     </div>
     <anonymous-modal text-message="На сайте хакера расположена форма. На первый взгляд ничего необычного.
                                    <br /><br />Кнопка отправляет запрос на элпочта.рф. Но между кнопкой и полем оценки в HTML-форме вставлено скрытое поле с уже заполненным сообщением хакера: “Привет. Деньги закончились. Переведи пж деньги на карту 123456789123”.

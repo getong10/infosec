@@ -3,3 +3,6 @@ export const initialNotification = ` Сейчас Вы в роли жертвы.
                                    <br /><br />Хакер создал сайт с формой и отправил в виде анкеты. Откройте сообщение от anketa.ru`;
 
 export const actionNotification = "Перейдите по ссылке от хакера.";
+
+export const resultNotification = `<p>Как видите, сообщение хакера было отправлено другу от Вашего имени.</p>
+                                                    <p>А Вы об этом даже ничего не узнали бы.</p>`;
