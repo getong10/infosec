@@ -23,4 +23,13 @@ export const passwords = [
     "password1",
     "mar20lt",
     "gfhjkm",
+    "iloveu",
+    "000000",
+    "soccer",
+    "butterfly",
+    "purple",
+    "princess",
+    "sunshine",
+    "jordan",
+    "friends",
 ];

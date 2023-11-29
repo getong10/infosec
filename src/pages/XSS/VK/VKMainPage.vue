@@ -64,6 +64,7 @@
         Отправить
       </button>
     </div>
+    <secondary-button @click='$router.push(`/xss`)' svg-prop="Home.svg">Вернуться на главную</secondary-button>
     <anonymous-modal text-message="Для того чтобы скрипт встроился в страницу
                                   с общим доступом, необходимо отправить
                                   сообщение под “заражённым” именем"
@@ -84,7 +85,6 @@
       ></anonymous-modal>
     </div>
     <div v-else-if="end">
-      <secondary-button @click='$router.push(`/menu`)' svg-prop="Home.svg">Вернуться на главную</secondary-button>
       <anonymous-modal
           text-message="Чтобы узнать какие данные отправились на сервер хакера, можете посмотреть в консоль разработчика (нажми правой кнопкой мыши, выбери пункт меню “Исследовать элемент”, открой вкладку Console)"
       ></anonymous-modal>

@@ -59,7 +59,7 @@
             <span :class="{'text-is-checked': mes.check, 'text-is-not-checked': !mes.check}">{{ mes.topic }}</span>
           </div>
           <div class="mail__dialogs__item-content" v-if=!mes.isTarget>
-            <p>{{ mes.text }}</p>
+            <p v-html="mes.text"></p>
           </div>
           <div class="mail__dialogs__item-content" v-if=mes.isTarget>
             <p>Заполните анкету!</p>
@@ -96,8 +96,8 @@ export default {
           id: Date.now(),
           src: '/assets/img/anekdot.svg',
           name: 'anekdot.ru',
-          topic: 'Новые анекдоты для Вашей улыбки на...',
-          text: 'TEXT MESSAGES',
+          topic: 'Новые анекдоты для Вашей улыбки на каждый день!',
+          text: 'Когда разработчики стали больше похожи на лесников, чем на программистов? Когда начали не писать код, а пилить.<br /><br />Почему все сервера и сервисы жёстко падают именно в июне? Потому что это JUNE.',
           check: true,
           type: 'incoming',
         },
@@ -115,7 +115,7 @@ export default {
           src: '/assets/img/pesni.svg',
           name: 'pesni.com',
           topic: 'С Днём Рождения! ',
-          text: 'TEXT MESSAGES',
+          text: 'Поздравляю с днем рождения! Искренне желаю тебе огромного счастья, чтобы все желания стремительно шли к реализации, а мечты превращались в реальность. Никогда не опускай руки и смело смотри вперед, чтобы позитив никогда тебя не покидал, а близкие люди были всегда рядом. Конечно же, желаю здоровья, куда же без него в любое время, и чтобы всё в жизни получалось так, как ты захочешь.',
           check: true,
           type: 'incoming',
         },

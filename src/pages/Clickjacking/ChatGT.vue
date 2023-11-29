@@ -28,16 +28,8 @@
         <input placeholder="Пишите вопрос сюда..." />
         <button class="btn-search" @click="toggleButton">Найти</button>
       </div>
-      <div class="btn-wrapper">
-          <button  @click="$router.push(`/clickjacking`)">
-            <img src="/assets/home.svg" alt="" style="height: 2.8vh">
-            Вернуться на главную
-          </button>
-          <button @click="openModal">
-            <img src="/assets/eye.svg" alt="" style="height: 3vh">
-            Показать скрытое окно
-            </button>
-      </div>
+      <secondary-button @click='$router.push(`/clickjacking`)' svg-prop="Home.svg">Вернуться на главную</secondary-button>
+      <secondary-button @click='openModal' svg-prop="eye.svg" style="position: absolute; left: 21vw; bottom: 5vh">Показать скрытое окно</secondary-button>
       <anonymous-modal text-message='<p>Сейчас Вы в роли жертвы.</p>
 <p>Вам отправили ссылку на поисковик с искусственным интеллектом. Вы вводите запрос, нажимаете кнопку “Найти”, но ничего не происходит.</p>
 <p>На самом деле кнопка “Найти” отключена, а за ней скрывается полупрозрачный фрейм (окно) с другого сайта и подставлена кнопка “Лайк”. Нажимая на одну кнопку, Вы совершайте действие на другом сайте, которого даже не видите.</p>
@@ -132,15 +124,6 @@ export default {
   .chat-content button:hover {
     cursor: pointer;
     background: rgb(99, 20, 20)
-  }
-
-  .btn-wrapper {
-    position: absolute;
-    bottom: 50px;
-    left: 40px;
-    display: flex;
-    justify-content: center;
-    gap: 40px
   }
 
   .btn-wrapper button {
