@@ -70,8 +70,8 @@
                                   сообщение под “заражённым” именем"
                      v-if="isAuth && !nextStep && !end"
     ></anonymous-modal>
-    <anonymous-modal text-message="Сейчас Вы будете в роли хакера, который хочет заполучить данные аккаунта у Василия Пупкина.
-                                   <br /> <br />Для начала перейдите на страницу регистрации."
+    <anonymous-modal text-message="<p>Сейчас Вы будете в роли хакера, который хочет заполучить данные аккаунта у Василия Пупкина.</p>
+                                   <p>Для начала перейдите на страницу регистрации.</p>"
                      v-else-if="!isAuth && !nextStep && !end"
     ></anonymous-modal>
     <div v-else-if="isAuth && nextStep && !end">

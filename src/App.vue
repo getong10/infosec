@@ -27,7 +27,7 @@ body {
   font-weight: 800;
 }
 p:not(:last-child){
-  margin-bottom: 0.7vh;
+  margin-bottom: 1vh;
 }
 .text-is-not-checked {
   font-weight: 700;
