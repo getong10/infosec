@@ -145,8 +145,8 @@ export default {
     opacity: .9;
     position: fixed;
     z-index: 500;
-    top: -50px;
-    left: -50px;
+    top: -45px;
+    left: -65px;
     width: 100%;
     max-width: 860px;
     background: rgb(173, 173, 173);
