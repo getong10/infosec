@@ -44,6 +44,7 @@
           <button class="bucket-button">В корзину</button>
         </div>
       </div>
+      <h2 style="text-align: center; color: grey;" v-if="products.length === 0">Товар не найден</h2>
       <anonymous-modal
           text-message="<p>На сайте Интернет-магазина внутри поиска встроен SQL-запрос:<br/>SELECT * FROM Products <br/>WHERE name = '{$ЗначениеИзПоляПоиска}';</p>
            <p>Разработчики не настроили администрирование и забыли сделать проверку поля на ввод посторонних символов.</p>
