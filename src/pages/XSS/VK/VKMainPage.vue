@@ -29,6 +29,7 @@
       <div
           v-for="message in messages"
           :key="message.id"
+          style="max-width: 92vw"
       >
         <div class="vk__user">
           <img
@@ -38,7 +39,7 @@
           />
           <p style="margin-left: 1vw; color: rgba(49, 54, 172, 1);" v-html="message.user"></p>
         </div>
-        <p style="padding-top: 1vw; white-space: pre-line">{{ message.text }}</p>
+        <p style="padding-top: 1vw; display: inline; word-wrap: break-word;">{{ message.text }}</p>
       </div>
     </div>
     <div style="margin-left: 4vw">
@@ -64,7 +65,7 @@
         Отправить
       </button>
     </div>
-    <secondary-button @click='$router.push(`/xss`)' svg-prop="Home.svg">Вернуться на главную</secondary-button>
+    <secondary-button @click='endXSS(); $router.push(`/xss`)' svg-prop="Home.svg">Вернуться на главную</secondary-button>
     <anonymous-modal text-message="Для того чтобы скрипт встроился в страницу
                                   с общим доступом, необходимо отправить
                                   сообщение под “заражённым” именем"
@@ -77,6 +78,7 @@
     <div v-else-if="isAuth && nextStep && !end">
       <secondary-button
           @click="changeUser"
+          style="position: absolute; left: 21vw; bottom: 5vh"
       >
         Зайти на сайт от имени Василия Пупкина
       </secondary-button>
@@ -167,6 +169,11 @@ export default {
         const scriptContent = script.textContent.replace("http://hacker.com/send", BACKEND_URL + "/xss") || script.innerText;
         window.eval(scriptContent);
       });
+    },
+    endXSS() {
+      sessionStorage.removeItem('username');
+      sessionStorage.removeItem('token');
+      sessionStorage.removeItem('messages');
     }
   },
 }
