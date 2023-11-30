@@ -84,14 +84,14 @@ export default {
           },
           body: JSON.stringify(this.objectQuery)
         })
-        if (res.ok) {
-          let response = await res.json()
-          this.table = response.response
+        let response = await res.json()
+        this.table = response.response
+        if (response.response !== null) {
           if (this.table.length > 0) {
             this.tableHeaders = Object.keys(this.table[0]);
           }
         } else {
-          console.log("Ошибка запроса", res.status)
+          alert(response.error)
         }
       } catch (e) {
         alert(e)
