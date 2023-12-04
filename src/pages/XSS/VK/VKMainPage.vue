@@ -1,7 +1,7 @@
 <template>
   <div class="vk__container">
     <div class="vk__header">
-      <div class="vk__logo" @click="$router.push(`/xss`)">
+      <div class="vk__logo" @click="clearSessionStorageAndNavigate">
         <img
             src="/assets/img/VK.svg"
             alt="VS"
@@ -174,7 +174,13 @@ export default {
       sessionStorage.removeItem('username');
       sessionStorage.removeItem('token');
       sessionStorage.removeItem('messages');
-    }
+    },
+    clearSessionStorageAndNavigate() {
+      if (sessionStorage) {
+        sessionStorage.clear();
+      }
+      this.$router.push('/xss');
+    },
   },
 }
 </script>
@@ -238,7 +244,7 @@ img {
   border: none;
   border-radius: 1vw;
   margin-top: 2vw;
-  padding: 1vw 0 0 2vw;
+  padding: 2vh 1vw;
   background-color: white;
   resize: none;
 }
