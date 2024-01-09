@@ -3,7 +3,7 @@
     <ContentFirstPages
         title="ПОДДЕЛКА<br/>
         &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspЗАПРОСА"
-        description="CSRF (Cross-Site Request Forgery) – тип атаки на веб-приложения, при котором злоумышленник заставляет авторизованного пользователя выполнить нежелательные действия на веб-сайте,<br/> на который пользователь уже аутентифицирован"
+        description="CSRF (Cross-Site Request Forgery) – тип атаки на веб-приложения, при котором злоумышленник заставляет авторизованного пользователя выполнить нежелательные действия на веб-сайте,<br/> на котором пользователь уже аутентифицирован"
         svg-name="csrf.svg"
         :buttons-list=buttonsList
         :img-style="{ width: '60vh' }"
