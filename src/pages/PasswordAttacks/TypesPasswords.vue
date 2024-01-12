@@ -52,7 +52,7 @@
     </div>
 
     <div class="content" v-if="content === 'fourth'">
-      <h1>Подбор паролей по времени инетраций<br/><span>(Timing Attack)</span></h1>
+      <h1>Подбор паролей по времени итераций<br/><span>(Timing Attack)</span></h1>
       <div class="content">
         <img ref="myImage" alt="Анимация перебора значений" src="public/assets/img/timingAttack.gif"
              class="animation">
