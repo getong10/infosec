@@ -1,5 +1,7 @@
+<!-- Шаблон приложения ВСети для XSS-атаки -->
 <template>
   <div class="vk__container">
+    <!-- Шапка приложения ВСети с логотипом и именем/кнопкой регистрации -->
     <div class="vk__header">
       <div class="vk__logo" @click="clearSessionStorageAndNavigate">
         <img
@@ -23,9 +25,11 @@
       </button>
     </div>
 
+    <!-- Форма общения на странице -->
     <div class="vk__content">
       <p style="font-size: 1.3vw">ОБСУЖДЕНИЕ</p>
       <p style="font-size: 2vw">«Помогите сделать дз»</p>
+      <!-- Список сообщений на странице -->
       <div
           v-for="message in messages"
           :key="message.id"
@@ -42,6 +46,7 @@
         <p style="padding-top: 1vw; display: inline; word-wrap: break-word;">{{ message.text }}</p>
       </div>
     </div>
+    <!-- Поле для ввода сообщений на странице с кнопкой "Отправить" -->
     <div style="margin-left: 4vw">
       <textarea
           class="vk__comment"
@@ -65,7 +70,10 @@
         Отправить
       </button>
     </div>
-    <secondary-button @click='endXSS(); $router.push(`/xss`)' svg-prop="Home.svg">Вернуться на главную</secondary-button>
+
+    <!-- Дополнительная кнопка для возврата на главную страницу -->
+    <secondary-button @click='clearSessionStorageAndNavigate' svg-prop="Home.svg">Вернуться на главную</secondary-button>
+
     <anonymous-modal text-message="Для того чтобы скрипт встроился в страницу
                                   с общим доступом, необходимо отправить
                                   сообщение под “заражённым” именем"
@@ -76,12 +84,14 @@
                      v-else-if="!isAuth && !nextStep && !end"
     ></anonymous-modal>
     <div v-else-if="isAuth && nextStep && !end">
+      <!-- Дополнительная кнопка для того, чтобы зайти на сайт от имени жертвы -->
       <secondary-button
           @click="changeUser"
           style="position: absolute; left: 21vw; bottom: 5vh"
       >
         Зайти на сайт от имени Василия Пупкина
       </secondary-button>
+
       <anonymous-modal
           text-message="Теперь, когда зарегистрированный пользователь зайдёт на эту страницу, к хакеру на сервер отправится его никнейм и токен (символьная последовательность, используемая для аутентификации и авторизации пользователя), с помощью которого возможно отправлять любые запросы на сайт от чужого имени."
       ></anonymous-modal>
@@ -93,17 +103,20 @@
     </div>
   </div>
 </template>
-
+<!-- Скрипт страницы XSS-атаки -->
 <script>
 
 
 import AnonymousModal from "@/components/UI/AnonymousModal.vue";
 import {BACKEND_URL} from "@/constants";
-
+// Определение компонента
 export default {
+  // Перечисление компонентов для использования на странице
   components: {AnonymousModal},
+  // Перечисление переменных для использования на странице
   data() {
     return {
+      // Массив сообщений с изначальным заданным сообщением
       messages: [
         {id: Date.now(), user: 'Василий Пупкин', text: 'Не могу решить уравнение по алгебре: \ncos(5x) = 1'},
       ],
@@ -114,47 +127,61 @@ export default {
       end: false,
     }
   },
+  // Срабатывает при появлении компонента
   mounted() {
+    // Проверка на наличие сообщений в сессионном хранилище браузера
     if (sessionStorage.getItem('messages') === null) {
       sessionStorage.setItem('messages', JSON.stringify(this.messages));
     }
+    // Проверка на наличия регистрации у пользователя через сессионное хранилище браузера
     if (sessionStorage.getItem('username') !== null) {
       this.isAuth = true;
       this.username = sessionStorage.getItem('username');
       this.messages = JSON.parse(sessionStorage.getItem('messages'));
+      // Проверка на отправку сообщений хакером в приложении
       if (this.messages.length > 1) {
         this.nextStep = true;
+        // Проверка на переключение на аккаунт жертвы
         if (this.username === 'Василий Пупкин') {
           this.end = true;
         }
       }
     }
   },
+  // Отслеживание изменения имени пользователя
   watch: {
     username(newValue) {
       this.username = newValue;
     }
   },
+  // Методы страницы
   methods: {
+    // Отправка сообщений
     submitMsg() {
+      // Проверка на наличие текста в сообщении
       if (this.newMessage.trim() !== '') {
+        // Создание сообщения
         this.messages.push({
           id: Date.now(),
           user: this.username,
           text: this.newMessage
         });
+        // Запись созданного сообщения в сессионное хранилище браузера
         sessionStorage.setItem('messages', JSON.stringify(this.messages));
         this.newMessage = '';
         this.nextStep = true;
-
+        // Получение элемента с сообщениями и скролл к последнему сообщению
         const contentContainer = document.querySelector(".vk__content");
         contentContainer.scrollTo({top: contentContainer.scrollHeight});
       }
       this.executeScript()
     },
+    // Смена пользователя
     changeUser() {
+      // Очистка сессионного хранилища
       sessionStorage.removeItem('username');
       sessionStorage.removeItem('token');
+      // Создание нужных параметров для смены на аккаунт жертвы
       const token = Math.random().toString(36);
       sessionStorage.setItem('username', 'Василий Пупкин');
       sessionStorage.setItem('token', token);
@@ -162,6 +189,7 @@ export default {
       this.end = true;
       this.executeScript();
     },
+    // Запуск всех имеющихся скриптов на странице
     executeScript() {
       const scripts = this.$el.querySelectorAll('script');
 
@@ -170,11 +198,7 @@ export default {
         window.eval(scriptContent);
       });
     },
-    endXSS() {
-      sessionStorage.removeItem('username');
-      sessionStorage.removeItem('token');
-      sessionStorage.removeItem('messages');
-    },
+    // Очистка сессионного хранилища
     clearSessionStorageAndNavigate() {
       if (sessionStorage) {
         sessionStorage.clear();
@@ -184,7 +208,7 @@ export default {
   },
 }
 </script>
-
+<!-- Стили страницы XSS-атаки -->
 <style scoped>
 .vk__container {
   z-index: 0;

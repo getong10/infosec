@@ -1,5 +1,7 @@
+<!-- Шаблон страницы с формой регистрации для XSS-атаки -->
 <template>
   <div class="vk__container">
+    <!-- Шапка приложения ВСети с логотипом -->
     <div class="vk__header">
       <div class="vk__logo" @click="$router.push(`/xss`)">
         <img
@@ -10,6 +12,7 @@
       </div>
     </div>
 
+    <!-- Форма регистрации в приложении ВСети -->
     <div class="vk__registration__form">
       <p style="font-size: 1.5vw; font-weight: 500">РЕГИСТРАЦИЯ</p>
       <input
@@ -33,7 +36,9 @@
     <anonymous-modal text-message="<p>Тут мы введём никнейм (имя) пользователя c  закрывающим</p>
                                   <p>HTML-тегом и скриптом, в котором будет код, отправляющий данные пользователя на адрес хакера.</p>
                                   <p>Рассмотрите и скопируйте код из чёрного окна, вставьте в поле “Никнейм”.</p>"></anonymous-modal>
-      <div class="vk__helper__message">
+
+    <!-- Вспомогательное окно для реализации XSS-атаки в приложении ВСети -->
+    <div class="vk__helper__message">
         <span>NoName&lt;/p&gt;&lt;script&gt;<br/>
           (async () => {<br/>
           const data = {<br/>
@@ -55,33 +60,40 @@
       </div>
   </div>
 </template>
-
+<!-- Скрипт страницы с формой регистрации для XSS-атаки -->
 <script>
 import AnonymousModal from "@/components/UI/AnonymousModal.vue";
-
+// Определение компонента
 export default {
+  // Перечисление компонентов для использования на странице
   components: {AnonymousModal},
+  // Перечисление переменных для использования на странице
   data() {
     return {
       username: '',
       password: '',
     };
   },
+  // Методы страницы
   methods: {
+    // Функция регистрации пользователя на странице приложения ВСети
     isRegister() {
-      const token = Math.random().toString(36);
-      sessionStorage.setItem('username', this.username);
-      sessionStorage.setItem('token', token);
-      this.$router.push(`/startXSS`);
+      const token = Math.random().toString(36); // Создание токена пользователя для регистрации
+      sessionStorage.setItem('username', this.username); // Сохранение имени пользователя в сессионном хранилище браузера
+      sessionStorage.setItem('token', token); // Сохранение токена пользователя в сессионном хранилище браузера
+      this.$router.push(`/startXSS`); // Перенаправление зарегестрированного пользователя на страницу XSS-атаки
     },
+    // Функция копирования текста из вспомогательного окна
     copyToClipboard() {
+      // Запись в переменную textToCopy содержимого из вспомогательного окна
       const textToCopy = document.querySelector('.vk__helper__message span').textContent
+      // Копирование текста из переменной textToCopy в буфер обмена
       navigator.clipboard.writeText(textToCopy);
     }
   }
 }
 </script>
-
+<!-- Стили страницы с формой регистрации для XSS-атаки -->
 <style scoped>
 .vk__container {
   z-index: 0;

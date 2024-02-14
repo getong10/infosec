@@ -1,8 +1,10 @@
+<!-- Шаблон страницы с работой CSRF-атаки -->
 <template>
   <div>
     <img class="back-button" src="/assets/img/back.svg" @click="$router.push('/csrf')" alt="back-button" style="z-index: 100"/>
     <home-button class="home-button"></home-button>
     <div class="container">
+      <!-- Описание работы CSRF-атаки -->
       <text-content title="ПОДДЕЛКА<br/>
         &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspЗАПРОСА"
                     description="<p><span class='strong-text'>1.</span> Злоумышленник создает поддельную веб-страницу или отправляет злоумышленную ссылку жертве.</p>
@@ -14,7 +16,7 @@
     <img class="background-img" :src="`/assets/img/background-img/csrf.svg`" alt="csrf">
   </div>
 </template>
-
+<!-- Скрипт страницы о работе CSRF-атаки -->
 <script>
 import TextContent from "@/components/TextContent.vue";
 import HomeButton from "@/components/UI/HomeButton.vue";
@@ -23,7 +25,7 @@ export default {
   components: {HomeButton, TextContent},
 }
 </script>
-
+<!-- Стили страницы о работе CSRF-атаки -->
 <style scoped>
 .container {
   display: flex;

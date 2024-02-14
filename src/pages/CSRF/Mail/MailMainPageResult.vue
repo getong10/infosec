@@ -1,5 +1,7 @@
+<!-- Шаблон приложения ЭЛПОЧТА.РФ для CSRF-атаки с результатом атаки-->
 <template>
   <div class="mail__container">
+    <!-- Шапка приложения ЭЛПОЧТА.РФ с логотипом и счетчиком непрочитанных писем -->
     <div class="mail__header">
       <div style="display: flex;align-items: center;">
         <div class="mail__logo" @click="$router.push('/csrf')">
@@ -18,8 +20,12 @@
         Василий
       </div>
     </div>
+
+    <!-- Основной контент приложения ЭЛПОЧТА.РФ -->
     <div class="mail__content">
+      <!-- Типы сообщений -->
       <div class="mail__dialogs">
+        <!-- Входящие сообщения -->
         <div class="mail__dialogs__item"
              @click="this.filteredMessages = this.messages.filter((item) => item.type === 'incoming')">
           <img src="/assets/img/textSMS.svg" alt="textSMS" style="width: 2.5vw">
@@ -29,6 +35,7 @@
               messages.filter(e => !e.check).length
             }}</span>
         </div>
+        <!-- Отправленные сообщения -->
         <div class="mail__dialogs__item"
              @click="this.filteredMessages = this.messages.filter((item) => item.type === 'sent')">
           <img src="/assets/img/sendSMS.svg" alt="sendSMS" style="width: 2.5vw">
@@ -36,21 +43,25 @@
         </div>
       </div>
 
+      <!-- Отсортированный список сообщени (входящие или отправленные) -->
       <div class="mail__messages">
         <div
             :class="{'mail__messages__item_stretch': mes.stretch, 'mail__messages__item': true}"
             v-for="mes in filteredMessages"
             :key="mes.id"
         >
+          <!-- Проверка на нажатие по сообщению -->
           <div
               class="mail__messages__item-header"
               @click="isCheckedMessages(mes)"
           >
+            <!-- Элементы сообщения -->
             <div class="mail__dialogs__item_label">
               <div class="mail__messages__item__check">
                 <div :style="{opacity: mes.check ? '0' : '1'}" class="mail__messages__item__notification"></div>
               </div>
               <img :src=mes.src :alt=mes.name style="width: 3vw; margin-right: 1vw">
+              <!-- Изменение цвета в зависимости от нажатия на сообщение -->
               <span :class="{'text-is-checked': mes.check, 'text-is-not-checked': !mes.check}"
                     style="margin-right: 3vw">{{
                   mes.name
@@ -58,9 +69,11 @@
             </div>
             <span :class="{'text-is-checked': mes.check, 'text-is-not-checked': !mes.check}">{{ mes.topic }}</span>
           </div>
+          <!-- Обычные сообщения -->
           <div class="mail__dialogs__item-content" v-if=!mes.isTarget>
             <p>{{ mes.text }}</p>
           </div>
+          <!-- Сообщение от злоумышленника -->
           <div class="mail__dialogs__item-content" v-if=mes.isTarget>
             <p>Заполните анкету!</p>
             <p>Перейди по ссылке для заполнения анкеты: <span @click='$router.push(`/serviceAssessment`)'>
@@ -76,21 +89,25 @@
     </anonymous-modal>
   </div>
 </template>
-
+<!-- Скрипт страницы CSRF-атаки с результатом атаки -->
 <script>
 import AnonymousModal from "@/components/UI/AnonymousModal.vue";
 import SecondaryButton from "@/components/UI/SecondaryButton.vue";
 import {resultNotification} from "@/pages/CSRF/text";
 import {ref} from "vue";
-
+// Определение компонента
 export default {
+  // Перечисление компонентов для использования на странице
   components: {SecondaryButton, AnonymousModal},
+  // Срабатывает при появлении компонента
   mounted() {
+    // Изначальная фильтрация входящих сообщений
     this.filteredMessages = this.messages.filter((item) => item.type === 'sent');
   },
   data() {
 
     return {
+      // Массив сообщений с новым сообщением отправленным сообщением
       messages: [
         {
           id: Date.now(),
@@ -135,10 +152,12 @@ export default {
     }
   },
   setup() {
+    // Переменная дял хранения сообщения от анонимуса
     const notificationText = ref(resultNotification);
 
     return {
       notificationText,
+      // Функция для проверки сообщения
       isCheckedMessages(mes) {
         mes.stretch = !mes.stretch;
 
@@ -150,7 +169,7 @@ export default {
   },
 }
 </script>
-
+<!-- Стили страницы CSRF-атаки с результатом атаки -->
 <style scoped>
 .mail__container {
   z-index: 0;

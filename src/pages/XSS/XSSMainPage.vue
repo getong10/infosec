@@ -1,3 +1,4 @@
+<!-- Шаблон главной страницы о XSS-атаках -->
 <template>
   <div>
     <ContentFirstPages
@@ -9,7 +10,7 @@
     ></ContentFirstPages>
   </div>
 </template>
-
+<!-- Скрипт главной страницы о XSS-атаках -->
 <script>
 import ContentFirstPages from "@/components/ContentFirstPages.vue";
 
@@ -17,6 +18,7 @@ export default {
   components: { ContentFirstPages},
   data() {
     return {
+      // Массив с информацией о кнопках
       buttonsList: [
         {
           name: 'Типы атак',

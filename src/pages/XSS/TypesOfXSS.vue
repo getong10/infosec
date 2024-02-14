@@ -1,7 +1,11 @@
+<!-- Шаблон страницы с разновидностями XSS-атак -->
 <template>
   <div>
+    <!-- Кнопки для возврата на предыдущую страницу -->
     <img class="back-button" src="/assets/img/back.svg" @click="$router.push('/xss')" alt="back-button"/>
     <home-button class="home-button"></home-button>
+
+    <!-- Контейнер для отображения описаний разновидностей и кнопок выбора -->
     <div class="container">
       <text-content title="МЕЖСАЙТОВЫЙ<br/>&nbsp;&nbsp;&nbspСКРИПТИНГ"
                     :description="descriptionTypes.filter((type) => type.name === state)[0].description"></text-content>
@@ -16,10 +20,11 @@
         </type-button>
       </div>
     </div>
+    <!-- Фоновое изображение страницы -->
     <img class="background-img" :src="`/assets/img/background-img/xss.svg`" alt="xss">
   </div>
 </template>
-
+<!-- Скрипт страницы с разновидностями XSS-атак -->
 <script>
 import TextContent from "@/components/TextContent.vue";
 import HomeButton from "@/components/UI/HomeButton.vue";
@@ -30,6 +35,7 @@ export default {
   data() {
     return {
       state: 'first',
+      // Список кнопок с разновидностями атак
       buttonsList: [
         {
           name: 'Stored XSS'
@@ -41,6 +47,7 @@ export default {
           name: 'DOM-based XSS'
         },
       ],
+      // Список названий с кратким описанием разновидностей атак
       descriptionTypes: [
         {
           name: 'first',
@@ -62,13 +69,14 @@ export default {
     }
   },
   methods: {
+    // Изменение текущей разновидности атаки
     changeState(key) {
       this.state = key
     },
   },
 }
 </script>
-
+<!-- Стили страницы с разновидностями XSS-атак -->
 <style scoped>
 .container {
   display: flex;

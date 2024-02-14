@@ -1,3 +1,4 @@
+<!-- Шаблон страницы со способами защиты от CSRF-атаки -->
 <template>
   <div>
     <img class="back-button" src="/assets/img/back.svg" @click="$router.push('/csrf')" alt="back-button"/>
@@ -6,6 +7,7 @@
       <text-content title="ПОДДЕЛКА<br/>
         &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspЗАПРОСА"
                     :description="descriptionTypes[state].description"></text-content>
+      <!-- Кнопки навигации по способам-->
       <div v-if="state===0">
         <white-button
             style="margin-left: 40vw;"
@@ -28,7 +30,7 @@
     <img class="background-img" :src="`/assets/img/background-img/csrf.svg`" alt="csrf">
   </div>
 </template>
-
+<!-- Скрипт страницы со способами защиты от CSRF-атаки -->
 <script>
 import TextContent from "@/components/TextContent.vue";
 import HomeButton from "@/components/UI/HomeButton.vue";
@@ -38,7 +40,8 @@ export default {
   components: {WhiteButton, HomeButton, TextContent},
   data() {
     return {
-      state: 0,
+      state: 0, // Номер текущего способа защиты
+      // Массив с перечислением способов защиты
       descriptionTypes: [
         {
           description: 'На данной странице мы узнаем как защититься<br/>от подделки запроса CSRF и не потерять свои данные'
@@ -59,6 +62,7 @@ export default {
     }
   },
   methods: {
+    // Методы изменения состояния текущего способа защиты
     addState() {
       this.state = ++this.state
     },
@@ -71,7 +75,7 @@ export default {
   },
 }
 </script>
-
+<!-- Стили страницы со способами защиты от CSRF-атаки -->
 <style scoped>
 .container {
   display: flex;
