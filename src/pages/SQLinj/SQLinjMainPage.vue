@@ -19,7 +19,7 @@ export default {
   components: {ContentFirstPages},
   data() {
     return {
-      // Массив с информацией о кнопках
+      // Массив информации о кнопках страницы
       buttonsList: [
         {
           name: 'Защита',

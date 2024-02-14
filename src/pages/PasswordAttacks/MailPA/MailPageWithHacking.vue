@@ -1,5 +1,7 @@
+<!-- Шаблон страницы из сценария атаки после успешно подобранного пароля -->
 <template>
   <div class="mail__container">
+    <!-- Шапка почтового приложения -->
     <div class="mail__header">
       <div style="display: flex;align-items: center;">
         <div class="mail__logo" @click="$router.push('/csrf')">
@@ -18,7 +20,9 @@
         Василий
       </div>
     </div>
+    <!-- Основной контент -->
     <div class="mail__content">
+      <!-- Переключение между входящими и отправленными сообщениями -->
       <div class="mail__dialogs">
         <div class="mail__dialogs__item"
              @click="this.filteredMessages = this.messages.filter((item) => item.type === 'incoming')">
@@ -35,7 +39,7 @@
           <span style="color:rgba(40, 77, 209, 1); padding-left: 1vw">Отправленные</span>
         </div>
       </div>
-
+      <!-- Список сообщений -->
       <div class="mail__messages">
         <div
             :class="{'mail__messages__item_stretch': mes.stretch, 'mail__messages__item': true}"
@@ -45,6 +49,7 @@
           <div
               class="mail__messages__item-header"
           >
+            <!-- Аватар, имя и тема сообщения -->
             <div class="mail__dialogs__item_label">
               <div class="mail__messages__item__check">
                 <div :style="{opacity: mes.check ? '0' : '1'}" class="mail__messages__item__notification"></div>
@@ -57,6 +62,7 @@
             </div>
             <span :class="{'text-is-checked': mes.check, 'text-is-not-checked': !mes.check}">{{ mes.topic }}</span>
           </div>
+          <!-- Содержание сообщения -->
           <div class="mail__dialogs__item-content" v-if=!mes.isTarget>
             <p>{{ mes.text }}</p>
           </div>
@@ -77,19 +83,20 @@
     </anonymous-modal>
   </div>
 </template>
-
+<!-- Скрипт страницы из сценария атаки после успешно подобранного пароля -->
 <script>
 import AnonymousModal from "@/components/UI/AnonymousModal.vue";
 import SecondaryButton from "@/components/UI/SecondaryButton.vue";
 
 export default {
   components: {SecondaryButton, AnonymousModal},
+  // Инициализация отфильтрованного массива при появлении компонента по признаку "Входящие"
   mounted() {
     this.filteredMessages = this.messages.filter((item) => item.type === 'incoming');
   },
   data(){
-
     return {
+      // Список сообщений
       messages: [
         {
           id: Date.now(),
@@ -119,14 +126,13 @@ export default {
           type: 'incoming',
         },
       ],
+      // Отфильтрованный список сообщений
       filteredMessages: [],
     }
   },
-  setup() {
-  },
 }
 </script>
-
+<!-- Стили страницы из сценария атаки после успешно подобранного пароля -->
 <style scoped>
 .mail__container {
   z-index: 0;

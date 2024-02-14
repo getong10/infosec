@@ -1,17 +1,22 @@
+<!-- Шаблон страницы сценария с кликджекингом -->
 <template>
   <div class="chat-wrapper">
       <h2>Free <span>ChatGT</span> and Search Engine</h2>
       <div class="chat-content">
+      <!-- Скрытое окно -->
         <div v-if="isModalOpen">
           <div class="hidden-content">
+            <!-- Информация об авторе поста на "другом" сайте -->
             <div class="hidden-avatar-wrapper">
                 <div class="hidden-avatar">
                 </div>
                 <span>user_nakrutchik</span>
             </div>
+            <!-- Фото скрытого поста -->
             <div class="hidden-bg-img">
               <img src="/assets/bg-img.png" alt="">
             </div>
+            <!-- Текст и кнопки скрытого поста -->
             <div class="hidden-text-content">
               <div><span>user_nakrutchik</span> Поставь лайк и удача будет на твоей стороне!</div>
               <button class="btn-like"  v-if="isButtonVisible" @click="toggleButton">
@@ -25,8 +30,8 @@
             </div>
           </div>
         </div>
-        <input placeholder="Пишите вопрос сюда..." />
-        <button class="btn-search" @click="toggleButton">Найти</button>
+        <input placeholder="Пишите вопрос сюда..." /> <!-- Поле ввода поисковика -->
+        <button class="btn-search" @click="toggleButton">Найти</button> <!-- Кнопка поиска -->
       </div>
       <secondary-button @click='$router.push(`/clickjacking`)' svg-prop="Home.svg">Вернуться на главную</secondary-button>
       <secondary-button @click='openModal' svg-prop="eye.svg" style="position: absolute; left: 21vw; bottom: 5vh">Показать скрытое окно</secondary-button>
@@ -36,7 +41,7 @@
 <p>Здесь безобидная ситуация и Вы просто ставите лайк на аве другого человека, а действие от Вашего имени могут совершить и не только на таких сайтах.</p>'></anonymous-modal>
   </div>
 </template>
-
+<!-- Скрипт страницы сценария с кликджекингом -->
 <script>
 import AnonymousModal from "@/components/UI/AnonymousModal.vue";
 
@@ -44,21 +49,23 @@ export default {
   components: {AnonymousModal},
   data() {
     return {
-      isModalOpen: false,
-      isButtonVisible: true,
+      isModalOpen: false, // Состояние видимости модального окна
+      isButtonVisible: true, // Состояние кнопки Like
     };
   },
   methods: {
+    // Метод изменения состояния кнопки Like
     toggleButton() {
       this.isButtonVisible = !this.isButtonVisible;
     },
+    // Метод открытия/закрытия скрытого окна
     openModal() {
       this.isModalOpen = !this.isModalOpen;
     },
   }
 }
 </script>
-
+<!-- Стили страницы сценария с кликджекингом -->
 <style scoped>
   .chat-wrapper {
     width: 100vw;

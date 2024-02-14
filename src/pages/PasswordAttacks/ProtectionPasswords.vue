@@ -1,11 +1,15 @@
+<!-- Шаблон страницы со способами защиты от перебора паролей -->
 <template>
   <div>
+    <!-- Кнопки возврата на главную страницу -->
     <img class="back-button" src="/assets/img/back.svg" @click="$router.push('/passwordAttack')" alt="back-button"/>
     <home-button class="home-button"></home-button>
+    <!-- Компонент с заголовком и текстом способа защиты -->
     <div class="container">
       <text-content title="ПЕРЕБОР<br/>
                     &nbsp&nbsp&nbsp&nbsp&nbsp&nbspПАРОЛЕЙ"
                     :description="descriptionTypes[state].description"></text-content>
+      <!-- Кнопки навигации по способам-->
       <div v-if="state===0">
         <white-button
             style="margin-left: 40vw;"
@@ -28,7 +32,7 @@
     <img class="background-img" :src="`/assets/img/background-img/passw.svg`" alt="*******(не мат)">
   </div>
 </template>
-
+<!-- Скрипт страницы со способами защиты от перебора паролей -->
 <script>
 import TextContent from "@/components/TextContent.vue";
 import HomeButton from "@/components/UI/HomeButton.vue";
@@ -74,7 +78,7 @@ export default {
   },
 }
 </script>
-
+<!-- Стили страницы со способами защиты от перебора паролей -->
 <style scoped>
 .container {
   display: flex;

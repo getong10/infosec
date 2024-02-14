@@ -1,5 +1,7 @@
+<!-- Шаблон страницы с разновидностями переборов паролей -->
 <template>
   <div class="back">
+    <!-- Блок с информацией о полном переборе паролей -->
     <div class="content" v-if="content === 'first'">
       <h1>Полный перебор <span>(Brute Force)</span></h1>
       <p>Допустим, есть 4-значный пароль: <span>abcd</span></p>
@@ -13,7 +15,7 @@
       <secondary-button @click="content = 'second'" style="position: absolute; left: 21vw; bottom: 5vh">Другой метод ⟶
       </secondary-button>
     </div>
-
+    <!-- Блок с информацией о подборе паролей со словарём -->
     <div class="content" v-if="content === 'second'">
       <h1>Подбор со словарём <span>(Dictionary Attack)</span></h1>
       <p>1 шаг. Сбор или поиск словаря</p>
@@ -38,7 +40,7 @@
       <secondary-button @click="content = 'third'" style="position: absolute; left: 21vw; bottom: 5vh">Другой метод ⟶
       </secondary-button>
     </div>
-
+    <!-- Блок с информацией о кейлоггере -->
     <div class="content" v-if="content === 'third'">
       <h1>Отслеживание нажатий клавиш <span>(Keylogger)</span></h1>
       <div class="content">
@@ -50,7 +52,7 @@
       <secondary-button @click="content = 'fourth'" style="position: absolute; left: 21vw; bottom: 5vh">Другой метод ⟶
       </secondary-button>
     </div>
-
+    <!-- Блок с информацией о подборе паролей по времени итерации -->
     <div class="content" v-if="content === 'fourth'">
       <h1>Подбор паролей по времени итераций<br/><span>(Timing Attack)</span></h1>
       <div class="content">
@@ -61,6 +63,7 @@
       <p>if (hashPass === correctHashPassword)</p>
       <p>Так как опертор сравнения “===” работает поочерёдным перебором символов пока сравниваемая пара символов идентична, и неожиданно останавливается, если один из символов в паре различается.</p>
       <p>Эти остановки составляют несколько микросекунды, но даже столь малую величину времени возможно отследить программными средствами.</p>"></anonymous-modal>
+      <!-- Кнопка обновления страницы с сохранением состояния текущего блока -->
       <secondary-button @click="reloadPage" svg-prop="update.svg"
                         style="position: absolute; left: 21vw; bottom: 5vh ">
         Обновить анимацию
@@ -71,22 +74,25 @@
     </secondary-button>
   </div>
 </template>
-
+<!-- Скрипт страницы с разновидностями переборов паролей -->
 <script>
 export default {
   data() {
     return {
-      content: "first",
+      content: "first", // Определение текущего (открытого) блока с информацией о типе
     }
   },
   mounted() {
+    // Вычисляемое свойство контента, берущее своё значение из памяти сессии
     this.content = sessionStorage["content"] || "first"
   },
   methods: {
+    // Метод обновления страницы для того, чтобы анимация запустилась заново
     reloadPage() {
       sessionStorage.setItem("content", this.content)
       location.reload();
     },
+    // Метод возврата на главную страницу атаки
     backToMain() {
       if (sessionStorage) {
         sessionStorage.clear();
@@ -96,7 +102,7 @@ export default {
   }
 }
 </script>
-
+<!-- Стиль страницы с разновидностями переборов паролей -->
 <style scoped>
 .back {
   background-color: #EDEFEF;

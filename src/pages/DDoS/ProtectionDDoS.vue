@@ -1,8 +1,10 @@
 <!-- Шаблон страницы со способами защиты от DDoS-атак -->
 <template>
   <div>
+    <!-- Кнопки возврата на главную страницу -->
     <img class="back-button" src="/assets/img/back.svg" @click="$router.push('/ddos')" alt="back-button"/>
     <home-button class="home-button"></home-button>
+    <!-- Компонент с заголовком и текстом способа защиты -->
     <div class="container">
       <text-content title="ПЕРЕГРУЗКА<br/>
                     &nbsp&nbsp&nbsp&nbsp&nbspWEB-СЕРВЕРА"

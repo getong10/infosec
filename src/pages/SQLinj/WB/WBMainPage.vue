@@ -1,4 +1,4 @@
-<!-- Шаблон страницы CULTUREBERRIES -->
+<!-- Шаблон страницы сценария с SQL-инъекцией -->
 <template>
   <div class="full-page" style="overflow: auto;">
     <div class="header-wb">
@@ -66,7 +66,7 @@
     </div>
   </div>
 </template>
-<!-- Скрипт страницы CULTUREBERRIES -->
+<!-- Скрипт страницы сценария с SQL-инъекцией -->
 <script>
 import {BACKEND_URL} from "@/constants";
 
@@ -188,7 +188,7 @@ export default {
   }
 }
 </script>
-<!-- Стили для страницы CULTUREBERRIES -->
+<!-- Стили страницы сценария с SQL-инъекцией -->
 <style scoped>
 .full-page {
   background-color: #EDEFEF;

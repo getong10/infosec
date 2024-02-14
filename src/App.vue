@@ -1,3 +1,5 @@
+<!-- Шаблон компонента всего приложения
+с встраиванием компонентов согласно навигации -->
 <template>
   <div class="app">
     <router-view></router-view>
@@ -5,12 +7,11 @@
 </template>
 
 <script>
-
 export default {
 
 }
 </script>
-
+<!-- Основные стили приложения -->
 <style>
 * {
   margin: 0;

@@ -1,3 +1,4 @@
+<!-- Шаблон главной страницы о кликджекиге  -->
 <template>
   <div>
     <ContentFirstPages
@@ -9,7 +10,7 @@
     ></ContentFirstPages>
   </div>
 </template>
-
+<!-- Скрипт главной страницы о кликджекиге  -->
 <script>
 import ContentFirstPages from "@/components/ContentFirstPages.vue";
 
@@ -17,6 +18,7 @@ export default {
   components: { ContentFirstPages},
   data() {
     return {
+      // Массив информации о кнопках страницы
       buttonsList: [
         {
           name: 'Защита',

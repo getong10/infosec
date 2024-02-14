@@ -1,3 +1,4 @@
+<!-- Скрипт страницы со сценария атаки с перебором паролей -->
 <script>
 import AnonymousModal from "@/components/UI/AnonymousModal.vue";
 import {ref} from "vue";
@@ -8,21 +9,23 @@ import {useRouter} from "vue-router";
 
 export default {
   components: {AnonymousModal},
+  // Настройка компонента
   setup() {
     const notificationText = ref(initialNotificationText);
     const router = useRouter();
 
     return {
       notificationText,
+      // Функция, вызываемая при попытке входа
       onLogin() {
-
-
+        // Получение элементов ввода email и password
         const emailInput = document.getElementById("emailInput");
         const passwordInput = document.getElementById("passwordInput");
 
         if (emailInput.value === "vpupka@elpochta.rf") {
           passwordInput.value = "";
 
+          // Создание объекта для имитации печати при переборе
           const typewriter = new Typewriter(passwordInput, {
             loop: true,
             autoStart: true,
@@ -36,7 +39,7 @@ export default {
               passwordInput.value = passwordInput.value.slice(0, -1);
             }
           });
-
+          // Задержка перед началом печати следующего пароля
           setTimeout(() => {
             typewriter.stop();
             typewriter.autoStart = false;
@@ -54,10 +57,10 @@ export default {
   }
 }
 </script>
-
-
+<!-- Шаблон страницы со сценария атаки с перебором паролей -->
 <template>
   <div class="mail__container">
+    <!-- Шапка страницы элпочта.рф -->
     <div class="mail__header">
       <div style="display: flex;align-items: center;">
         <div class="mail__logo" @click="$router.push('/passwordAttack')">
@@ -65,9 +68,10 @@ export default {
         </div>
       </div>
     </div>
-
+    <!-- Форма входа в элпочта.рф -->
     <div class="mail__registration__form">
       <p style="font-size: 1.5vw; font-weight: 500">ВХОД</p>
+      <!-- Поле "Email" -->
       <input
           value="vpupka@elpochta.rf"
           id="emailInput"
@@ -75,12 +79,14 @@ export default {
           placeholder="E-mail"
           type="text"
       />
+      <!-- Поле "Пароль" -->
       <input
           id="passwordInput"
           class="mail__registration__input"
           placeholder="Пароль"
           type="text"
       />
+      <!-- Кнопка "Войти" -->
       <button
           class="mail__registration__btn"
       >
@@ -98,8 +104,7 @@ export default {
   </div>
   <secondary-button @click='$router.push(`/passwordAttack`)' svg-prop="Home.svg">Вернуться на главную</secondary-button>
 </template>
-
-
+<!-- Стили страницы со сценария атаки с перебором паролей -->
 <style scoped>
 .mail__container {
   z-index: 0;
