@@ -1,7 +1,11 @@
+<!-- Шаблон страницы с разновидностями DDoS-атак -->
 <template>
   <div>
+    <!-- Кнопки для возврата на предыдущую страницу -->
     <img class="back-button" src="/assets/img/back.svg" @click="$router.push('/ddos')" alt="back-button"/>
     <home-button class="home-button"></home-button>
+
+    <!-- Контейнер для отображения описаний разновидностей и кнопок выбора -->
     <div class="container">
       <text-content title="ПЕРЕГРУЗКА<br/>
                     &nbsp&nbsp&nbsp&nbsp&nbspWEB-СЕРВЕРА"
@@ -17,10 +21,12 @@
         </type-button>
       </div>
     </div>
+
+    <!-- Фоновое изображение страницы -->
     <img class="background-img" :src="`/assets/img/background-img/ddos.svg`" alt="ddos">
   </div>
 </template>
-
+<!-- Скрипт страницы с разновидностями DDoS-атак -->
 <script>
 import TextContent from "@/components/TextContent.vue";
 import HomeButton from "@/components/UI/HomeButton.vue";
@@ -31,6 +37,7 @@ export default {
   data() {
     return {
       state: 'first',
+      // Список кнопок с разновидностями атак
       buttonsList: [
         {
           name: 'На прикладном уровне'
@@ -42,6 +49,7 @@ export default {
           name: 'На сетевом уровне'
         },
       ],
+      // Список названий с кратким описанием разновидностей атак
       descriptionTypes: [
         {
           name: 'first',
@@ -67,13 +75,14 @@ export default {
     }
   },
   methods: {
+    // Изменение текущей разновидности атаки
     changeState(key) {
       this.state = key
     },
   },
 }
 </script>
-
+<!-- Стили страницы с разновидностями DDoS-атак -->
 <style scoped>
 .container {
   display: flex;

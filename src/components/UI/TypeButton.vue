@@ -1,16 +1,17 @@
+<!-- Шаблон кнопки для пунктов на главной странице атак -->
 <template>
   <button
       class="type-button">
     <slot></slot>
   </button>
 </template>
-
+<!-- Скрипт с названием компонента для обращения к кнопке -->
 <script>
 export default {
   name: 'type-button',
 }
 </script>
-
+<!-- Стили кнопки для пунктов на главной странице атак -->
 <style scoped>
 .type-button {
   border-radius: 100vw;

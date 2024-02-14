@@ -1,15 +1,18 @@
+<!-- Шаблон главной страницы -->
 <template>
   <div>
     <div class="container">
       <text-content title="ИНФОБЕЗ<br/>&nbsp;&nbsp;&nbsp;&nbsp;WEB-СИСТЕМ"
                     description="Защити свой сайт от уязвимостей<br/>и внешних угроз"></text-content>
+      <!-- Кнопка для перехода к главному меню -->
       <white-button
           @click="$router.push(`/menu`)"
           style="margin-left: 40vw"
           >Начать ➝</white-button>
     </div>
+    <!-- Изображение хакера на заднем плане -->
     <img src="/assets/img/background-img/main-hacker-bro.svg" alt="hacker-background-image">
-
+    <!-- Изображение кнопки "Инфо" и модальное окно с дисклеймером -->
     <img src="/assets/info.svg" alt="info" class="info_button" @click="openModal">
     <div v-if="isModalOpen" class="modal-overlay" @click="closeModal">
       <div class="modal-container" @click.stop="">
@@ -34,7 +37,7 @@
     </div>
   </div>
 </template>
-
+<!-- Скрипт главной страницы -->
 <script>
 import TextContent from "@/components/TextContent.vue";
 import WhiteButton from "@/components/UI/WhiteButton.vue";
@@ -43,10 +46,11 @@ export default {
   components: {WhiteButton, TextContent},
   data() {
     return {
-      isModalOpen: false,
+      isModalOpen: false, // Состояние модального окна
     };
   },
   methods: {
+    // Методы изменения видимости модального окна
     openModal() {
       this.isModalOpen = true;
     },
@@ -56,7 +60,7 @@ export default {
   },
 }
 </script>
-
+<!-- Стили главной страницы -->
 <style scoped>
 .container {
   display: flex;

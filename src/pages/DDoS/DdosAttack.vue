@@ -1,88 +1,6 @@
-<script>
-
-import AnonymousModal from "@/components/UI/AnonymousModal.vue";
-import {defineComponent, ref} from "vue";
-import SecondaryButton from "@/components/UI/SecondaryButton.vue";
-
-export default defineComponent({
-  setup() {
-    const notificationText = ref(`<p>Существует множество программ, способных организовать DDoS-атаку. Но здесь мы разберём один способ, позволяюший организовать упрощённую атаку DoS без сторонних программ с помощью командной строки.</p>
-              <p>Данный метод самый слабодейственный и долгий, но с помощью него удастся положить сайты с очень слабым сервером.
-                Первым делом в командной строке отправляем пакеты данных на любой сайт, через команду:
-                ping *название сайта* -t</p>`);
-
-
-    return {
-      notificationText,
-      onEnter: (e) => {
-        const regex = /^ping\s+(.*?)\s+-t$/;
-        const numberOfPackets = 50;
-
-        const terminalContent = document.querySelector(".terminal__content");
-        const inputContainers = document.querySelectorAll(".terminal__input_container");
-        const inputContainer = inputContainers[inputContainers.length - 1];
-
-        const inputClone = inputContainer.cloneNode(true);
-
-        const inputText = e.target.value;
-        const isCorrectCommand = regex.test(inputText);
-
-        terminalContent.insertBefore(inputClone, inputContainer);
-        inputClone.querySelector("input").readOnly = true;
-        e.target.value = "";
-
-        if (isCorrectCommand) {
-          let i = 0;
-
-          const domain = inputText.match(regex)[1];
-          inputContainer.style.display = "none";
-
-          const intervalId = setInterval(() => {
-            i++;
-            const paragraph = document.createElement("p");
-            paragraph.style.color = "white";
-            paragraph.innerText = "64 bytes from 142.250.74.110: icmp_seq=0 ttl=111 time=116.314 ms";
-
-            terminalContent.insertBefore(paragraph, inputContainer);
-
-            terminalContent.scrollTo({top: terminalContent.scrollHeight});
-
-            if (i === numberOfPackets) {
-              clearInterval(intervalId);
-              const finalParagraph = document.createElement("p");
-
-              finalParagraph.style.color = "white";
-              finalParagraph.innerText = `--- ${domain} ping statistics ---\n` +
-                  `${numberOfPackets} packets transmitted, ${numberOfPackets} packets received, 0.0% packet loss\n` +
-                  "round-trip min/avg/max/stddev = 31.807/41.095/48.346/5.333 ms"
-
-              terminalContent.insertBefore(finalParagraph, inputContainer);
-
-              inputContainer.style.display = "flex";
-              terminalContent.scrollTo({top: terminalContent.scrollHeight});
-              notificationText.value = "<p>С помощью ping отправляются пакеты данных на указанный сервер.<p/>" +
-                  "<p>Сервер не успевает обрабатывать эти пакеты, и это приводит к перегрузке и падению производительности сети, вследствие чего" +
-                  " сервисы, предоставляемые сервером, становятся недоступны.<p/>" +
-                  "<p>При DDoS-атаке пингуют сервер не с одного компьютера, а используют заражённые сети нескольких компьютеров (ботнеты).<p/>"
-            }
-          }, 100);
-        } else {
-          const paragraph = document.createElement("p");
-          paragraph.style.color = "white";
-          paragraph.innerText = "Команда введена неверно";
-
-          terminalContent.insertBefore(paragraph, inputContainer);
-
-          terminalContent.scrollTo({top: terminalContent.scrollHeight});
-        }
-      }
-    }
-  },
-  components: {SecondaryButton, AnonymousModal}
-})
-</script>
-
+<!-- Шаблон страницы с моделью DDoS-атаки -->
 <template>
+  <!-- Окно командной строки (терминала) -->
   <div class="terminal_container">
     <div class="terminal">
       <div class="terminal__header">
@@ -116,8 +34,95 @@ export default defineComponent({
     <anonymous-modal :text-message=notificationText></anonymous-modal>
   </div>
 </template>
+<!-- Скрипт страницы с моделью DDoS-атаки -->
+<script>
+import AnonymousModal from "@/components/UI/AnonymousModal.vue";
+import {defineComponent, ref} from "vue";
+import SecondaryButton from "@/components/UI/SecondaryButton.vue";
+// Определение компонента
+export default defineComponent({
+  setup() {
+    const notificationText = ref(`<p>Существует множество программ, способных организовать DDoS-атаку. Но здесь мы разберём один способ, позволяюший организовать упрощённую атаку DoS без сторонних программ с помощью командной строки.</p>
+              <p>Данный метод самый слабодейственный и долгий, но с помощью него удастся положить сайты с очень слабым сервером.
+                Первым делом в командной строке отправляем пакеты данных на любой сайт, через команду:
+                ping *название сайта* -t</p>`);
 
+    // Возврат объекта с данными и методами для компонента
+    return {
+      notificationText,
+      // Обработка ввода команды в терминале
+      onEnter: (e) => {
+        const regex = /^ping\s+(.*?)\s+-t$/;
+        const numberOfPackets = 50;
 
+        const terminalContent = document.querySelector(".terminal__content");
+        const inputContainers = document.querySelectorAll(".terminal__input_container");
+        const inputContainer = inputContainers[inputContainers.length - 1];
+
+        const inputClone = inputContainer.cloneNode(true);
+
+        const inputText = e.target.value;
+        const isCorrectCommand = regex.test(inputText);
+
+        terminalContent.insertBefore(inputClone, inputContainer);
+        inputClone.querySelector("input").readOnly = true;
+        e.target.value = "";
+        // Обработка правильно введенной команды ping
+        if (isCorrectCommand) {
+          let i = 0;
+
+          const domain = inputText.match(regex)[1];
+          inputContainer.style.display = "none";
+
+          // Запуск интервала для эмуляции пакетов ping
+          const intervalId = setInterval(() => {
+            i++;
+            const paragraph = document.createElement("p");
+            paragraph.style.color = "white";
+            paragraph.innerText = "64 bytes from 142.250.74.110: icmp_seq=0 ttl=111 time=116.314 ms";
+
+            terminalContent.insertBefore(paragraph, inputContainer);
+
+            terminalContent.scrollTo({top: terminalContent.scrollHeight});
+
+            // Очистка после отправки заданного числа пакетов
+            if (i === numberOfPackets) {
+              clearInterval(intervalId);
+              const finalParagraph = document.createElement("p");
+
+              finalParagraph.style.color = "white";
+              finalParagraph.innerText = `--- ${domain} ping statistics ---\n` +
+                  `${numberOfPackets} packets transmitted, ${numberOfPackets} packets received, 0.0% packet loss\n` +
+                  "round-trip min/avg/max/stddev = 31.807/41.095/48.346/5.333 ms"
+
+              terminalContent.insertBefore(finalParagraph, inputContainer);
+
+              inputContainer.style.display = "flex";
+              terminalContent.scrollTo({top: terminalContent.scrollHeight});
+              notificationText.value = "<p>С помощью ping отправляются пакеты данных на указанный сервер.<p/>" +
+                  "<p>Сервер не успевает обрабатывать эти пакеты, и это приводит к перегрузке и падению производительности сети, вследствие чего" +
+                  " сервисы, предоставляемые сервером, становятся недоступны.<p/>" +
+                  "<p>При DDoS-атаке пингуют сервер не с одного компьютера, а используют заражённые сети нескольких компьютеров (ботнеты).<p/>"
+            }
+          }, 100);
+        } else {
+          // Обработка неверно введенной команды
+          const paragraph = document.createElement("p");
+          paragraph.style.color = "white";
+          paragraph.innerText = "Команда введена неверно";
+
+          terminalContent.insertBefore(paragraph, inputContainer);
+
+          terminalContent.scrollTo({top: terminalContent.scrollHeight});
+        }
+      }
+    }
+  },
+  components: {SecondaryButton, AnonymousModal}
+})
+</script>
+
+<!-- Стили страницы с моделью DDoS-атаки -->
 <style scoped>
 .terminal_container {
   margin: 40px 60px;

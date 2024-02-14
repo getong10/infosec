@@ -1,4 +1,6 @@
+<!-- Шаблон страницы с управлением базой данных -->
 <template>
+  <!--  Страница смены ролей с двумя кнопками "Пользователь" и "Администратор" -->
   <div class="manage-DB" v-if="statusPage === 'registration'">
     <div class="buttons">
       <type-button @click="statusPage = 'roles'; this.role = 'Пользователь'; this.tableHeaders = []; this.table = []">Войти как пользователь</type-button>
@@ -7,12 +9,14 @@
     <home-button></home-button>
     <anonymous-modal text-message='<p>Роль администратора ты уже попробовал. Теперь можешь выбрать роль пользователя.</p>'></anonymous-modal>
   </div>
+  <!--  Страница с окнами ввод SQL-запросов и полученные данные-->
   <div v-if="statusPage === 'roles'" class="manage-DB">
     <div class="role-panel">
       <span><b class="bold">Роль:</b> {{ role }}</span>
       <img src="/assets/img/exit.svg" alt="exit" @click="statusPage = 'registration'" class="svg-exit"/>
     </div>
     <div class="column-container">
+      <!-- Окно полученные данные-->
       <div class="column-1">
         <h2>Полученные данные:</h2>
         <div class="response-table">
@@ -33,7 +37,7 @@
             </tbody>
           </table>
         </div>
-
+      <!-- Окно ввод SQL-запросов-->
       </div>
       <div class="column-2">
         <h2>Ввод SQL-запросов:</h2>
@@ -59,13 +63,14 @@
   </div>
   <secondary-button @click='reboot' svg-prop="update.svg">Восстановить БД</secondary-button>
 </template>
-
+<!-- Скрипт страницы с управлением базой данных -->
 <script>
 import {BACKEND_URL} from "@/constants";
 
 export default {
   data() {
     return {
+      // Переменные для использования их в шаблоне
       role: 'Администратор',
       query: '',
       table: [],
@@ -74,6 +79,7 @@ export default {
     }
   },
   methods: {
+    // Функция для отправки SQL-запроса на сервер и обновления данных в компоненте
     async sendSQLQuery() {
       try {
         let res = await fetch(`${BACKEND_URL}/query`, {
@@ -97,6 +103,7 @@ export default {
         alert(e)
       }
     },
+    // Функция для восстановления базы данных на сервере
     async reboot() {
       try {
         await fetch(`${BACKEND_URL}/fail/main/reboot`)
@@ -109,6 +116,7 @@ export default {
     },
   },
   computed: {
+    // Вычисляемое свойство, возвращающее объект запроса в формате, ожидаемом сервером
     objectQuery() {
       return {
         query: this.query,
@@ -118,7 +126,7 @@ export default {
   }
 }
 </script>
-
+<!-- Стили страницы с управлением базой данных -->
 <style scoped>
 .manage-DB {
   background: #EDEFEF;

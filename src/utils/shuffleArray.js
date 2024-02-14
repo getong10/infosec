@@ -1,3 +1,6 @@
+/*
+    Функция для перемешивания элементов массива в случайном порядке
+ */
 export function shuffle(array) {
     let currentIndex = array.length,  randomIndex;
 

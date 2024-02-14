@@ -5,7 +5,7 @@ import MenuButton from "@/components/UI/MenuButton";
 import SecondaryButton from "@/components/UI/SecondaryButton";
 import WhiteButton from "@/components/UI/WhiteButton";
 import TypeButton from "@/components/UI/TypeButton.vue";
-
+// Перечисление общих компонентов для использования на страницах
 export default [
     AnonimusModal,
     HomeButton,

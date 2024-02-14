@@ -1,17 +1,20 @@
+<!-- Шаблон контейнера с названием и описанием атаки -->
 <template>
   <div>
     <h1 v-html="title"></h1>
     <h2 v-html="description"></h2>
   </div>
 </template>
-
+<!-- Скрипт для контейнера с названием и описанием атаки -->
 <script>
 export default {
   props: {
+    // Передаваемый в компонент параметр (название атаки)
     title: {
       type: String,
       required: true
     },
+    // Передаваемый в компонент параметр (описание атаки)
     description: {
       type: String,
       required: true
@@ -19,7 +22,7 @@ export default {
   }
 }
 </script>
-
+<!-- Стили для контейнера с названием и описанием атаки -->
 <style scoped>
 * {
   display: flex;

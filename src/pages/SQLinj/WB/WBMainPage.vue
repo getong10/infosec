@@ -1,18 +1,22 @@
+<!-- Шаблон страницы CULTUREBERRIES -->
 <template>
   <div class="full-page" style="overflow: auto;">
     <div class="header-wb">
       <h1 @click="clearSessionStorageAndNavigate" class="logo">CULTUREBERRIES</h1>
       <div class="search-field">
+        <!-- Поле поиска -->
         <input placeholder="Поиск" class="wb-search"
                :disabled="!isAuth"
                :style="{ cursor: isAuth ? 'text' : 'not-allowed' }"
                v-model="searchQuery"
                @keyup.enter="searching"/>
+        <!-- Кнопка с иконкой поиска -->
         <button v-if="isAuth" class="searching-button" @click="searching">
           <img src="public/assets/img/searchIcon.svg">
         </button>
       </div>
     </div>
+    <!-- Форма входа -->
     <div class="authentication" v-if="!isAuth">
       <div class="form-auth">
         <h1 class="text-header">Вход</h1>
@@ -29,7 +33,9 @@
            <p>Вставьте ''' or ''''''=''' в поле “Логин” и ''' or 1=1 limit 1 offset 5-- в поле ”Пароль”.</p>
            <p>В таком случае проверка покажет истину, так как в запросе сложится следующее условие: WHERE login = '' or ''='' AND password_noencoder = '' or 1=1 limit 1 offset 5--'AND deleted_at is null;</p>"></anonymous-modal>
     </div>
+    <!-- Основная страница CULTUREBERRIES -->
     <div class="pageShop" v-else>
+      <!-- Список карточек товаров -->
       <div class="cards">
         <div class="card-item"
              v-for="product in products"
@@ -53,46 +59,53 @@
            <p>Ещё один из вариантов – удалить таблицу Продукты:<br/>'; TRUNCATE TABLE products CASCADE; SELECT '</p>
       "></anonymous-modal>
     </div>
+    <!-- Контейнер с дополнительными кнопками -->
     <div class="buttons-bottom-container">
       <secondary-button @click='clearSessionStorageAndNavigate' svg-prop="Home.svg">Вернуться на главную</secondary-button>
       <secondary-button @click='reboot' svg-prop="update.svg">Восстановить БД</secondary-button>
     </div>
   </div>
 </template>
-
+<!-- Скрипт страницы CULTUREBERRIES -->
 <script>
 import {BACKEND_URL} from "@/constants";
 
 export default {
   components: {},
+  // Перечисление переменных для использования в шаблоне
   data() {
     return {
-      isAuth: sessionStorage.getItem('authToken') !== null,
-      inputFocused: false,
+      isAuth: sessionStorage.getItem('authToken') !== null, // Получение токена из памяти сессии
       searchQuery: '',
       login: '',
       password: '',
       products: []
     }
   },
+  // Срабатывает при появлении компонента (проверка авторизации)
   mounted() {
     if (this.isAuth) {
       this.getAllProducts();
     }
   },
+  // Методы страницы
   methods: {
+    // Получение полного пути к изображению продукта
     getPathImage(photo) {
       return `/assets/img/product-img/${photo}.jpg`;
     },
+    // Обработка ошибки загрузки изображения продукта
     handleImageError(event) {
       event.target.src = '/assets/img/product-img/nullPhoto.jpg';
     },
+    // Очистка sessionStorage и перенаправление на главную страницу атаки
     clearSessionStorageAndNavigate() {
       if (sessionStorage) {
         sessionStorage.clear();
       }
       this.$router.push('/sql');
     },
+    // Аутентификация пользователя с обращением к бекенду
     async authIn() {
       try {
         let response = await fetch(`${BACKEND_URL}/fail/log`, {
@@ -116,6 +129,7 @@ export default {
         console.error("Ошибка во время выполнения запроса:", error);
       }
     },
+    // Получение списка всех продуктов
     async getAllProducts() {
       try {
         let res = await fetch(`${BACKEND_URL}/fail/main/all`, {
@@ -134,6 +148,7 @@ export default {
         console.error(e)
       }
     },
+    // Поиск продуктов в базе данных
     async searching() {
       try {
         let res = await fetch(`${BACKEND_URL}/fail/main/search?name=${this.searchQuery}`, {
@@ -152,6 +167,7 @@ export default {
         console.error(e)
       }
     },
+    // Восстановление базы данных
     async reboot() {
       try {
         await fetch(`${BACKEND_URL}/fail/main/reboot`)
@@ -162,26 +178,17 @@ export default {
     },
   },
   computed: {
+    // Вычисляемое свойство для формирования объекта аутентификации
     auth() {
       return {
         username: this.login,
         password: this.password
       }
     },
-    /*filteredProducts() {
-      if (this.searchQuery === "") {
-        return this.products
-      } else {
-        return this.products.filter(item => {
-              return item.name.toLowerCase().includes(this.searchQuery.toLowerCase())
-            }
-        )
-      }
-    }*/
   }
 }
 </script>
-
+<!-- Стили для страницы CULTUREBERRIES -->
 <style scoped>
 .full-page {
   background-color: #EDEFEF;

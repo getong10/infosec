@@ -1,3 +1,4 @@
+<!-- Шаблон главных страниц атак -->
 <template>
   <div>
     <home-button class="home-button"></home-button>
@@ -9,7 +10,7 @@
     <img :src="`/assets/img/background-img/${svgName}`" :alt="svgName" :style="imgStyle">
   </div>
 </template>
-
+<!-- Скрипт для главных страниц атак -->
 <script>
 import TextContent from "@/components/TextContent.vue";
 import ButtonsContent from "@/components/ButtonsContent.vue";
@@ -18,21 +19,26 @@ import HomeButton from "@/components/UI/HomeButton.vue";
 export default {
   components: {HomeButton, ButtonsContent, TextContent},
   props: {
+    // Передаваемый в компонент параметр (название атаки)
     title: {
       type: String,
       required: true
     },
+    // Передаваемый в компонент параметр (описание атаки)
     description: {
       type: String,
       required: true
     },
+    // Передаваемый в компонент параметр (путь к иконке атаки)
     svgName: {
       type: String,
       required: true
     },
+    // Передаваемый в компонент параметр (массив кнопок)
     buttonsList: {
       type: Array
     },
+    // Передаваемый в компонент параметр (кастомный стиль для изображения)
     imgStyle: {
       type: Object,
       default: () => ({})
@@ -40,7 +46,7 @@ export default {
   }
 }
 </script>
-
+<!-- Стили главных страниц атак -->
 <style scoped>
 .container {
   display: flex;

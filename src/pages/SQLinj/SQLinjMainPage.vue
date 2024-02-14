@@ -1,3 +1,4 @@
+<!-- Шаблон главной страницы о управлении базами данных и SQL-инъекциях  -->
 <template>
   <div>
     <ContentFirstPages
@@ -10,7 +11,7 @@
     ></ContentFirstPages>
   </div>
 </template>
-
+<!-- Шаблон главной страницы о управлении базами данных и SQL-инъекциях  -->
 <script>
 import ContentFirstPages from "@/components/ContentFirstPages.vue";
 
@@ -18,6 +19,7 @@ export default {
   components: {ContentFirstPages},
   data() {
     return {
+      // Массив с информацией о кнопках
       buttonsList: [
         {
           name: 'Защита',

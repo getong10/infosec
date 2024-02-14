@@ -1,21 +1,24 @@
+<!-- Шаблон кнопки для различных дополнительных действий на странице (например,
+Вернуться на главную, Запустить анимацию и т.д.) -->
 <template>
   <button class="secondary-button" >
     <img v-if="svgProp" :src="`/assets/img/${svgProp}`" :alt="svgProp" class="image">
     <slot></slot>
   </button>
 </template>
-
+<!-- Скрипт кнопки для различных дополнительных действий на странице -->
 <script>
 export default {
   name: 'secondary-button',
   props: {
+    // Передаваемый в компонент параметр (путь к файлу)
     svgProp: {
       type: String
     },
   }
 }
 </script>
-
+<!-- Стили кнопки для различных дополнительных действий на странице -->
 <style scoped>
 .secondary-button {
   border-radius: 0.7vw;

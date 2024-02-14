@@ -1,3 +1,4 @@
+<!-- Шаблон страницы со способами защиты от SQL-инъекций -->
 <template>
   <div>
     <img class="back-button" src="/assets/img/back.svg" @click="$router.push('/sql')" alt="back-button"/>
@@ -7,10 +8,11 @@
           title="УПРАВЛЕНИЕ БД
         <br/>&nbsp&nbspИ SQL-ИНЪЕКЦИИ"
           :description="descriptionTypes[state].description"></text-content>
+      <!-- Кнопки навигации по способам-->
       <div v-if="state===0">
         <white-button
             style="margin-left: 40vw;"
-            @click="addState()">Узнать ➝</white-button>
+            @click="addState">Узнать ➝</white-button>
       </div>
       <div class="button-container" v-if="state !== 0">
         <white-button
@@ -29,7 +31,7 @@
     <img class="background-img" :src="`/assets/img/background-img/sql.svg`" alt="sql">
   </div>
 </template>
-
+<!-- Скрипт страницы со способами защиты от SQL-инъекций -->
 <script>
 import TextContent from "@/components/TextContent.vue";
 import HomeButton from "@/components/UI/HomeButton.vue";
@@ -38,7 +40,8 @@ export default {
   components: {HomeButton, TextContent},
   data() {
     return {
-      state: 0,
+      state: 0, // Номер текущего способа защиты
+      // Массив с перечислением способов защиты
       descriptionTypes: [
         {
           description: 'На данной странице мы узнаем как защитить <br/>свою базу данных от потери конфиденциальной информации'
@@ -62,6 +65,7 @@ export default {
     }
   },
   methods: {
+    // Методы изменения состояния текущего способа защиты
     addState() {
       this.state = ++this.state
     },
@@ -74,7 +78,7 @@ export default {
   },
 }
 </script>
-
+<!-- Стили страницы со способами защиты от SQL-инъекций -->
 <style scoped>
 .container {
   display: flex;

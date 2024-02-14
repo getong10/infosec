@@ -1,3 +1,4 @@
+<!-- Структура компонента "Гид по приложению (Анонимус)" -->
 <template>
   <div class="container">
     <div class="message typing-demo" v-if="isShowed" v-html="textMessage"></div>
@@ -7,7 +8,7 @@
     />
   </div>
 </template>
-
+<!-- Скрипт компонента "Гид по приложению (Анонимус)" -->
 <script>
 export default {
   name: 'anonymous-modal',
@@ -17,18 +18,20 @@ export default {
     }
   },
   methods: {
+    // Функция для показа/скрытия окна по клику
     changeModalView() {
       this.isShowed = !this.isShowed
     },
   },
   props: {
+    // Передаваемый в компонент параметр (текст сообщения от гида)
     textMessage: {
       type: String,
     },
   },
 }
 </script>
-
+<!-- Стили компонента "Гид по приложению (Анонимус)" -->
 <style scoped>
 .container {
   position: absolute;

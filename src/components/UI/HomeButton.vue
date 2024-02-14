@@ -1,3 +1,4 @@
+<!-- Шаблон кнопки "Домой" -->
 <template>
     <button class="home-button" @click="$router.push('/menu')">
       <svg xmlns="http://www.w3.org/2000/svg" width="54" height="54" viewBox="0 0 54 54" fill="none">
@@ -12,13 +13,13 @@
       </svg>
     </button>
 </template>
-
+<!-- Скрипт с названием компонента для обращения к кнопке "Домой" -->
 <script>
 export default {
   name: 'home-button'
 }
 </script>
-
+<!-- Стили кнопки "Домой" -->
 <style scoped>
 .home-button {
   padding: 1vw;

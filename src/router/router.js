@@ -29,7 +29,7 @@ import MailPageWithHacking from "@/pages/PasswordAttacks/MailPA/MailPageWithHack
 import ServiceAssessment from "@/pages/CSRF/Mail/ServiceAssessment.vue";
 import MailMainPageResult from "@/pages/CSRF/Mail/MailMainPageResult.vue";
 
-
+// Список связи путей с компонентами для навигации приложения
 const routes = [
     {
         path: '/',
@@ -148,7 +148,7 @@ const routes = [
         component: MailPageWithHacking
     }
 ]
-
+// Создание экземпляра маршрутизатора Vue с определенными маршрутами и режимом истории
 const router = createRouter({
         routes,
         history: createWebHistory(import.meta.env.BASE_URL)

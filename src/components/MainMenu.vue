@@ -1,3 +1,4 @@
+<!-- Шаблон главного меню приложения -->
 <template>
   <div class="container">
     <img class="back-button" src="/assets/img/back.svg" @click="$router.push('/')"/>
@@ -11,7 +12,7 @@
     </div>
   </div>
 </template>
-
+<!-- Скрипт для главного меню приложения с импоротом кнопки-пункта меню -->
 <script>
 import MenuButton from "@/components/UI/MenuButton.vue";
 
@@ -20,7 +21,7 @@ export default {
 
 }
 </script>
-
+<!-- Стили главного меню приложения -->
 <style scoped>
 * {
   display: flex;
